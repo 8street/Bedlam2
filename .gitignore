@@ -1,0 +1,90 @@
+*.7z
+*.a
+*.d
+*.dll
+*.exe
+*.o
+*.tmp
+*.zip
+
+# Visual Studio files
+*.code-workspace
+*.exp
+*.ilk
+*.opensdf
+*.pdb
+*.lib
+*.sdf
+*.suo
+*.user
+.vs/
+.vscode/
+Debug*/
+Release*/
+vc2019/.vs/
+vc2019/.vscode/
+vc2019/Debug*/
+vc2019/Release*/
+
+# Temporary and backup files
+*.bak
+*.cbTemp
+*.sw?
+*~
+\#*
+gmon.out
+
+# System Files
+.DS_Store
+._.DS_Store
+Thumbs.db
+cscope.*
+tags
+
+# Netbeans IDE folders
+nbproject/
+
+# Python runtime files
+*.pyc
+
+# vim files
+*.vim
+*.session
+.ycm_extra_conf.py
+.vimrc
+
+# taskwarrior files
+*.task*
+
+# GitEye files
+*.project
+
+# vimdiff backup
+*.orig
+
+# coredumps
+*.core
+
+# sublime-text workspace
+*.sublime-workspace
+
+# cppcheck
+*cppcheck.xml
+*.cppcheck
+
+# clang tooling
+compile_commands.json
+.clangd
+
+# Snapcraft build file
+*.snap
+
+# Eclipse IDE
+.cproject
+.settings/
+
+# Apple Xcode IDE
+Xcode/
+
+# gdb
+.gdb_history

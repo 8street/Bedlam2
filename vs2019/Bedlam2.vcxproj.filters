@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ASM Sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>
+      </Extensions>
+    </Filter>
+    <Filter Include="CPP Sources">
+      <UniqueIdentifier>{e188e48e-0152-484b-9622-4b5b278fe353}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.gitignore" />
+    <None Include="..\README.md" />
+    <None Include="..\ASM_Sources\bedlam2.inc">
+      <Filter>ASM Sources</Filter>
+    </None>
+    <None Include="..\ASM_Sources\bedlam2_data.inc">
+      <Filter>ASM Sources</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\CPP_Sources\ddraw_func.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\dsound_func.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\file.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\helper.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\keyboard.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\library_func.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\main.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\mouse.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\palette.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\timers.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\window.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\screenshot.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\ingame_music.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\CPP_Sources\ddraw_func.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\dsound_func.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\file.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\helper.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\keyboard.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\main.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\mouse.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\palette.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\timers.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\window.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\bedlam2.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\screenshot.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\ingame_music.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="..\ASM_Sources\bedlam2.asm">
+      <Filter>ASM Sources</Filter>
+    </MASM>
+  </ItemGroup>
+</Project>
