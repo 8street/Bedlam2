@@ -4,7 +4,8 @@
 [![Lines of Code](https://tokei.rs/b1/github/8street/Bedlam2?category=code)](https://github.com/XAMPPRocky/tokei)
 
 Source code for Bedlam 2: Absolute Bedlam executable file. To preserve the cultural heritage.
-Ported on Windows.
+
+This game has been ported on Windows. The original Direct Draw and Direct Sound wrapper was used from Bedlam 1.
 
 This repository does not contain any original game resources.
 
@@ -16,8 +17,6 @@ The sources can be compiled and playable. Crashes are possible.
 
 Contributors, welcome. Create a fork of this repository, then create a branch. Modify the source code in your branch. Finally, create a pull request to merge with my main branch.
 Patches and improvements are welcome.
-
-IDA reverse file of the original Bedlam.exe [here](https://www.dropbox.com/sh/h0yyypzx8gjkn9c/AABBuR-fwNthYnOYPf7VH-Q7a?dl=0).
 
 # Compiling
 
