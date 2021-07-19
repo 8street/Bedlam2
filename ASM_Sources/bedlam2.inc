@@ -29,6 +29,7 @@ extrn redraw:proc
 extrn unlock_surface_and_wait:proc
 extrn redraw_copy_buff_to_screen_and_unlock:proc
 extrn draw_map_and_game_screen:proc
+extrn copy_screen_to_buffer:proc
 
 extrn show_cursor:proc
 extrn hide_cursor:proc

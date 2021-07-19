@@ -612,7 +612,7 @@ HRESULT unlock_surface_and_screen_ptr()
     if (SCREEN_BUFFER_PTR)
     {
         result = unlock_surface();
-        SCREEN_BUFFER_PTR = 0;
+        SCREEN_BUFFER_PTR = NULL;
     }
     return result;
 }
@@ -898,3 +898,12 @@ void dead_screen_scaler()
     }
 }
 
+
+void copy_screen_to_buffer(uint8_t* buffer_ptr)
+{
+    get_screen_buffer_ptr();
+    if (SCREEN_BUFFER_PTR) {
+        memcpy(buffer_ptr, SCREEN_BUFFER_PTR, SCREEN_SURFACE_WIDTH * SCREEN_SURFACE_HEIGHT);
+    }
+    unlock_surface_and_screen_ptr();
+}
