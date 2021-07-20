@@ -5,13 +5,13 @@
 
 Source code for Bedlam 2: Absolute Bedlam executable file. To preserve the cultural heritage.
 
-This game has been ported on Windows. The original Direct Draw and Direct Sound wrapper was used from Bedlam 1.
+This game has been ported on Windows. The original Direct Draw and Direct Sound wrapper was inspired from Bedlam 1.
 
 This repository does not contain any original game resources.
 
 # Project State
 
-The sources can be compiled and playable. Crashes are possible.
+The sources can be compiled and fully playable. Rare crashes are possible.
 
 # Contributing
 
