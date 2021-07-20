@@ -455,6 +455,7 @@ int blit_second_surface_to_screen()
     tagRECT destination;    // [esp+0h] [ebp-3Ch] BYREF
     tagRECT source;         // [esp+10h] [ebp-2Ch] BYREF
     struct tagPOINT Cursor; // [esp+20h] [ebp-1Ch] BYREF
+    int start_time;
 
     if (APPLICATION_ACTIVE)
     {
@@ -464,9 +465,14 @@ int blit_second_surface_to_screen()
         {
             if (UPDATE_CURSOR_BY_TIMER)
             {
+                start_time = WAITING_TIMER;
                 while (CURSOR_IS_BLITTING)
                 {
-                    ;
+                    if (abs(WAITING_TIMER - start_time) > 200)
+                    {
+                        IS_BLITTING = 0;
+                        return -1;
+                    }
                 }
                 CURSOR_UNKNOWN = 1;
                 blit_cursor_bg();
