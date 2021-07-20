@@ -4,10 +4,10 @@
 #include <stdint.h>
 
 int init_dsound();
-int load_raw_to_dsound_buffer(uint8_t* raw_ptr, int filesize, int discretization, int bit, int channels);
+int load_raw_to_dsound_buffer(uint8_t *raw_ptr, int filesize, int discretization, int bit, int channels);
 int duplicate_sound_buffer(int index);
-extern "C" int load_raw(const char* filename);
-extern "C" int load_music(const char* filename);
+extern "C" int load_raw(const char *filename);
+extern "C" int load_music(const char *filename);
 bool dsound_buf_is_stopped(int buffer_index);
 extern "C" int play_sound(int raw_index, int x, int y, int a5);
 extern "C" int play_music(int raw_index, int x, int y, int flag);

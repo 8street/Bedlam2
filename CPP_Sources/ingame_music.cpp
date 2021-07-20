@@ -6,7 +6,8 @@ volatile UINT WDEVICEID;
 
 void play_wav_music(int track)
 {
-    if (track < 0 || track > 9) {
+    if (track < 0 || track > 9)
+    {
         return;
     }
     DWORD dwReturn = 0;
@@ -16,7 +17,8 @@ void play_wav_music(int track)
     WCHAR track_char = track + '0';
     path[18] = track_char;
 
-    if (WDEVICEID) {
+    if (WDEVICEID)
+    {
         stop_wav_music();
     }
 

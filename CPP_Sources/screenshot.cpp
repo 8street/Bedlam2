@@ -1,6 +1,7 @@
-#include <stdio.h>
-#include <cstdint>
 #include <windows.h>
+#include <cstdint>
+#include <stdio.h>
+
 
 #include "ddraw_func.h"
 #include "helper.h"
@@ -8,30 +9,29 @@
 
 #ifdef _MSC_VER
 // For use sprintf, fopen
-#pragma warning(disable : 4996)
+#    pragma warning(disable : 4996)
 #endif
-
 
 int NUM_SCREENSHOTS;
 
-//0044CEB0 Bedlam 1
+// 0044CEB0 Bedlam 1
 int save_screenshot()
 {
-    int n; // esi
-    int pal_indx; // eax
-    FILE* file; // eax
-    int ii; // esi
-    int bytes_writted; // ebp
-    int i; // esi
-    uint8_t* current_screen_point; // eax
-    uint8_t buffer1_1[258*3]; // [esp+0h] [ebp-38Ch]
+    int n;                            // esi
+    int pal_indx;                     // eax
+    FILE *file;                       // eax
+    int ii;                           // esi
+    int bytes_writted;                // ebp
+    int i;                            // esi
+    uint8_t *current_screen_point;    // eax
+    uint8_t buffer1_1[258 * 3];       // [esp+0h] [ebp-38Ch]
     BITMAPINFOHEADER bmp_info_header; // [esp+304h] [ebp-88h] BYREF
-    char filename[32]; // [esp+32Ch] [ebp-60h] BYREF
+    char filename[32];                // [esp+32Ch] [ebp-60h] BYREF
     BITMAPFILEHEADER bmp_file_header; // [esp+34Ch] [ebp-40h] BYREF
-    uint32_t filesize; // [esp+364h] [ebp-28h] BYREF
-    uint32_t null; // [esp+368h] [ebp-24h] BYREF
-    uint8_t* screen_surface_ptr; // [esp+36Ch] [ebp-20h]
-    int height; // [esp+370h] [ebp-1Ch]
+    uint32_t filesize;                // [esp+364h] [ebp-28h] BYREF
+    uint32_t null;                    // [esp+368h] [ebp-24h] BYREF
+    uint8_t *screen_surface_ptr;      // [esp+36Ch] [ebp-20h]
+    int height;                       // [esp+370h] [ebp-1Ch]
 
     n = 0;
     pal_indx = 0;
@@ -41,17 +41,20 @@ int save_screenshot()
         n += 3;
         buffer1_1[n + 1] = PALETTEENTRY_BUFFER[pal_indx + 1].peRed;
         buffer1_1[n + 2] = PALETTEENTRY_BUFFER[pal_indx + 1].peGreen;
-        buffer1_1[n + 3] = PALETTEENTRY_BUFFER[++pal_indx].peBlue;;
+        buffer1_1[n + 3] = PALETTEENTRY_BUFFER[++pal_indx].peBlue;
+        ;
     } while (pal_indx != 256);
     while (1)
     {
         sprintf(filename, "SS%04d.BMP", NUM_SCREENSHOTS);
         NUM_SCREENSHOTS++;
-        if (NUM_SCREENSHOTS > 9999) {
+        if (NUM_SCREENSHOTS > 9999)
+        {
             NUM_SCREENSHOTS = 9999;
         }
         file = fopen(filename, "rb");
-        if (!file) {
+        if (!file)
+        {
             break;
         }
         fclose(file);
@@ -64,7 +67,7 @@ int save_screenshot()
         bmp_file_header.bfReserved1 = 0;
         bmp_file_header.bfReserved2 = 0;
         bmp_file_header.bfOffBits = 0;
-        fwrite((char*)&bmp_file_header, 1, sizeof(bmp_file_header), file);
+        fwrite((char *)&bmp_file_header, 1, sizeof(bmp_file_header), file);
         bmp_info_header.biCompression = 0;
         bmp_info_header.biYPelsPerMeter = 0;
         bmp_info_header.biClrImportant = 0;
@@ -76,7 +79,7 @@ int save_screenshot()
         bmp_info_header.biClrUsed = 0;
         bmp_info_header.biHeight = GAME_HEIGHT;
         bmp_info_header.biPlanes = 1;
-        fwrite((char*)&bmp_info_header, 1, sizeof(bmp_info_header), file);
+        fwrite((char *)&bmp_info_header, 1, sizeof(bmp_info_header), file);
         ii = 0;
         do
         {
@@ -95,7 +98,7 @@ int save_screenshot()
         if (height > -1)
         {
             bytes_writted = 0;
-            for (i = 0; ; i = 0)
+            for (i = 0;; i = 0)
             {
                 while (i < GAME_WIDTH)
                 {
@@ -104,7 +107,7 @@ int save_screenshot()
                     i++;
                 }
                 if ((bytes_writted & 3) != 0)
-                    fwrite((char*)&null, 1, 4 - (bytes_writted & 3), file);
+                    fwrite((char *)&null, 1, 4 - (bytes_writted & 3), file);
                 if (--height <= -1)
                     break;
                 bytes_writted = 0;
@@ -118,7 +121,7 @@ int save_screenshot()
         unlock_surface();
         return 0;
     }
-    else 
+    else
     {
         printf("Unable to save screenshot. The file %s does not open.", filename);
         return -1;

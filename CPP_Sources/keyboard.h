@@ -17,5 +17,4 @@ extern "C" int32_t KEY_7;
 extern "C" int32_t KEY_P;
 extern "C" int32_t KEY_M;
 
-
 void keyboard(uint8_t scan_code, uint8_t key_up);

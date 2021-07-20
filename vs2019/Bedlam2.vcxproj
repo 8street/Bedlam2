@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\.clang-format" />
     <None Include="..\.gitignore" />
     <None Include="..\ASM_Sources\bedlam2.inc" />
     <None Include="..\ASM_Sources\bedlam2_data.inc" />

@@ -1,6 +1,6 @@
 #pragma once
-#include <stdint.h>
 #include <Windows.h>
+#include <stdint.h>
 
 extern HWND WINDOW_HWND;
 extern uint8_t APPLICATION_ACTIVE;
@@ -15,5 +15,5 @@ LRESULT WindowProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
 WPARAM message_dispatcher();
 void destroy();
 LRESULT send_destroy_message();
-int error_msgbox(char* error_str);
-int error_msgbox(const char* error_str);
+int error_msgbox(char *error_str);
+int error_msgbox(const char *error_str);

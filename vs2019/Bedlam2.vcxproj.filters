@@ -19,6 +19,7 @@
     <None Include="..\ASM_Sources\bedlam2_data.inc">
       <Filter>ASM Sources</Filter>
     </None>
+    <None Include="..\.clang-format" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CPP_Sources\ddraw_func.cpp">

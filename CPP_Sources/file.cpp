@@ -1,28 +1,29 @@
 
-#include <fstream>
 #include "file.h"
+#include <fstream>
 
 File::File()
 {
     m_file_size = 0;
 }
 
-File::File(const std::string &path ) : m_file( path )
+File::File(const std::string &path)
+    : m_file(path)
 {
     load_data();
 }
 
-int File::load(const std::string& path)
+int File::load(const std::string &path)
 {
     const std::filesystem::path new_path = path;
-    if (new_path == m_file && m_file_size) {
+    if (new_path == m_file && m_file_size)
+    {
         return 0;
     }
     return set_path(path);
 }
 
-
-int File::set_path(const std::string& path)
+int File::set_path(const std::string &path)
 {
     int retval = 0;
     const std::filesystem::path old_path = m_file;
@@ -32,7 +33,8 @@ int File::set_path(const std::string& path)
     {
         retval = load_data();
     }
-    else {
+    else
+    {
         m_file = old_path;
         retval = 1;
     }
@@ -63,23 +65,24 @@ std::string File::get_extension() const
 int File::load_data()
 {
     std::ifstream file;
-    file.open( get_full_path().c_str(), std::ios_base::in | std::ios_base::binary );
-    if( !file.is_open() ) {
+    file.open(get_full_path().c_str(), std::ios_base::in | std::ios_base::binary);
+    if (!file.is_open())
+    {
         printf("Unable to open file %s.", get_full_path().c_str());
         exit(404);
     }
 
     // get filesize
-    file.seekg( 0, std::ios_base::end );
+    file.seekg(0, std::ios_base::end);
     const std::ifstream::pos_type file_end_pos = file.tellg();
-    file.seekg( 0, std::ios::beg );
+    file.seekg(0, std::ios::beg);
 
-    m_file_size = static_cast<size_t>( file_end_pos );
+    m_file_size = static_cast<size_t>(file_end_pos);
 
     m_data.clear();
-    m_data.resize( m_file_size );
+    m_data.resize(m_file_size);
 
-    file.read( ( char * )&m_data[0], static_cast<std::streamsize>(m_file_size) );
+    file.read((char *)&m_data[0], static_cast<std::streamsize>(m_file_size));
 
     file.close();
     return 0;
@@ -87,16 +90,15 @@ int File::load_data()
 
 uint16_t File::get_file_header() const
 {
-
-    return *((uint16_t*)m_data.data());
+    return *((uint16_t *)m_data.data());
 }
 
-const uint8_t* File::get_ptr() const
+const uint8_t *File::get_ptr() const
 {
     return m_data.data();
 }
 
-uint8_t* File::get_ptr()
+uint8_t *File::get_ptr()
 {
     return m_data.data();
 }
