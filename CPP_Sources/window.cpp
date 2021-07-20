@@ -1,6 +1,6 @@
 
-#include <Windows.h>
 #include <WinUser.h>
+#include <Windows.h>
 
 #include "ddraw_func.h"
 #include "dsound_func.h"
@@ -21,14 +21,16 @@ int32_t WINDOW_WIDTH;
 int32_t WINDOW_HEIGHT;
 
 // 0044D320 Bedlam 1
-int init_window(HINSTANCE hwnd, HINSTANCE prev_hwnd, LPSTR lp_cmd_line) {
-
+int init_window(HINSTANCE hwnd, HINSTANCE prev_hwnd, LPSTR lp_cmd_line)
+{
     FULLSCREEN = 0;
     USE_VIDEOMEMORY = 1;
-     
+
     int i = 0;
-    if (lp_cmd_line) {
-        if(strstr(lp_cmd_line, "-f") != NULL || strstr(lp_cmd_line, "-F") != NULL){
+    if (lp_cmd_line)
+    {
+        if (strstr(lp_cmd_line, "-f") != NULL || strstr(lp_cmd_line, "-F") != NULL)
+        {
             FULLSCREEN = 1;
         }
     }
@@ -38,7 +40,8 @@ int init_window(HINSTANCE hwnd, HINSTANCE prev_hwnd, LPSTR lp_cmd_line) {
         HDC dc = GetDC(NULL);
         if ((GetDeviceCaps(dc, RASTERCAPS) & RC_PALETTE) == 0)
         {
-            if (MessageBoxA(NULL, "256 colour mode needed\nClick 'OK' to run full-screen", "Problem", 0x11) == 2){
+            if (MessageBoxA(NULL, "256 colour mode needed\nClick 'OK' to run full-screen", "Problem", 0x11) == 2)
+            {
                 exit(0);
             }
             FULLSCREEN = 1;
@@ -53,7 +56,7 @@ int init_window(HINSTANCE hwnd, HINSTANCE prev_hwnd, LPSTR lp_cmd_line) {
         WNDCLASSEXA classex;
         classex.cbSize = sizeof(classex);
         classex.style = CS_VREDRAW | CS_HREDRAW;
-        //if (dword_4EDECE >> 16 == 1)
+        // if (dword_4EDECE >> 16 == 1)
         //    classex.style = 11;
         classex.hInstance = hwnd;
         classex.lpfnWndProc = (WNDPROC)WindowProc;
@@ -65,14 +68,15 @@ int init_window(HINSTANCE hwnd, HINSTANCE prev_hwnd, LPSTR lp_cmd_line) {
         classex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
         classex.lpszClassName = class_name;
         classex.lpszMenuName = 0;
-        if (!RegisterClassExA(&classex)) {
+        if (!RegisterClassExA(&classex))
+        {
             return 1;
         }
     }
 
     int32_t display_width = GetSystemMetrics(SM_CXSCREEN);
     int32_t display_height = GetSystemMetrics(SM_CYSCREEN);
-   
+
     uint32_t dwStyle = 0;
     NEED_EXIT = 0;
 
@@ -94,24 +98,14 @@ int init_window(HINSTANCE hwnd, HINSTANCE prev_hwnd, LPSTR lp_cmd_line) {
     }
 
     WINDOW_HWND = CreateWindowExA(
-        NULL,
-        class_name,
-        "Bedlam 2",
-        dwStyle,
-        WINDOW_POS_X,
-        WINDOW_POS_Y,
-        WINDOW_WIDTH,
-        WINDOW_HEIGHT,
-        NULL,
-        NULL,
-        hwnd,
-        NULL);
+        NULL, class_name, "Bedlam 2", dwStyle, WINDOW_POS_X, WINDOW_POS_Y, WINDOW_WIDTH, WINDOW_HEIGHT, NULL, NULL, hwnd, NULL);
 
     ShowWindow(WINDOW_HWND, SW_SHOWNORMAL);
     UpdateWindow(WINDOW_HWND);
 
     int error_code = init_dsound();
-    if (error_code) {
+    if (error_code)
+    {
         dsound_deinit();
         return 6;
     }
@@ -125,7 +119,6 @@ int init_window(HINSTANCE hwnd, HINSTANCE prev_hwnd, LPSTR lp_cmd_line) {
         }
         else
         {
-            //ddraw_created = 1;
             error_code = create_surface_palette(GAME_WIDTH, GAME_HEIGHT, 8);
             if (error_code)
             {
@@ -141,12 +134,13 @@ int init_window(HINSTANCE hwnd, HINSTANCE prev_hwnd, LPSTR lp_cmd_line) {
     return 0;
 }
 
-//0044DACC Bedlam 1
-LRESULT WindowProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) {
-
+// 0044DACC Bedlam 1
+LRESULT WindowProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
+{
     if (Msg == WM_DESTROY)
     {
-        if (GAME_THREAD_ID != -1) {
+        if (GAME_THREAD_ID != -1)
+        {
             SuspendThread(HANDLE_GAME_THREAD);
         }
         activate_app(0);
@@ -163,12 +157,12 @@ LRESULT WindowProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) {
     {
         GAME_WIDTH = LOWORD(lParam);
         GAME_HEIGHT = HIWORD(lParam);
-        ///dword_4EF682 = lParam;
+        /// dword_4EF682 = lParam;
         InvalidateRect(WINDOW_HWND, NULL, 0);
     }
     if (Msg == WM_ACTIVATEAPP)
     {
-        if (!FULLSCREEN || wParam == 1)// wParam == activate
+        if (!FULLSCREEN || wParam == 1) // wParam == activate
         {
             APPLICATION_ACTIVE = 1;
             activate_app(1);
@@ -176,34 +170,40 @@ LRESULT WindowProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) {
         }
         return 1;
     }
-    if (Msg == WM_SETCURSOR) {
+    if (Msg == WM_SETCURSOR)
+    {
         uint16_t nHittest = LOWORD(lParam);
-        uint16_t wMouseMsg = HIWORD(lParam); 
-        if (IsIconic(hWnd) || !SURFACE_IS_LOCKED) {// is minimized
+        uint16_t wMouseMsg = HIWORD(lParam);
+        if (IsIconic(hWnd) || !SURFACE_IS_LOCKED)
+        { // is minimized
             nHittest = HTNOWHERE;
         }
-        if (nHittest == HTCLIENT){ // in client area
+        if (nHittest == HTCLIENT)
+        { // in client area
             SetCursor(0);
             return 1;
         }
-        else {
+        else
+        {
             HCURSOR cursor = LoadCursorA(NULL, (LPCSTR)0x7F00);
             SetCursor(cursor);
         }
         return 1;
-
     }
     if (Msg == WM_KEYDOWN)
     {
-        if (BYTE2(static_cast<uint32_t>(lParam)) == 70) {
+        if (BYTE2(static_cast<uint32_t>(lParam)) == 70)
+        {
             save_screenshot();
         }
-        else {
+        else
+        {
             keyboard(BYTE2(static_cast<uint32_t>(lParam)), 0);
         }
         return DefWindowProcA(hWnd, (UINT)Msg, wParam, lParam);
     }
-    if (Msg == WM_KEYUP) {
+    if (Msg == WM_KEYUP)
+    {
         keyboard(BYTE2(static_cast<uint32_t>(lParam)), 1);
         return DefWindowProcA(hWnd, (UINT)Msg, wParam, lParam);
     }
@@ -233,11 +233,11 @@ LRESULT WindowProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) {
         mouse_buttons(1, 2);
         return DefWindowProcA(hWnd, (UINT)Msg, wParam, lParam);
     }
-    if (Msg == WM_LBUTTONDOWN) {
+    if (Msg == WM_LBUTTONDOWN)
+    {
         mouse_buttons(0, 0);
         return DefWindowProcA(hWnd, (UINT)Msg, wParam, lParam);
     }
-
 
     if (wParam >= 0xF100)
     {
@@ -253,7 +253,7 @@ LRESULT WindowProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) {
     return DefWindowProcA(hWnd, (UINT)Msg, wParam, lParam);
 }
 
-//0044D93C Bedlam 1
+// 0044D93C Bedlam 1
 WPARAM message_dispatcher()
 {
     struct tagMSG Msg; // [esp+0h] [ebp-28h] BYREF
@@ -278,34 +278,35 @@ WPARAM message_dispatcher()
     return Msg.wParam;
 }
 
-//0041C9F0 Bedlam 1
+// 0041C9F0 Bedlam 1
 void destroy()
 {
-    //free_mem();
+    // free_mem();
     Sleep(500u);
     send_destroy_message();
-    while (1) {
+    while (1)
+    {
         ;
     }
 }
 
-//0044DA00 Bedlam 1
+// 0044DA00 Bedlam 1
 LRESULT send_destroy_message()
 {
     return SendMessageA(WINDOW_HWND, 2u, 0, 0);
 }
 
-//0044DE10 Bedlam 1
-int error_msgbox(const char* error_str)
+// 0044DE10 Bedlam 1
+int error_msgbox(const char *error_str)
 {
-    return error_msgbox((char*)error_str);
+    return error_msgbox((char *)error_str);
 }
 
-//0044DE10 Bedlam 1
-int error_msgbox(char* error_str)
+// 0044DE10 Bedlam 1
+int error_msgbox(char *error_str)
 {
     uint8_t lock; // si
-    int result; // eax
+    int result;   // eax
 
     lock = SURFACE_IS_LOCKED;
     SURFACE_IS_LOCKED = 0;

@@ -1,6 +1,6 @@
 #pragma once
-#include <stdint.h>
 #include <Windows.h>
+#include <stdint.h>
 
 extern uint32_t TIMER_RESOLUTION;
 extern uint32_t TIMER_EVENT;

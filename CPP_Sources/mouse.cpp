@@ -1,10 +1,9 @@
 
+#include "mouse.h"
 #include "bedlam2.h"
 #include "ddraw_func.h"
 #include "helper.h"
-#include "mouse.h"
 #include "window.h"
-
 
 int16_t CURSOR_X1;
 int16_t CURSOR_Y1;
@@ -37,15 +36,15 @@ volatile int32_t MOUSE_CLICK;
 
 int32_t MOUSE_UP;
 
-//00425AB9 Bedlam 1
+// 00425AB9 Bedlam 1
 void mouse_update()
 {
-    int icon; // eax
+    int icon;   // eax
     LONG pos_x; // [esp+0h] [ebp-1Ch] BYREF
     LONG pos_y; // [esp+4h] [ebp-18h] OVERLAPPED BYREF
     uint32_t prev_state;
 
-    //if ((MOUSE_BUTTONS_STATE1 & 2) != 0)
+    // if ((MOUSE_BUTTONS_STATE1 & 2) != 0)
     //    mouse_r_click1 = 1;
     prev_state = MOUSE_CLICK;
     if (!MOUSE_CLICK)
@@ -87,35 +86,36 @@ void mouse_update()
         CURSOR_POS_RCLICK_X = CURSOR_POS_X;
         CURSOR_POS_RCLICK_Y = CURSOR_POS_Y;
     }
-    
+
     if (game_is_playing)
     {
-        if (CURSOR_POS_X < 480) {
+        if (CURSOR_POS_X < 480)
+        {
             icon = ICON_CROSSHAIR;
         }
-        else {
+        else
+        {
             icon = ICON_CURSOR;
         }
         set_cursor_icon(icon);
     }
 }
 
-//0041D714 Bedlam 1
+// 0041D714 Bedlam 1
 void set_cursor_icon(int32_t icon)
 {
-    uint8_t* cursor_surface; // ebp
-    uint8_t* pos; // edi
-    uint8_t* cursor_pos; // edx
-    int i; // esi
-    uint8_t* line; // eax
-    int icon1; // [esp+0h] [ebp-20h]
-    uint8_t* cursor_pos1; // [esp+4h] [ebp-1Ch]
-    uint8_t* general;
+    uint8_t *cursor_surface; // ebp
+    uint8_t *pos;            // edi
+    uint8_t *cursor_pos;     // edx
+    int i;                   // esi
+    uint8_t *line;           // eax
+    int icon1;               // [esp+0h] [ebp-20h]
+    uint8_t *cursor_pos1;    // [esp+4h] [ebp-1Ch]
+    uint8_t *general;
 
     icon1 = icon;
     if (icon != CURSOR_ICON2)
     {
-
         if (CURSOR_SURFACE_IS_LOCKED != 1)
         {
             CURSOR_SURFACE_IS_LOCKED = 1;
@@ -124,28 +124,29 @@ void set_cursor_icon(int32_t icon)
             if (icon >= ICON_WAIT && icon < 152)
             {
                 cursor_surface = lock_and_get_cursor_surface();
-                if (!cursor_surface) {
+                if (!cursor_surface)
+                {
                     return;
                 }
-
             }
             else
             {
                 cursor_surface = NULL;
-                while (!cursor_surface) {
+                while (!cursor_surface)
+                {
                     cursor_surface = lock_and_get_cursor_surface();
                 }
-
             }
             clear_buffer(1024u, cursor_surface);
             pos = cursor_surface + 24;
             general = general_bin_ptr;
-            cursor_pos = &general[4 * icon1 + 8 + *(uint32_t*)&general[4 * icon1 + 2]];
+            cursor_pos = &general[4 * icon1 + 8 + *(uint32_t *)&general[4 * icon1 + 2]];
             for (i = 0; i < 24; ++i)
             {
                 cursor_pos1 = cursor_pos;
                 line = &cursor_surface[32 * i];
-                do {
+                do
+                {
                     *line++ = *cursor_pos++;
                 } while (line != pos);
                 pos += 32;
@@ -160,7 +161,7 @@ void set_cursor_icon(int32_t icon)
     }
 }
 
-//0044BBAC Bedlam 1
+// 0044BBAC Bedlam 1
 void set_cursor_surface_size(int16_t size)
 {
     uint8_t by_timer;
@@ -179,31 +180,30 @@ void set_cursor_surface_size(int16_t size)
     }
 }
 
-
-//0042391D Bedlam 1
+// 0042391D Bedlam 1
 int hide_cursor()
 {
     CURSOR_BY_TIMER = 0;
     return blit_cursor_one_time();
 }
 
-//0044B3F8
+// 0044B3F8 Bedlam 1
 int blit_cursor_one_time()
 {
     UPDATE_CURSOR_BY_TIMER = 0;
     return blit_cursor_bg_to_screen();
 }
 
-//0044B428
-void get_cursor_pos(LONG* x, LONG* y)
+// 0044B428 Bedlam 1
+void get_cursor_pos(LONG *x, LONG *y)
 {
     struct tagPOINT cursor_pos; // [esp+0h] [ebp-1Ch] BYREF
 
     GetCursorPos(&cursor_pos);
     cursor_pos.x -= WINDOW_POS_X;
     cursor_pos.y -= WINDOW_POS_Y;
-    //cursor_pos.x = cursor_pos.x * GAME_WIDTH / WINDOW_WIDTH;
-    //cursor_pos.y = cursor_pos.y * GAME_HEIGHT / WINDOW_HEIGHT;
+    // cursor_pos.x = cursor_pos.x * GAME_WIDTH / WINDOW_WIDTH;
+    // cursor_pos.y = cursor_pos.y * GAME_HEIGHT / WINDOW_HEIGHT;
     if (cursor_pos.x < 0)
         cursor_pos.x = 0;
     if (cursor_pos.y < 0)
@@ -216,7 +216,7 @@ void get_cursor_pos(LONG* x, LONG* y)
     *y = cursor_pos.y;
 }
 
-//0042392D Bedlam 1
+// 0042392D Bedlam 1
 void show_cursor()
 {
     set_cursor_icon(CURSOR_ICON);
@@ -224,14 +224,14 @@ void show_cursor()
     set_update_cursor_by_timer();
 }
 
-//0044B3D8 Bedlam 1
+// 0044B3D8 Bedlam 1
 void set_update_cursor_by_timer()
 {
     CURSOR_X1 = -1;
     UPDATE_CURSOR_BY_TIMER = 1;
 }
 
-//0041BF35 Bedlam 1
+// 0041BF35 Bedlam 1
 void mouse_buttons(uint16_t r_butt, uint16_t l_button)
 {
     if (!r_butt && !l_button)
@@ -242,11 +242,11 @@ void mouse_buttons(uint16_t r_butt, uint16_t l_button)
     {
         MOUSE_BUTTONS_STATE &= 0xFE;
     }
-    if (r_butt == 1 && !l_button) 
+    if (r_butt == 1 && !l_button)
     {
         MOUSE_BUTTONS_STATE |= 2u;
     }
-    if (r_butt == 1 && l_button == 1) 
+    if (r_butt == 1 && l_button == 1)
     {
         MOUSE_BUTTONS_STATE &= 0xFFFFFFFD;
     }

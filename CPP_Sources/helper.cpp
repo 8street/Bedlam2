@@ -4,32 +4,33 @@
 
 #include "helper.h"
 
-
-//00402965 Bedlam 1
-void _fastcall clear_buffer(uint32_t size, uint8_t* buffer)
+// 00402965 Bedlam 1
+void _fastcall clear_buffer(uint32_t size, uint8_t *buffer)
 {
     memset(buffer, 0, size);
 }
 
-//not present
+// not present
 bool _fastcall bittest(int32_t value, int32_t bit)
 {
     return value & (1 << bit);
 }
 
-//not present
-uint8_t _fastcall BYTE2(uint32_t value) {
+// not present
+uint8_t _fastcall BYTE2(uint32_t value)
+{
     uint32_t ret = (value & 0x00FF0000) >> 16;
     return static_cast<uint8_t>(ret);
 }
 
-//0041EBF8 Bedlam 1
+// 0041EBF8 Bedlam 1
 // Hack equival SQRT(X^2 + Y^2)
 int _fastcall get_distance(int delta_x, int delta_y)
 {
     int x1 = abs(delta_x);
     int y1 = abs(delta_y);
-    if (x1 <= y1) {
+    if (x1 <= y1)
+    {
         x1 >>= 1;
     }
     else
@@ -39,7 +40,8 @@ int _fastcall get_distance(int delta_x, int delta_y)
     return x1 + y1;
 }
 
-long get_file_size(FILE* fp) 
+// 000305D4 Bedlam 2
+long get_file_size(FILE *fp)
 {
     long curr_pos = ftell(fp);
     fseek(fp, 0L, SEEK_END);
