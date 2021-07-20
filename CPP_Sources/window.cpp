@@ -1,6 +1,5 @@
-
-#include <WinUser.h>
 #include <Windows.h>
+#include <WinUser.h>
 
 #include "ddraw_func.h"
 #include "dsound_func.h"

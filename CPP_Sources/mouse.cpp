@@ -195,7 +195,7 @@ int blit_cursor_one_time()
 }
 
 // 0044B428 Bedlam 1
-void get_cursor_pos(LONG *x, LONG *y)
+void get_cursor_pos(long *x, long *y)
 {
     struct tagPOINT cursor_pos; // [esp+0h] [ebp-1Ch] BYREF
 
