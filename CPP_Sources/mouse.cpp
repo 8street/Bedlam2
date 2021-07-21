@@ -1,3 +1,4 @@
+#include <SDL.h>
 
 #include "mouse.h"
 #include "bedlam2.h"
@@ -40,29 +41,9 @@ int32_t MOUSE_UP;
 void mouse_update()
 {
     int icon;   // eax
-    LONG pos_x; // [esp+0h] [ebp-1Ch] BYREF
-    LONG pos_y; // [esp+4h] [ebp-18h] OVERLAPPED BYREF
-    uint32_t prev_state;
+    int pos_x; // [esp+0h] [ebp-1Ch] BYREF
+    int pos_y; // [esp+4h] [ebp-18h] OVERLAPPED BYREF
 
-    // if ((MOUSE_BUTTONS_STATE1 & 2) != 0)
-    //    mouse_r_click1 = 1;
-    prev_state = MOUSE_CLICK;
-    if (!MOUSE_CLICK)
-    {
-        if ((MOUSE_BUTTONS_STATE1 & 3) != 0)
-        {
-            if (MOUSE_UP)
-            {
-                MOUSE_CLICK = 1;
-                MOUSE_UP = prev_state;
-            }
-        }
-        else
-        {
-            MOUSE_UP = 1;
-        }
-    }
-    MOUSE_BUTTONS_STATE1 = MOUSE_BUTTONS_STATE;
     get_cursor_pos(&pos_x, &pos_y);
     pos_x += 9;
     pos_y += 9;
@@ -76,12 +57,12 @@ void mouse_update()
         pos_y = 463;
     CURSOR_POS_X = pos_x;
     CURSOR_POS_Y = pos_y;
-    if ((MOUSE_BUTTONS_STATE1 & 1) != 0)
+    if ((MOUSE_BUTTONS_STATE1 & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0)
     {
         CURSOR_POS_LCLICK_X = CURSOR_POS_X;
         CURSOR_POS_LCLICK_Y = CURSOR_POS_Y;
     }
-    if ((MOUSE_BUTTONS_STATE1 & 2) != 0)
+    if ((MOUSE_BUTTONS_STATE1 & SDL_BUTTON(SDL_BUTTON_RIGHT)) != 0)
     {
         CURSOR_POS_RCLICK_X = CURSOR_POS_X;
         CURSOR_POS_RCLICK_Y = CURSOR_POS_Y;
@@ -97,7 +78,7 @@ void mouse_update()
         {
             icon = ICON_CURSOR;
         }
-        set_cursor_icon(icon);
+        //set_cursor_icon(icon);
     }
 }
 
@@ -183,8 +164,9 @@ void set_cursor_surface_size(int16_t size)
 // 0042391D Bedlam 1
 int hide_cursor()
 {
-    CURSOR_BY_TIMER = 0;
-    return blit_cursor_one_time();
+    //CURSOR_BY_TIMER = 0;
+    //return blit_cursor_one_time();
+    return 0;
 }
 
 // 0044B3F8 Bedlam 1
@@ -195,33 +177,34 @@ int blit_cursor_one_time()
 }
 
 // 0044B428 Bedlam 1
-void get_cursor_pos(long *x, long *y)
+void get_cursor_pos(int *x, int *y)
 {
-    struct tagPOINT cursor_pos; // [esp+0h] [ebp-1Ch] BYREF
+    //struct tagPOINT cursor_pos; // [esp+0h] [ebp-1Ch] BYREF
 
-    GetCursorPos(&cursor_pos);
-    cursor_pos.x -= WINDOW_POS_X;
-    cursor_pos.y -= WINDOW_POS_Y;
+    //GetCursorPos(&cursor_pos);
+
+    MOUSE_BUTTONS_STATE1 = (int32_t)SDL_GetMouseState(x, y);
+    MOUSE_CLICK = MOUSE_BUTTONS_STATE1;
+    // *x -= WINDOW_POS_X;
+    // *y -= WINDOW_POS_Y;
     // cursor_pos.x = cursor_pos.x * GAME_WIDTH / WINDOW_WIDTH;
     // cursor_pos.y = cursor_pos.y * GAME_HEIGHT / WINDOW_HEIGHT;
-    if (cursor_pos.x < 0)
-        cursor_pos.x = 0;
-    if (cursor_pos.y < 0)
-        cursor_pos.y = 0;
-    if (cursor_pos.x >= WINDOW_WIDTH)
-        cursor_pos.x = WINDOW_WIDTH - 1;
-    if (cursor_pos.y >= WINDOW_HEIGHT)
-        cursor_pos.y = WINDOW_HEIGHT - 1;
-    *x = cursor_pos.x;
-    *y = cursor_pos.y;
+    if (*x < 0)
+        *x = 0;
+    if (*y < 0)
+        *y = 0;
+    if (*x >= GAME_WIDTH)
+        *x = GAME_WIDTH;
+    if (*y >= GAME_HEIGHT)
+        *y = GAME_HEIGHT;
 }
 
 // 0042392D Bedlam 1
 void show_cursor()
 {
-    set_cursor_icon(CURSOR_ICON);
-    CURSOR_BY_TIMER = 1;
-    set_update_cursor_by_timer();
+    //set_cursor_icon(CURSOR_ICON);
+    //CURSOR_BY_TIMER = 1;
+    //set_update_cursor_by_timer();
 }
 
 // 0044B3D8 Bedlam 1

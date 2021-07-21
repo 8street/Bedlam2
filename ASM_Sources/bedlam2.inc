@@ -45,6 +45,8 @@ extrn stop_wav_music:proc
 
 extrn free_win:proc
 
+extrn SDL_events:proc
+
 extrn SCREEN_BUFFER_PTR:dword
 extrn SCREEN_SURFACE_WIDTH:dword
 extrn CURSOR_ICON:dword

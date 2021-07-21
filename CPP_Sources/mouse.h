@@ -41,7 +41,7 @@ void set_cursor_icon(int32_t icon);
 void set_cursor_surface_size(int16_t size);
 extern "C" int hide_cursor();
 int blit_cursor_one_time();
-void get_cursor_pos(long *x, long *y);
+void get_cursor_pos(int *x, int *y);
 extern "C" void show_cursor();
 void set_update_cursor_by_timer();
 void mouse_buttons(uint16_t r_butt, uint16_t l_button);
