@@ -22,113 +22,113 @@ int32_t WINDOW_HEIGHT;
 // 0044D320 Bedlam 1
 int init_window(HINSTANCE hwnd, HINSTANCE prev_hwnd, LPSTR lp_cmd_line)
 {
-    FULLSCREEN = 0;
-    USE_VIDEOMEMORY = 1;
+    //FULLSCREEN = 0;
+    //USE_VIDEOMEMORY = 1;
 
-    int i = 0;
-    if (lp_cmd_line)
-    {
-        if (strstr(lp_cmd_line, "-f") != NULL || strstr(lp_cmd_line, "-F") != NULL)
-        {
-            FULLSCREEN = 1;
-        }
-    }
+    //int i = 0;
+    //if (lp_cmd_line)
+    //{
+    //    if (strstr(lp_cmd_line, "-f") != NULL || strstr(lp_cmd_line, "-F") != NULL)
+    //    {
+    //        FULLSCREEN = 1;
+    //    }
+    //}
 
-    if (!FULLSCREEN)
-    {
-        HDC dc = GetDC(NULL);
-        if ((GetDeviceCaps(dc, RASTERCAPS) & RC_PALETTE) == 0)
-        {
-            if (MessageBoxA(NULL, "256 colour mode needed\nClick 'OK' to run full-screen", "Problem", 0x11) == 2)
-            {
-                exit(0);
-            }
-            FULLSCREEN = 1;
-        }
-    }
+    //if (!FULLSCREEN)
+    //{
+    //    HDC dc = GetDC(NULL);
+    //    if ((GetDeviceCaps(dc, RASTERCAPS) & RC_PALETTE) == 0)
+    //    {
+    //        if (MessageBoxA(NULL, "256 colour mode needed\nClick 'OK' to run full-screen", "Problem", 0x11) == 2)
+    //        {
+    //            exit(0);
+    //        }
+    //        FULLSCREEN = 1;
+    //    }
+    //}
 
-    HINSTANCE base_addres = hwnd;
-    const char class_name[] = "Bedlam2";
+    //HINSTANCE base_addres = hwnd;
+    //const char class_name[] = "Bedlam2";
 
-    if (!prev_hwnd)
-    {
-        WNDCLASSEXA classex;
-        classex.cbSize = sizeof(classex);
-        classex.style = CS_VREDRAW | CS_HREDRAW;
-        // if (dword_4EDECE >> 16 == 1)
-        //    classex.style = 11;
-        classex.hInstance = hwnd;
-        classex.lpfnWndProc = (WNDPROC)WindowProc;
-        classex.cbClsExtra = 0;
-        classex.cbWndExtra = 0;
-        classex.hIcon = LoadIconA(hwnd, (LPCSTR)0x7D0);
-        classex.hIconSm = LoadIconA(hwnd, (LPCSTR)0x7D1);
-        classex.hCursor = LoadCursorA(0, (LPCSTR)0x7F00);
-        classex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
-        classex.lpszClassName = class_name;
-        classex.lpszMenuName = 0;
-        if (!RegisterClassExA(&classex))
-        {
-            return 1;
-        }
-    }
+    //if (!prev_hwnd)
+    //{
+    //    WNDCLASSEXA classex;
+    //    classex.cbSize = sizeof(classex);
+    //    classex.style = CS_VREDRAW | CS_HREDRAW;
+    //    // if (dword_4EDECE >> 16 == 1)
+    //    //    classex.style = 11;
+    //    classex.hInstance = hwnd;
+    //    classex.lpfnWndProc = (WNDPROC)WindowProc;
+    //    classex.cbClsExtra = 0;
+    //    classex.cbWndExtra = 0;
+    //    classex.hIcon = LoadIconA(hwnd, (LPCSTR)0x7D0);
+    //    classex.hIconSm = LoadIconA(hwnd, (LPCSTR)0x7D1);
+    //    classex.hCursor = LoadCursorA(0, (LPCSTR)0x7F00);
+    //    classex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
+    //    classex.lpszClassName = class_name;
+    //    classex.lpszMenuName = 0;
+    //    if (!RegisterClassExA(&classex))
+    //    {
+    //        return 1;
+    //    }
+    //}
 
-    int32_t display_width = GetSystemMetrics(SM_CXSCREEN);
-    int32_t display_height = GetSystemMetrics(SM_CYSCREEN);
+    //int32_t display_width = GetSystemMetrics(SM_CXSCREEN);
+    //int32_t display_height = GetSystemMetrics(SM_CYSCREEN);
 
-    uint32_t dwStyle = 0;
-    NEED_EXIT = 0;
+    //uint32_t dwStyle = 0;
+    //NEED_EXIT = 0;
 
-    if (FULLSCREEN || display_width == GAME_WIDTH)
-    {
-        WINDOW_POS_X = 0;
-        WINDOW_POS_Y = 0;
-        WINDOW_WIDTH = GAME_WIDTH;
-        WINDOW_HEIGHT = GAME_HEIGHT;
-        dwStyle = WS_POPUP | WS_VISIBLE;
-    }
-    else
-    {
-        WINDOW_WIDTH = GAME_WIDTH + 16;
-        WINDOW_HEIGHT = GAME_HEIGHT + 39;
-        dwStyle = WS_CAPTION | WS_SYSMENU | WS_GROUP;
-        WINDOW_POS_X = (display_width - WINDOW_WIDTH) / 2;
-        WINDOW_POS_Y = (display_height - WINDOW_HEIGHT) / 2;
-    }
+    //if (FULLSCREEN || display_width == GAME_WIDTH)
+    //{
+    //    WINDOW_POS_X = 0;
+    //    WINDOW_POS_Y = 0;
+    //    WINDOW_WIDTH = GAME_WIDTH;
+    //    WINDOW_HEIGHT = GAME_HEIGHT;
+    //    dwStyle = WS_POPUP | WS_VISIBLE;
+    //}
+    //else
+    //{
+    //    WINDOW_WIDTH = GAME_WIDTH + 16;
+    //    WINDOW_HEIGHT = GAME_HEIGHT + 39;
+    //    dwStyle = WS_CAPTION | WS_SYSMENU | WS_GROUP;
+    //    WINDOW_POS_X = (display_width - WINDOW_WIDTH) / 2;
+    //    WINDOW_POS_Y = (display_height - WINDOW_HEIGHT) / 2;
+    //}
 
-    WINDOW_HWND = CreateWindowExA(
-        NULL, class_name, "Bedlam 2", dwStyle, WINDOW_POS_X, WINDOW_POS_Y, WINDOW_WIDTH, WINDOW_HEIGHT, NULL, NULL, hwnd, NULL);
+    //WINDOW_HWND = CreateWindowExA(
+    //    NULL, class_name, "Bedlam 2", dwStyle, WINDOW_POS_X, WINDOW_POS_Y, WINDOW_WIDTH, WINDOW_HEIGHT, NULL, NULL, hwnd, NULL);
 
-    ShowWindow(WINDOW_HWND, SW_SHOWNORMAL);
-    UpdateWindow(WINDOW_HWND);
+    //ShowWindow(WINDOW_HWND, SW_SHOWNORMAL);
+    //UpdateWindow(WINDOW_HWND);
 
-    int error_code = init_dsound();
-    if (error_code)
-    {
-        dsound_deinit();
-        return 6;
-    }
+    //int error_code = init_dsound();
+    //if (error_code)
+    //{
+    //    dsound_deinit();
+    //    return 6;
+    //}
 
-    if (SURFACE_IS_LOCKED)
-    {
-        error_code = ddraw_init(WINDOW_HWND);
-        if (error_code)
-        {
-            SURFACE_IS_LOCKED = 0;
-        }
-        else
-        {
-            error_code = create_surface_palette(GAME_WIDTH, GAME_HEIGHT, 8);
-            if (error_code)
-            {
-                ddraw_deinit();
-                SURFACE_IS_LOCKED = 0;
-            }
-        }
-    }
-    if (!SURFACE_IS_LOCKED)
-        return error_code;
-    clear_and_blit_screen();
+    //if (SURFACE_IS_LOCKED)
+    //{
+    //    error_code = ddraw_init(WINDOW_HWND);
+    //    if (error_code)
+    //    {
+    //        SURFACE_IS_LOCKED = 0;
+    //    }
+    //    else
+    //    {
+    //        error_code = create_surface_palette(GAME_WIDTH, GAME_HEIGHT, 8);
+    //        if (error_code)
+    //        {
+    //            ddraw_deinit();
+    //            SURFACE_IS_LOCKED = 0;
+    //        }
+    //    }
+    //}
+    //if (!SURFACE_IS_LOCKED)
+    //    return error_code;
+    //clear_and_blit_screen();
 
     return 0;
 }

@@ -9,98 +9,22 @@
 #include "timers.h"
 #include "window.h"
 
+#include "sdl_draw.h"
+#include "sdl_event.h"
+#include "sdl_thread.h"
+#include "sdl_timer.h"
+#include "sdl_window.h"
+
 DWORD GAME_THREAD_ID;
 HANDLE HANDLE_GAME_THREAD;
 
-#ifdef _DEBUG
-int _cdecl main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
-    HINSTANCE hInstance = NULL;
-    HINSTANCE hPrevInstance = NULL;
-    PSTR lpCmdLine = argv[1];
-    // Needs for printf to console
-    setvbuf(stdout, NULL, _IONBF, 0);
-    setvbuf(stderr, NULL, _IONBF, 0);
-#else
-// 0044D6E8 Bedlam 1
-int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, INT nCmdShow)
-{
-#endif // _DEBUG
+    init_video();
+    init_dsound();
+    init_timer();
 
-    SURFACE_IS_LOCKED = 1;
-    int32_t error_code = init_window(hInstance, hPrevInstance, lpCmdLine);
-
-    if (!error_code)
-    {
-        if (game_thread_create())
-        {
-            error_code = 4;
-        }
-        else
-        {
-            error_code = init_timer();
-            if (!error_code)
-            {
-                error_code = static_cast<int>(message_dispatcher());
-                timeKillEvent((UINT)TIMER_EVENT);
-                timeEndPeriod((UINT)TIMER_RESOLUTION);
-            }
-            game_thread_exit();
-        }
-    }
-    if (error_code == 1)
-    {
-        error_msgbox("Class error");
-    }
-    else if (error_code == 2)
-    {
-        error_msgbox("DDInit error");
-    }
-    else if (error_code == 3)
-    {
-        error_msgbox("SetVideoMode error");
-    }
-    else if (error_code == 4)
-    {
-        error_msgbox("Error starting thread");
-    }
-    else if (error_code == 5)
-    {
-        error_msgbox("Timer init error");
-    }
-    else if (error_code == 6)
-    {
-        error_msgbox("DSound init error");
-    }
-    else if (error_code == 1001)
-    {
-        error_msgbox("Please install DirectX");
-    }
-    else if (error_code == 1002)
-    {
-        error_msgbox("DirectX is already in use by another application");
-    }
-    else if (error_code == 1003)
-    {
-        error_msgbox("DirectDraw can not initialise a compatible display mode");
-    }
-    else if (error_code == 1004)
-    {
-        error_msgbox("DirectDraw initialization failed");
-    }
-    else if (error_code == 1010)
-    {
-        error_msgbox("No DirectDraw support possible with current display driver");
-    }
-    else
-    {
-        char buf[50];
-        sprintf_s(buf, "Unknown error. Errorcode: %d", error_code);
-        error_msgbox(buf);
-    }
-
-    free_win();
-    return error_code;
+    return main_(0, NULL, NULL);
 }
 
 // 0044D9C0 Bedlam 1

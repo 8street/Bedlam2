@@ -7,25 +7,7 @@
 uint32_t TIMER_RESOLUTION;
 uint32_t TIMER_EVENT;
 
-volatile int32_t WAITING_TIMER;
-volatile int32_t GAME_UPDATE_TIMER;
 
-// 0044DA64 Bedlam 1
-int init_timer()
-{
-    // 10 ms
-    TIMER_RESOLUTION = 10;
-    timeBeginPeriod(TIMER_RESOLUTION);
-    TIMER_EVENT = (uint32_t)timeSetEvent(TIMER_RESOLUTION, 0, (LPTIMECALLBACK)timer_callback, NULL, TIME_PERIODIC);
-    if (TIMER_EVENT)
-    {
-        return 0;
-    }
-    else
-    {
-        return 5;
-    }
-}
 
 // 0044DE58 Bedlam 1
 void timer_callback(UINT uTimerID, UINT uMsg, DWORD_PTR dwUser, DWORD_PTR dw1, DWORD_PTR dw2)
@@ -65,8 +47,8 @@ void timer_update()
 // 00402B0C Bedlam 1
 void increment_timers()
 {
-    WAITING_TIMER++;
-    GAME_UPDATE_TIMER++;
+   /* WAITING_TIMER++;
+    GAME_UPDATE_TIMER++;*/
     level_clock();
     if (PALETTE_TIMER)
     {
