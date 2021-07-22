@@ -43,7 +43,25 @@ void mouse_update()
     int icon;   // eax
     int pos_x; // [esp+0h] [ebp-1Ch] BYREF
     int pos_y; // [esp+4h] [ebp-18h] OVERLAPPED BYREF
+    uint32_t prev_state;
 
+    prev_state = MOUSE_CLICK;
+    if (!MOUSE_CLICK)
+    {
+        if ((MOUSE_BUTTONS_STATE1 & 3) != 0)
+        {
+            if (MOUSE_UP)
+            {
+                MOUSE_CLICK = 1;
+                MOUSE_UP = prev_state;
+            }
+        }
+        else
+        {
+            MOUSE_UP = 1;
+        }
+    }
+    MOUSE_BUTTONS_STATE1 = MOUSE_BUTTONS_STATE;
     get_cursor_pos(&pos_x, &pos_y);
     pos_x += 9;
     pos_y += 9;
@@ -57,12 +75,12 @@ void mouse_update()
         pos_y = 463;
     CURSOR_POS_X = pos_x;
     CURSOR_POS_Y = pos_y;
-    if ((MOUSE_BUTTONS_STATE1 & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0)
+    if ((MOUSE_BUTTONS_STATE1 & 1) != 0)
     {
         CURSOR_POS_LCLICK_X = CURSOR_POS_X;
         CURSOR_POS_LCLICK_Y = CURSOR_POS_Y;
     }
-    if ((MOUSE_BUTTONS_STATE1 & SDL_BUTTON(SDL_BUTTON_RIGHT)) != 0)
+    if ((MOUSE_BUTTONS_STATE1 & 2) != 0)
     {
         CURSOR_POS_RCLICK_X = CURSOR_POS_X;
         CURSOR_POS_RCLICK_Y = CURSOR_POS_Y;
@@ -183,8 +201,10 @@ void get_cursor_pos(int *x, int *y)
 
     //GetCursorPos(&cursor_pos);
 
-    MOUSE_BUTTONS_STATE1 = (int32_t)SDL_GetMouseState(x, y);
-    MOUSE_CLICK = MOUSE_BUTTONS_STATE1;
+    //MOUSE_BUTTONS_STATE1 = (int32_t)SDL_GetMouseState(x, y);
+    SDL_GetMouseState(x, y);
+    //MOUSE_CLICK = MOUSE_BUTTONS_STATE1;
+
     // *x -= WINDOW_POS_X;
     // *y -= WINDOW_POS_Y;
     // cursor_pos.x = cursor_pos.x * GAME_WIDTH / WINDOW_WIDTH;
