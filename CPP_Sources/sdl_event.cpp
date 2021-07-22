@@ -3,6 +3,7 @@
 #include "sdl_event.h"
 #include "mouse.h"
 #include "sdl_timer.h"
+#include "palette.h"
 
 int SDL_events()
 {
@@ -36,6 +37,15 @@ int SDL_events()
                 mouse_buttons(1, 1);
             }
         }
+        if (event.type == SDL_USEREVENT)
+        {
+            if (event.user.type == SDL_USEREVENT && event.user.code == 0)
+            {
+                palette_animation();
+            }
+        }
+
+
         switch (event.window.event)
         {
             case SDL_WINDOWEVENT_SHOWN:

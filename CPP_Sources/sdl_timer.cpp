@@ -4,6 +4,7 @@
 #include "bedlam2.h"
 #include "mouse.h"
 #include "sdl_timer.h"
+#include "palette.h"
 
 SDL_TimerID my_timer_id;
 
@@ -27,26 +28,25 @@ int init_timer()
 
 Uint32 sdl_timer_callback(Uint32 interval, void *param)
 {
-    // SDL_Event event;
-    // SDL_UserEvent userevent;
-
-    ///* In this example, our callback pushes an SDL_USEREVENT event
-    // into the queue, and causes our callback to be called again at the
-    // same interval: */
-
-    // userevent.type = SDL_USEREVENT;
-    // userevent.code = 0;
-    // userevent.data1 = NULL;
-    // userevent.data2 = NULL;
-
-    // event.type = SDL_USEREVENT;
-    // event.user = userevent;
-
-    // SDL_PushEvent(&event);
+    SDL_Event event;
+    SDL_UserEvent userevent;
 
     WAITING_TIMER++;
     GAME_UPDATE_TIMER++;
     level_clock();
     mouse_update();
+
+    if (PALETTE_TIMER)
+    {
+        // palette animation event
+        userevent.type = SDL_USEREVENT;
+        userevent.code = 0;
+        userevent.data1 = NULL;
+        userevent.data2 = NULL;
+        event.type = SDL_USEREVENT;
+        event.user = userevent;
+        SDL_PushEvent(&event);
+        PALETTE_TIMER--;
+    }
     return (interval);
 }

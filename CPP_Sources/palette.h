@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 
-extern volatile int32_t PALETTE_TIMER;
+extern volatile uint32_t PALETTE_TIMER;
 
 extern "C" void set_palette(uint8_t *pal_file);
 void palette_animation();
