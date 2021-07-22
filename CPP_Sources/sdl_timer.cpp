@@ -13,6 +13,7 @@ volatile int32_t GAME_UPDATE_TIMER;
 
 int init_timer()
 {
+    PALETTE_TIMER = 0;
     int ret_val = 0;
     ret_val = SDL_Init(SDL_INIT_TIMER) ;
 
@@ -36,17 +37,20 @@ Uint32 sdl_timer_callback(Uint32 interval, void *param)
     level_clock();
     mouse_update();
 
-    if (PALETTE_TIMER)
+    if (PALETTE_TIMER > 0)
     {
-        // palette animation event
-        userevent.type = SDL_USEREVENT;
-        userevent.code = 0;
-        userevent.data1 = NULL;
-        userevent.data2 = NULL;
-        event.type = SDL_USEREVENT;
-        event.user = userevent;
-        SDL_PushEvent(&event);
         PALETTE_TIMER--;
+        palette_animation();
     }
+
+
+    userevent.type = SDL_USEREVENT;
+    userevent.code = 0;
+    userevent.data1 = NULL;
+    userevent.data2 = NULL;
+    event.type = SDL_USEREVENT;
+    event.user = userevent;
+    SDL_PushEvent(&event);
+
     return (interval);
 }

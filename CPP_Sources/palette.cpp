@@ -3,9 +3,10 @@
 #include "sdl_draw.h"
 #include "sdl_event.h"
 
-volatile uint32_t PALETTE_TIMER;
+volatile int32_t PALETTE_TIMER;
 uint8_t ANIMATE_PALETTE_PTR[780];
 uint8_t ANIMATE_PALETTE_BUFER[3082];
+volatile uint8_t *NEW_PALETTE;
 
 // 004258D0 Bedlam 1
 void set_palette(uint8_t *pal_file)
@@ -41,8 +42,8 @@ void palette_animation()
         ANIMATE_PALETTE_PTR[ofst++] = HIBYTE(color);
         buf_ofst += 4;
     } while (ofst < 768);
-    // ddraw_setpalettes(ANIMATE_PALETTE_PTR, 0, 256);
-    sdl_set_palette(ANIMATE_PALETTE_PTR, 0, 256);
+    NEW_PALETTE = ANIMATE_PALETTE_PTR;
+    //sdl_set_palette(ANIMATE_PALETTE_PTR, 0, 256);
 }
 
 // 0041CBF0 Bedlam 1
@@ -79,6 +80,10 @@ void swap_palette_with_animation(uint8_t *palette_file_ptr, int time)
         buf_file += 2;
         screen_palette_ptr++;
     }
+    //if (time < 0 || time > 100)
+    //{
+    //    time = 0;
+    //}
     PALETTE_TIMER = time;
 }
 
@@ -102,8 +107,7 @@ uint8_t *get_RGB_palette_ptr()
 // 0041FA3F Bedlam 1
 void wait_palette_animation(int target_time)
 {
-    //unlock_surface_and_screen_ptr();
-    while (PALETTE_TIMER > (uint32_t)target_time)
+    while (PALETTE_TIMER > target_time)
     {
         SDL_events();
     }

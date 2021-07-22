@@ -4,10 +4,11 @@
 #include "mouse.h"
 #include "sdl_timer.h"
 #include "palette.h"
+#include "keyboard.h"
+#include "sdl_draw.h"
 
 int SDL_events()
 {
-
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
@@ -41,10 +42,106 @@ int SDL_events()
         {
             if (event.user.type == SDL_USEREVENT && event.user.code == 0)
             {
-                palette_animation();
+                if (NEW_PALETTE)
+                {
+                    sdl_set_palette((uint8_t *)NEW_PALETTE, 0, 256);
+                    redraw();
+                    NEW_PALETTE = NULL;
+                }
             }
         }
-
+        if (event.type == SDL_KEYDOWN)
+        {
+            switch (event.key.keysym.sym)
+            {
+                case SDLK_ESCAPE:
+                    KEY_ESC = 1;
+                    break;
+                case SDLK_1:
+                    KEY_1 = 1;
+                    break;
+                case SDLK_2:
+                    KEY_2 = 1;
+                    break;
+                case SDLK_3:
+                    KEY_3 = 1;
+                    break;
+                case SDLK_4:
+                    KEY_4 = 1;
+                    break;
+                case SDLK_5:
+                    KEY_5 = 1;
+                    break;
+                case SDLK_6:
+                    KEY_6 = 1;
+                    break;
+                case SDLK_7:
+                    KEY_7 = 1;
+                    break;
+                case SDLK_F1:
+                    KEY_F1 = 1;
+                    break;
+                case SDLK_F2:
+                    KEY_F2 = 1;
+                    break;
+                case SDLK_F3:
+                    KEY_F3 = 1;
+                    break;
+                case SDLK_p:
+                    KEY_P = 1;
+                    break;
+                case SDLK_m:
+                case SDLK_SPACE:
+                    KEY_M = 1;
+                    break;
+            }
+        }
+        if (event.type == SDL_KEYUP)
+        {
+            switch (event.key.keysym.sym)
+            {
+                case SDLK_ESCAPE:
+                    KEY_ESC = 0;
+                    break;
+                case SDLK_1:
+                    KEY_1 = 0;
+                    break;
+                case SDLK_2:
+                    KEY_2 = 0;
+                    break;
+                case SDLK_3:
+                    KEY_3 = 0;
+                    break;
+                case SDLK_4:
+                    KEY_4 = 0;
+                    break;
+                case SDLK_5:
+                    KEY_5 = 0;
+                    break;
+                case SDLK_6:
+                    KEY_6 = 0;
+                    break;
+                case SDLK_7:
+                    KEY_7 = 0;
+                    break;
+                case SDLK_F1:
+                    KEY_F1 = 0;
+                    break;
+                case SDLK_F2:
+                    KEY_F2 = 0;
+                    break;
+                case SDLK_F3:
+                    KEY_F3 = 0;
+                    break;
+                case SDLK_p:
+                    KEY_P = 0;
+                    break;
+                case SDLK_m:
+                case SDLK_SPACE:
+                    KEY_M = 0;
+                    break;
+            }
+        }
 
         switch (event.window.event)
         {
