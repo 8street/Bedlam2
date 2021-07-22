@@ -3,9 +3,16 @@
 #include "bedlam2.h"
 #include "sdl_draw.h"
 #include "sdl_event.h"
-#include "ddraw_func.h"
 #include "sdl_timer.h"
 #include "timer.h"
+
+int32_t GAME_WIDTH = 640;
+int32_t GAME_HEIGHT = 480;
+
+volatile uint8_t FULLSCREEN;
+
+volatile uint32_t SCREEN_SURFACE_WIDTH;
+volatile uint32_t SCREEN_SURFACE_HEIGHT;
 
 SDL_Window *WINDOW;
 SDL_Renderer *RENDER;
@@ -313,3 +320,52 @@ SDL_Texture *MY_CreateTextureFromSurface(SDL_Renderer *renderer, const SDL_Surfa
     return t;
 }
 
+extern "C" void get_screen_buffer_ptr()
+{
+    if (SDL_MUSTLOCK(SCREEN_SURFACE))
+    {
+        SDL_LockSurface(SCREEN_SURFACE);
+    }
+    // SCREEN_BUFFER_PTR already map with SCREEN_SURFACE->pixels
+}
+
+uint8_t *lock_and_get_surface_ptr() 
+{
+    if (SDL_MUSTLOCK(SCREEN_SURFACE))
+    {
+        SDL_LockSurface(SCREEN_SURFACE);
+    }
+    return (uint8_t *)SCREEN_SURFACE->pixels;
+}
+
+void unlock_surface()
+{
+    if (SDL_MUSTLOCK(SCREEN_SURFACE))
+    {
+        SDL_UnlockSurface(SCREEN_SURFACE);
+    }
+}
+
+// 0044B040 Bedlam 1
+uint8_t *get_RGB_palette_ptr()
+{
+    static uint8_t palette[769];
+    int32_t i;
+    int32_t color_offset; // ecx
+    if (SDL_MUSTLOCK(SCREEN_SURFACE))
+    {
+        SDL_LockSurface(SCREEN_SURFACE);
+    }
+    for (i = 0; i < 256; ++i)
+    {
+        color_offset = 3 * i;
+        palette[color_offset + 0] = SCREEN_SURFACE->format->palette->colors[i].r >> 2;
+        palette[color_offset + 1] = SCREEN_SURFACE->format->palette->colors[i].g >> 2;
+        palette[color_offset + 2] = SCREEN_SURFACE->format->palette->colors[i].b >> 2;
+    }
+    if (SDL_MUSTLOCK(SCREEN_SURFACE))
+    {
+        SDL_UnlockSurface(SCREEN_SURFACE);
+    }
+    return palette;
+}

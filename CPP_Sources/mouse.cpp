@@ -2,9 +2,8 @@
 
 #include "mouse.h"
 #include "bedlam2.h"
-#include "ddraw_func.h"
+#include "sdl_draw.h"
 #include "helper.h"
-#include "window.h"
 
 int16_t CURSOR_X1;
 int16_t CURSOR_Y1;
@@ -103,80 +102,80 @@ void mouse_update()
 // 0041D714 Bedlam 1
 void set_cursor_icon(int32_t icon)
 {
-    uint8_t *cursor_surface; // ebp
-    uint8_t *pos;            // edi
-    uint8_t *cursor_pos;     // edx
-    int i;                   // esi
-    uint8_t *line;           // eax
-    int icon1;               // [esp+0h] [ebp-20h]
-    uint8_t *cursor_pos1;    // [esp+4h] [ebp-1Ch]
-    uint8_t *general;
+    //uint8_t *cursor_surface; // ebp
+    //uint8_t *pos;            // edi
+    //uint8_t *cursor_pos;     // edx
+    //int i;                   // esi
+    //uint8_t *line;           // eax
+    //int icon1;               // [esp+0h] [ebp-20h]
+    //uint8_t *cursor_pos1;    // [esp+4h] [ebp-1Ch]
+    //uint8_t *general;
 
-    icon1 = icon;
-    if (icon != CURSOR_ICON2)
-    {
-        if (CURSOR_SURFACE_IS_LOCKED != 1)
-        {
-            CURSOR_SURFACE_IS_LOCKED = 1;
-            set_cursor_surface_size(24);
-            Set_Cursor_ColorKey(0);
-            if (icon >= ICON_WAIT && icon < 152)
-            {
-                cursor_surface = lock_and_get_cursor_surface();
-                if (!cursor_surface)
-                {
-                    return;
-                }
-            }
-            else
-            {
-                cursor_surface = NULL;
-                while (!cursor_surface)
-                {
-                    cursor_surface = lock_and_get_cursor_surface();
-                }
-            }
-            clear_buffer(1024u, cursor_surface);
-            pos = cursor_surface + 24;
-            general = general_bin_ptr;
-            cursor_pos = &general[4 * icon1 + 8 + *(uint32_t *)&general[4 * icon1 + 2]];
-            for (i = 0; i < 24; ++i)
-            {
-                cursor_pos1 = cursor_pos;
-                line = &cursor_surface[32 * i];
-                do
-                {
-                    *line++ = *cursor_pos++;
-                } while (line != pos);
-                pos += 32;
-                cursor_pos = cursor_pos1 + 24;
-            }
-            unlock_cursor_surface();
-            icon = icon1;
-            CURSOR_ICON = icon1;
-            CURSOR_ICON2 = icon1;
-            CURSOR_SURFACE_IS_LOCKED = 0;
-        }
-    }
+    //icon1 = icon;
+    //if (icon != CURSOR_ICON2)
+    //{
+    //    if (CURSOR_SURFACE_IS_LOCKED != 1)
+    //    {
+    //        CURSOR_SURFACE_IS_LOCKED = 1;
+    //        set_cursor_surface_size(24);
+    //        Set_Cursor_ColorKey(0);
+    //        if (icon >= ICON_WAIT && icon < 152)
+    //        {
+    //            cursor_surface = lock_and_get_cursor_surface();
+    //            if (!cursor_surface)
+    //            {
+    //                return;
+    //            }
+    //        }
+    //        else
+    //        {
+    //            cursor_surface = NULL;
+    //            while (!cursor_surface)
+    //            {
+    //                cursor_surface = lock_and_get_cursor_surface();
+    //            }
+    //        }
+    //        clear_buffer(1024u, cursor_surface);
+    //        pos = cursor_surface + 24;
+    //        general = general_bin_ptr;
+    //        cursor_pos = &general[4 * icon1 + 8 + *(uint32_t *)&general[4 * icon1 + 2]];
+    //        for (i = 0; i < 24; ++i)
+    //        {
+    //            cursor_pos1 = cursor_pos;
+    //            line = &cursor_surface[32 * i];
+    //            do
+    //            {
+    //                *line++ = *cursor_pos++;
+    //            } while (line != pos);
+    //            pos += 32;
+    //            cursor_pos = cursor_pos1 + 24;
+    //        }
+    //        unlock_cursor_surface();
+    //        icon = icon1;
+    //        CURSOR_ICON = icon1;
+    //        CURSOR_ICON2 = icon1;
+    //        CURSOR_SURFACE_IS_LOCKED = 0;
+    //    }
+    //}
 }
 
 // 0044BBAC Bedlam 1
 void set_cursor_surface_size(int16_t size)
 {
-    uint8_t by_timer;
+    //uint8_t by_timer;
 
-    by_timer = UPDATE_CURSOR_BY_TIMER;
-    if (UPDATE_CURSOR_BY_TIMER)
-    {
-        UPDATE_CURSOR_BY_TIMER = 0;
-        blit_cursor_bg_to_screen();
-    }
-    CURSOR_SURFACE_SIZE = size;
-    if (by_timer)
-    {
-        CURSOR_X1 = -1;
-        UPDATE_CURSOR_BY_TIMER = 1;
-    }
+    //by_timer = UPDATE_CURSOR_BY_TIMER;
+    //if (UPDATE_CURSOR_BY_TIMER)
+    //{
+    //    UPDATE_CURSOR_BY_TIMER = 0;
+    //    blit_cursor_bg_to_screen();
+    //}
+    //CURSOR_SURFACE_SIZE = size;
+    //if (by_timer)
+    //{
+    //    CURSOR_X1 = -1;
+    //    UPDATE_CURSOR_BY_TIMER = 1;
+    //}
 }
 
 // 0042391D Bedlam 1
@@ -190,8 +189,9 @@ int hide_cursor()
 // 0044B3F8 Bedlam 1
 int blit_cursor_one_time()
 {
-    UPDATE_CURSOR_BY_TIMER = 0;
-    return blit_cursor_bg_to_screen();
+    //UPDATE_CURSOR_BY_TIMER = 0;
+    //return blit_cursor_bg_to_screen();
+    return 0;
 }
 
 // 0044B428 Bedlam 1

@@ -22,9 +22,6 @@
     <None Include="..\.clang-format" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\CPP_Sources\ddraw_func.cpp">
-      <Filter>CPP Sources</Filter>
-    </ClCompile>
     <ClCompile Include="..\CPP_Sources\dsound_func.cpp">
       <Filter>CPP Sources</Filter>
     </ClCompile>
@@ -50,9 +47,6 @@
       <Filter>CPP Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\CPP_Sources\timers.cpp">
-      <Filter>CPP Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CPP_Sources\window.cpp">
       <Filter>CPP Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\CPP_Sources\screenshot.cpp">
@@ -81,9 +75,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\CPP_Sources\ddraw_func.h">
-      <Filter>CPP Sources</Filter>
-    </ClInclude>
     <ClInclude Include="..\CPP_Sources\dsound_func.h">
       <Filter>CPP Sources</Filter>
     </ClInclude>
@@ -106,9 +97,6 @@
       <Filter>CPP Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\CPP_Sources\timers.h">
-      <Filter>CPP Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CPP_Sources\window.h">
       <Filter>CPP Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\CPP_Sources\bedlam2.h">

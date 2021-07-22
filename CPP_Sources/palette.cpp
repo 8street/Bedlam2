@@ -1,5 +1,5 @@
+#include "helper.h"
 #include "palette.h"
-#include "ddraw_func.h"
 #include "sdl_draw.h"
 #include "sdl_event.h"
 
@@ -37,13 +37,12 @@ void palette_animation()
     do
     {
         // color = steep + old_color
-        color = *(WORD *)&ANIMATE_PALETTE_BUFER[buf_ofst + 2] + *(WORD *)&ANIMATE_PALETTE_BUFER[buf_ofst];
-        *(WORD *)&ANIMATE_PALETTE_BUFER[buf_ofst] = color;
-        ANIMATE_PALETTE_PTR[ofst++] = HIBYTE(color);
+        color = *(uint16_t *)&ANIMATE_PALETTE_BUFER[buf_ofst + 2] + *(uint16_t *)&ANIMATE_PALETTE_BUFER[buf_ofst];
+        *(uint16_t *)&ANIMATE_PALETTE_BUFER[buf_ofst] = color;
+        ANIMATE_PALETTE_PTR[ofst++] = (color >> 8) & 0xFF;
         buf_ofst += 4;
     } while (ofst < 768);
     NEW_PALETTE = ANIMATE_PALETTE_PTR;
-    //sdl_set_palette(ANIMATE_PALETTE_PTR, 0, 256);
 }
 
 // 0041CBF0 Bedlam 1
@@ -74,9 +73,9 @@ void swap_palette_with_animation(uint8_t *palette_file_ptr, int time)
         {
             steep = (((in_color - screen_color) << 8) + 1) / time;
         }
-        *(WORD *)buf_file = (WORD)screen_color << 8;
+        *(uint16_t *)buf_file = (uint16_t)screen_color << 8;
         buf_file += 2;
-        *(WORD *)buf_file = steep;
+        *(uint16_t *)buf_file = steep;
         buf_file += 2;
         screen_palette_ptr++;
     }
@@ -85,23 +84,6 @@ void swap_palette_with_animation(uint8_t *palette_file_ptr, int time)
     //    time = 0;
     //}
     PALETTE_TIMER = time;
-}
-
-// 0044B040 Bedlam 1
-uint8_t *get_RGB_palette_ptr()
-{
-    static uint8_t palette[769];
-    int32_t i;
-    int32_t color_offset; // ecx
-
-    for (i = 0; i < 256; ++i)
-    {
-        color_offset = 3 * i;
-        palette[color_offset + 0] = SCREEN_SURFACE->format->palette->colors[i].r >> 2;
-        palette[color_offset + 1] = SCREEN_SURFACE->format->palette->colors[i].g >> 2;
-        palette[color_offset + 2] = SCREEN_SURFACE->format->palette->colors[i].b >> 2;
-    }
-    return palette;
 }
 
 // 0041FA3F Bedlam 1
