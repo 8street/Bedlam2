@@ -79,10 +79,6 @@ void swap_palette_with_animation(uint8_t *palette_file_ptr, int time)
         buf_file += 2;
         screen_palette_ptr++;
     }
-    //if (time < 0 || time > 100)
-    //{
-    //    time = 0;
-    //}
     PALETTE_TIMER = time;
 }
 

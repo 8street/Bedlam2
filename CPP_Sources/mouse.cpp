@@ -80,19 +80,18 @@ void mouse_update()
     }
 }
 
-// 0042391D Bedlam 1
 int hide_cursor()
 {
     return WINDOW_CURSOR.hide_cursor();
 }
 
-// 0044B428 Bedlam 1
 void get_cursor_pos(int *x, int *y)
 {
     SDL_GetMouseState(x, y);
+    *x = *x * GAME_WIDTH / WINDOW_WIDTH; 
+    *y = *y * GAME_HEIGHT / WINDOW_HEIGHT;
 }
 
-// 0042392D Bedlam 1
 void show_cursor()
 {
     WINDOW_CURSOR.show_cursor();

@@ -9,6 +9,9 @@
 int32_t GAME_WIDTH = 640;
 int32_t GAME_HEIGHT = 480;
 
+int32_t WINDOW_WIDTH;
+int32_t WINDOW_HEIGHT;
+
 volatile uint8_t FULLSCREEN;
 
 volatile uint32_t SCREEN_SURFACE_WIDTH;
@@ -26,12 +29,13 @@ uint8_t GAME_SCREEN_PTR[409600];
 
 int init_video()
 {
-
+    WINDOW_WIDTH = GAME_WIDTH;
+    WINDOW_HEIGHT = GAME_HEIGHT;
     int ret_val = 0;
     ret_val |= SDL_Init(SDL_INIT_VIDEO);
     int window_flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_SHOWN;
     WINDOW = SDL_CreateWindow(
-        "Bedlam 2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, GAME_WIDTH, GAME_HEIGHT, window_flags);
+        "Bedlam 2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, window_flags);
     RENDER = SDL_CreateRenderer(WINDOW, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
 
     if (RENDER == NULL)
@@ -147,7 +151,14 @@ void redraw()
 {
     //Timer tim;
     SDL_Texture *t = MY_CreateTextureFromSurface(RENDER, SCREEN_SURFACE);
-    SDL_RenderCopy(RENDER, t, NULL, NULL);
+
+    SDL_Rect dstrect;
+
+    dstrect.x = 0;
+    dstrect.y = 0;
+    dstrect.w = WINDOW_WIDTH;
+    dstrect.h = WINDOW_HEIGHT;
+    SDL_RenderCopy(RENDER, t, NULL, &dstrect);
     //volatile double a = tim.elapsed();
     //a = 0.0;
     SDL_RenderPresent(RENDER);

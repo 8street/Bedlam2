@@ -42,9 +42,7 @@
     <ClCompile Include="..\CPP_Sources\sdl_draw.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_event.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_texture.cpp" />
-    <ClCompile Include="..\CPP_Sources\sdl_thread.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_timer.cpp" />
-    <ClCompile Include="..\CPP_Sources\sdl_window.cpp" />
     <ClCompile Include="..\CPP_Sources\timer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -64,9 +62,7 @@
     <ClInclude Include="..\CPP_Sources\sdl_draw.h" />
     <ClInclude Include="..\CPP_Sources\sdl_event.h" />
     <ClInclude Include="..\CPP_Sources\sdl_texture.h" />
-    <ClInclude Include="..\CPP_Sources\sdl_thread.h" />
     <ClInclude Include="..\CPP_Sources\sdl_timer.h" />
-    <ClInclude Include="..\CPP_Sources\sdl_window.h" />
     <ClInclude Include="..\CPP_Sources\timer.h" />
   </ItemGroup>
   <ItemGroup>
