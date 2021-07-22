@@ -46,10 +46,20 @@ int init_video()
         {
             std::cout << "ERROR: created software renderer is invalid. \n";
             ret_val |= 1;
+            return ret_val;
         }
     }
 
     SDL_SetWindowMinimumSize(WINDOW, GAME_WIDTH, GAME_HEIGHT);
+
+    if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2"))
+    {
+        if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
+        {
+            std::cout << "ERROR: Could't set render scale quality \n";
+            ret_val |= 1;
+        }
+    }
 
     ret_val |= SDL_SetRenderTarget(RENDER, NULL);
     //ret_val |= SDL_SetRenderDrawBlendMode(RENDER, SDL_BLENDMODE_BLEND);
