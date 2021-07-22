@@ -6,6 +6,7 @@
 #include "palette.h"
 #include "keyboard.h"
 #include "sdl_draw.h"
+#include "screenshot.h"
 
 int SDL_events()
 {
@@ -93,6 +94,9 @@ int SDL_events()
                 case SDLK_m:
                 case SDLK_SPACE:
                     KEY_M = 1;
+                    break;
+                case SDLK_PRINTSCREEN:
+                    save_screenshot();
                     break;
             }
         }
