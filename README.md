@@ -5,13 +5,13 @@
 
 Source code for Bedlam 2: Absolute Bedlam executable file. To preserve the cultural heritage.
 
-This game has been ported on Windows. The original Direct Draw and Direct Sound wrapper was inspired from Bedlam 1.
+This game has been ported on SDL2 library.
 
 This repository does not contain any original game resources.
 
 # Project State
 
-The sources can be compiled and fully playable. Rare crashes are possible.
+The sources can be compiled and fully playable. All crashes have been fixed.
 
 # Contributing
 
@@ -20,9 +20,13 @@ Patches and improvements are welcome.
 
 # Compiling
 
+### Windows users
+
 1. Open solution vs2019/Bedlam2.sln in Visual Studio 2019
 2. Compile x86 platform
 3. Put compiled .exe file in your Bedlam2 folder. Or put Bedlam2 files in VS output directory
-4. Run 
+4. Run
 
-To run in a window mode, set the application 256 color compatibility mode.
+### Linux, Mac users
+
+Source codes can be compiled. You will have to modify the sources that so the save paths is be not "C:/MIRAGE/AD_BED". Other modifications may be required.
