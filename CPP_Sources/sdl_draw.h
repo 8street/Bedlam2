@@ -3,6 +3,8 @@
 #include <SDL.h>
 #include <cstdint>
 
+extern SDL_Surface *SCREEN_SURFACE;
+
 extern "C" uint8_t *SCREEN_BUFFER_PTR;
 extern uint8_t GAME_SCREEN_PTR[409600];
 

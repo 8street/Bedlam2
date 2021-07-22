@@ -47,13 +47,13 @@ void timer_update()
 // 00402B0C Bedlam 1
 void increment_timers()
 {
-   /* WAITING_TIMER++;
-    GAME_UPDATE_TIMER++;*/
-    level_clock();
-    if (PALETTE_TIMER)
-    {
-        palette_animation();
-    }
+   ///* WAITING_TIMER++;
+   // GAME_UPDATE_TIMER++;*/
+   // level_clock();
+   // if (PALETTE_TIMER)
+   // {
+   //     palette_animation();
+   // }
 }
 
 void timer_deinit()
