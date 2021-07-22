@@ -26,7 +26,9 @@
     <None Include="..\README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\CPP_Sources\bin_file.cpp" />
     <ClCompile Include="..\CPP_Sources\dsound_func.cpp" />
+    <ClCompile Include="..\CPP_Sources\exported_func.cpp" />
     <ClCompile Include="..\CPP_Sources\file.cpp" />
     <ClCompile Include="..\CPP_Sources\helper.cpp" />
     <ClCompile Include="..\CPP_Sources\ingame_music.cpp" />
@@ -36,19 +38,20 @@
     <ClCompile Include="..\CPP_Sources\mouse.cpp" />
     <ClCompile Include="..\CPP_Sources\palette.cpp" />
     <ClCompile Include="..\CPP_Sources\screenshot.cpp" />
+    <ClCompile Include="..\CPP_Sources\sdl_cursor.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_draw.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_event.cpp" />
+    <ClCompile Include="..\CPP_Sources\sdl_texture.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_thread.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_timer.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_window.cpp" />
     <ClCompile Include="..\CPP_Sources\timer.cpp" />
-    <ClCompile Include="..\CPP_Sources\timers.cpp">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Disabled</Optimization>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CPP_Sources\bedlam2.h" />
+    <ClInclude Include="..\CPP_Sources\bin_file.h" />
     <ClInclude Include="..\CPP_Sources\dsound_func.h" />
+    <ClInclude Include="..\CPP_Sources\exported_func.h" />
     <ClInclude Include="..\CPP_Sources\file.h" />
     <ClInclude Include="..\CPP_Sources\helper.h" />
     <ClInclude Include="..\CPP_Sources\ingame_music.h" />
@@ -57,13 +60,14 @@
     <ClInclude Include="..\CPP_Sources\mouse.h" />
     <ClInclude Include="..\CPP_Sources\palette.h" />
     <ClInclude Include="..\CPP_Sources\screenshot.h" />
+    <ClInclude Include="..\CPP_Sources\sdl_cursor.h" />
     <ClInclude Include="..\CPP_Sources\sdl_draw.h" />
     <ClInclude Include="..\CPP_Sources\sdl_event.h" />
+    <ClInclude Include="..\CPP_Sources\sdl_texture.h" />
     <ClInclude Include="..\CPP_Sources\sdl_thread.h" />
     <ClInclude Include="..\CPP_Sources\sdl_timer.h" />
     <ClInclude Include="..\CPP_Sources\sdl_window.h" />
     <ClInclude Include="..\CPP_Sources\timer.h" />
-    <ClInclude Include="..\CPP_Sources\timers.h" />
   </ItemGroup>
   <ItemGroup>
     <MASM Include="..\ASM_Sources\bedlam2.asm" />

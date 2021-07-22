@@ -2,6 +2,10 @@
 
 #include <stdint.h>
 
+#include "sdl_cursor.h"
+
+extern cursor WINDOW_CURSOR;
+
 extern int16_t CURSOR_X1;
 extern int16_t CURSOR_Y1;
 
@@ -37,11 +41,7 @@ enum CURSOR_ICON
 };
 
 void mouse_update();
-void set_cursor_icon(int32_t icon);
-void set_cursor_surface_size(int16_t size);
 extern "C" int hide_cursor();
-int blit_cursor_one_time();
 void get_cursor_pos(int *x, int *y);
 extern "C" void show_cursor();
-void set_update_cursor_by_timer();
 void mouse_buttons(uint16_t r_butt, uint16_t l_button);

@@ -48,7 +48,7 @@ int init_video()
     SDL_SetWindowMinimumSize(WINDOW, GAME_WIDTH, GAME_HEIGHT);
 
     ret_val |= SDL_SetRenderTarget(RENDER, NULL);
-    ret_val |= SDL_SetRenderDrawBlendMode(RENDER, SDL_BLENDMODE_BLEND);
+    //ret_val |= SDL_SetRenderDrawBlendMode(RENDER, SDL_BLENDMODE_BLEND);
 
     ret_val |= SDL_RenderClear(RENDER);
     SDL_RenderPresent(RENDER);
@@ -107,7 +107,6 @@ int sdl_set_palette(uint8_t *pal_ptr, int offset, int num_entries)
     {
         SDL_UnlockSurface(SCREEN_SURFACE);
     }
-    //redraw();
     return ret_val;
 }
 
@@ -119,7 +118,6 @@ void clear_screen()
         SDL_LockSurface(SCREEN_SURFACE);
     }
     memset(SCREEN_SURFACE->pixels, 0, GAME_WIDTH * GAME_HEIGHT);
-    //memset(SCREEN_BUFFER_PTR, 0, GAME_WIDTH * GAME_HEIGHT);
     if (SDL_MUSTLOCK(SCREEN_SURFACE))
     {
         SDL_UnlockSurface(SCREEN_SURFACE);
@@ -130,7 +128,6 @@ void clear_screen()
 // 00425A1E Bedlam 1
 void copy_buffer_to_screen_and_unlock(uint8_t *buffer)
 {
-    //int i;           // [esp+0h] [ebp-20h]
     uint8_t *destin; // [esp+4h] [ebp-1Ch]
 
     if (SDL_MUSTLOCK(SCREEN_SURFACE))
