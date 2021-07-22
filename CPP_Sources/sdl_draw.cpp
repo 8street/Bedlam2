@@ -58,14 +58,6 @@ int init_video()
         std::cout << "ERROR: created screen surface. \n";
         ret_val |= 1;
     }
-    if(SDL_MUSTLOCK(SCREEN_SURFACE))
-    {
-        std::cout << "You must lock surface \n";
-    }
-    else
-    {
-        std::cout << "You not need lock surface \n";
-    }
 
     if (ret_val)
     {
@@ -144,26 +136,28 @@ void copy_buffer_to_screen_and_unlock(uint8_t *buffer)
     {
         SDL_UnlockSurface(SCREEN_SURFACE);
     }
-    redraw();
 }
 
 // 00425A03 Bedlam 1
 void redraw()
 {
-    Timer tim;
+    //Timer tim;
     SDL_Texture *t = MY_CreateTextureFromSurface(RENDER, SCREEN_SURFACE);
     SDL_RenderCopy(RENDER, t, NULL, NULL);
-    volatile double a = tim.elapsed();
-    a = 0.0;
+    //volatile double a = tim.elapsed();
+    //a = 0.0;
     SDL_RenderPresent(RENDER);
     SDL_DestroyTexture(t);
     SDL_events();
-
 }
 
 // 0041E215 Bedlam 1
 int unlock_surface_and_wait(int time_to_waiting)
 {
+    if (SDL_MUSTLOCK(SCREEN_SURFACE))
+    {
+        SDL_UnlockSurface(SCREEN_SURFACE);
+    }
     WAITING_TIMER = 0;
     redraw();
     while (time_to_waiting > WAITING_TIMER)
@@ -295,6 +289,10 @@ SDL_Texture *MY_CreateTextureFromSurface(SDL_Renderer *renderer, const SDL_Surfa
     uint8_t *bytes = nullptr;
     int pitch = 0;
     errorcode |= SDL_LockTexture(t, nullptr, reinterpret_cast<void **>(&bytes), &pitch);
+    if (SDL_MUSTLOCK(SCREEN_SURFACE))
+    {
+        SDL_LockSurface(SCREEN_SURFACE);
+    }
     for (int y = 0; y < surface->h; y++)
     {
         for (int x = 0; x < surface->w; x++)
@@ -302,6 +300,10 @@ SDL_Texture *MY_CreateTextureFromSurface(SDL_Renderer *renderer, const SDL_Surfa
             uint8_t index = ((uint8_t *)surface->pixels)[y * surface->w + x];
             ((SDL_Color *)bytes)[y * surface->w + x] = surface->format->palette->colors[index];
         }
+    }
+    if (SDL_MUSTLOCK(SCREEN_SURFACE))
+    {
+        SDL_UnlockSurface(SCREEN_SURFACE);
     }
     SDL_UnlockTexture(t);
     if (errorcode)
