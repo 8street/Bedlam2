@@ -108,7 +108,7 @@ int sdl_set_palette(uint8_t *pal_ptr, int offset, int num_entries)
     {
         SDL_UnlockSurface(SCREEN_SURFACE);
     }
-    redraw();
+    //redraw();
     return ret_val;
 }
 
