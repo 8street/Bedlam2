@@ -13,7 +13,6 @@
 *.ilk
 *.opensdf
 *.pdb
-*.lib
 *.sdf
 *.suo
 *.user
