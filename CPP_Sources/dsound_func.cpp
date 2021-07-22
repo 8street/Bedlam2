@@ -6,6 +6,7 @@
 #include "dsound_func.h"
 #include "file.h"
 #include "helper.h"
+#include "sdl_event.h"
 
 LPDIRECTSOUND ppDS;
 
@@ -183,6 +184,7 @@ int load_raw(const char *filename)
     {
         duplicate_sound_buffer(raw_index);
         num_copy++;
+        SDL_events();
     }
     return raw_index;
 }

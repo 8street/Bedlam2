@@ -31,7 +31,10 @@ Uint32 sdl_timer_callback(Uint32 interval, void *param)
 {
     SDL_Event event;
     SDL_UserEvent userevent;
+    SDL_UserEvent userevent2;
+    static uint32_t cursor_timer;
 
+    cursor_timer++;
     WAITING_TIMER++;
     GAME_UPDATE_TIMER++;
     level_clock();
@@ -43,7 +46,6 @@ Uint32 sdl_timer_callback(Uint32 interval, void *param)
         palette_animation();
     }
 
-
     userevent.type = SDL_USEREVENT;
     userevent.code = 0;
     userevent.data1 = NULL;
@@ -51,6 +53,18 @@ Uint32 sdl_timer_callback(Uint32 interval, void *param)
     event.type = SDL_USEREVENT;
     event.user = userevent;
     SDL_PushEvent(&event);
+
+    // animated cursor
+    if ((cursor_timer & 7) == 0)
+    {
+        userevent2.type = SDL_USEREVENT;
+        userevent2.code = 1;
+        userevent2.data1 = NULL;
+        userevent2.data2 = NULL;
+        event.type = SDL_USEREVENT;
+        event.user = userevent2;
+        SDL_PushEvent(&event);
+    }
 
     return (interval);
 }

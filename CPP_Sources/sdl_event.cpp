@@ -50,6 +50,18 @@ int SDL_events()
                     NEW_PALETTE = NULL;
                 }
             }
+            if (event.user.type == SDL_USEREVENT && event.user.code == 1)
+            {
+                int icon = WINDOW_CURSOR.get_cursor_img();
+                if (icon != CURSOR_ICON)
+                {
+                    WINDOW_CURSOR.set_cursor_icon(CURSOR_ICON);
+                }
+                if (icon == ICON_WAIT)
+                {
+                    WINDOW_CURSOR.update_waiting_cursor();
+                }
+            }
         }
         if (event.type == SDL_KEYDOWN)
         {

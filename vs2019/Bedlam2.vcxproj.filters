@@ -46,9 +46,6 @@
     <ClCompile Include="..\CPP_Sources\palette.cpp">
       <Filter>CPP Sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\CPP_Sources\timers.cpp">
-      <Filter>CPP Sources</Filter>
-    </ClCompile>
     <ClCompile Include="..\CPP_Sources\screenshot.cpp">
       <Filter>CPP Sources</Filter>
     </ClCompile>
@@ -73,6 +70,18 @@
     <ClCompile Include="..\CPP_Sources\timer.cpp">
       <Filter>CPP Sources</Filter>
     </ClCompile>
+    <ClCompile Include="..\CPP_Sources\sdl_cursor.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\exported_func.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\bin_file.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\sdl_texture.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CPP_Sources\dsound_func.h">
@@ -94,9 +103,6 @@
       <Filter>CPP Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\CPP_Sources\palette.h">
-      <Filter>CPP Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CPP_Sources\timers.h">
       <Filter>CPP Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\CPP_Sources\bedlam2.h">
@@ -124,6 +130,18 @@
       <Filter>CPP Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\CPP_Sources\timer.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\sdl_cursor.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\exported_func.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\bin_file.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\sdl_texture.h">
       <Filter>CPP Sources</Filter>
     </ClInclude>
   </ItemGroup>
