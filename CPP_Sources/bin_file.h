@@ -20,8 +20,6 @@ public:
     const uint8_t* get_img_data_ptr(int img) const;
 
 private:
-    
-
 
 };
 

@@ -231,39 +231,40 @@ bool dsound_buf_is_stopped(int buffer_index)
 // 0043A48E Bedlam 1
 int play_sound(int raw_index, int x, int y, int a5)
 {
-    int balance; // [esp+0h] [ebp-18h]
-    int volume;  // [esp+4h] [ebp-14h]
+    //int balance; // [esp+0h] [ebp-18h]
+    //int volume;  // [esp+4h] [ebp-14h]
 
-    if (x == -1 && y == -1)
-    {
-        volume = 32768;
-        balance = 0;
-    }
-    else
-    {
-        volume = get_volume(x, y);
-        balance = get_balance(x, y);
-    }
+    //if (x == -1 && y == -1)
+    //{
+    //    volume = 32768;
+    //    balance = 0;
+    //}
+    //else
+    //{
+    //    volume = get_volume(x, y);
+    //    balance = get_balance(x, y);
+    //}
 
-    int first_stopped_index = 0; // ebp
-    int i = 0;
-    for (int raw2 = raw_index; raw2 < raw_index + SIMULTANEOUSLY_PLAYING_BUFFERS; raw2++)
-    {
-        if (dsound_buf_is_stopped(raw2))
-        {
-            first_stopped_index = i;
-            break;
-        }
-        i++;
-    }
+    //int first_stopped_index = 0; // ebp
+    //int i = 0;
+    //for (int raw2 = raw_index; raw2 < raw_index + SIMULTANEOUSLY_PLAYING_BUFFERS; raw2++)
+    //{
+    //    if (dsound_buf_is_stopped(raw2))
+    //    {
+    //        first_stopped_index = i;
+    //        break;
+    //    }
+    //    i++;
+    //}
 
-    int play_index = raw_index + first_stopped_index;
+    //int play_index = raw_index + first_stopped_index;
 
-    if (!first_stopped_index)
-    {
-        dsound_stop(play_index);
-    }
-    return dsound_play(play_index, 0, 11025, volume, balance, 0);
+    //if (!first_stopped_index)
+    //{
+    //    dsound_stop(play_index);
+    //}
+    //return dsound_play(play_index, 0, 11025, volume, balance, 0);
+    return 0;
 }
 
 int play_music(int raw_index, int x, int y, int flag)

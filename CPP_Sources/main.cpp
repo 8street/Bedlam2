@@ -10,7 +10,6 @@
 #include "sdl_event.h"
 #include "sdl_thread.h"
 #include "sdl_timer.h"
-#include "sdl_window.h"
 
 int main(int argc, char *argv[])
 {

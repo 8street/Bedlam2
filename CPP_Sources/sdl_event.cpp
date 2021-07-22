@@ -179,6 +179,16 @@ int SDL_events()
                 // SDL_Log("Window %d resized to %dx%d",
                 // event->window.windowID, event->window.data1,
                 // event->window.data2);
+                WINDOW_WIDTH = event.window.data1;
+                WINDOW_HEIGHT = event.window.data2;
+                if (WINDOW_WIDTH * 3 > WINDOW_HEIGHT * 4)
+                {
+                    WINDOW_WIDTH = WINDOW_HEIGHT * 4 / 3;
+                }
+                else
+                {
+                    WINDOW_HEIGHT = WINDOW_WIDTH * 3 / 4;
+                }
                 break;
             case SDL_WINDOWEVENT_SIZE_CHANGED:
                 // SDL_DisplayMode DM;

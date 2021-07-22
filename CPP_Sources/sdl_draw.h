@@ -6,6 +6,9 @@
 extern int32_t GAME_WIDTH;
 extern int32_t GAME_HEIGHT;
 
+extern int32_t WINDOW_WIDTH;
+extern int32_t WINDOW_HEIGHT;
+
 extern volatile uint8_t FULLSCREEN;
 
 extern "C" volatile uint32_t SCREEN_SURFACE_WIDTH;

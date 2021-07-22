@@ -52,12 +52,6 @@
     <ClCompile Include="..\CPP_Sources\ingame_music.cpp">
       <Filter>CPP Sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\CPP_Sources\sdl_window.cpp">
-      <Filter>CPP Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CPP_Sources\sdl_thread.cpp">
-      <Filter>CPP Sources</Filter>
-    </ClCompile>
     <ClCompile Include="..\CPP_Sources\sdl_event.cpp">
       <Filter>CPP Sources</Filter>
     </ClCompile>
@@ -112,12 +106,6 @@
       <Filter>CPP Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\CPP_Sources\ingame_music.h">
-      <Filter>CPP Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CPP_Sources\sdl_window.h">
-      <Filter>CPP Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CPP_Sources\sdl_thread.h">
       <Filter>CPP Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\CPP_Sources\sdl_event.h">
