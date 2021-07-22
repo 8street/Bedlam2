@@ -5,6 +5,7 @@
 #include "sdl_event.h"
 #include "ddraw_func.h"
 #include "sdl_timer.h"
+#include "timer.h"
 
 SDL_Window *WINDOW;
 SDL_Renderer *RENDER;
@@ -148,24 +149,15 @@ void copy_buffer_to_screen_and_unlock(uint8_t *buffer)
 // 00425A03 Bedlam 1
 void redraw()
 {
-    // unlock_surface();
-    // SCREEN_BUFFER_PTR = 0;
-    // blit_second_surface_to_screen();
-    SDL_Texture *t;
-    
-    //if (!t)
-    //{
-    //    std::cout << "ERROR: creating texture from surface \n";
-    //}
-    //else
-    //{
-
-    t = MY_CreateTextureFromSurface(RENDER, SCREEN_SURFACE);
+    Timer tim;
+    SDL_Texture *t = MY_CreateTextureFromSurface(RENDER, SCREEN_SURFACE);
     SDL_RenderCopy(RENDER, t, NULL, NULL);
+    volatile double a = tim.elapsed();
+    a = 0.0;
     SDL_RenderPresent(RENDER);
     SDL_DestroyTexture(t);
     SDL_events();
-    //}
+
 }
 
 // 0041E215 Bedlam 1
@@ -299,7 +291,6 @@ SDL_Texture *MY_CreateTextureFromSurface(SDL_Renderer *renderer, const SDL_Surfa
     {
         errorcode |= 1;
     }
-    //errorcode |= SDL_SetTextureBlendMode(t, SDL_BLENDMODE_BLEND);
     uint8_t *bytes = nullptr;
     int pitch = 0;
     errorcode |= SDL_LockTexture(t, nullptr, reinterpret_cast<void **>(&bytes), &pitch);
@@ -308,11 +299,7 @@ SDL_Texture *MY_CreateTextureFromSurface(SDL_Renderer *renderer, const SDL_Surfa
         for (int x = 0; x < surface->w; x++)
         {
             uint8_t index = ((uint8_t *)surface->pixels)[y * surface->w + x];
-            bytes[y * pitch + x * 4 + 0] = surface->format->palette->colors[index].r;
-            bytes[y * pitch + x * 4 + 1] = surface->format->palette->colors[index].g;
-            bytes[y * pitch + x * 4 + 2] = surface->format->palette->colors[index].b;
-            // if you need alpha texture with opacue instead black color change 0xFF to index ? 255 : 0;
-            bytes[y * pitch + x * 4 + 3] = 0xFF; 
+            ((SDL_Color *)bytes)[y * surface->w + x] = surface->format->palette->colors[index];
         }
     }
     SDL_UnlockTexture(t);
@@ -322,3 +309,4 @@ SDL_Texture *MY_CreateTextureFromSurface(SDL_Renderer *renderer, const SDL_Surfa
     }
     return t;
 }
+

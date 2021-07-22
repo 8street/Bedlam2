@@ -49,6 +49,7 @@
     <ClCompile Include="..\CPP_Sources\sdl_thread.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_timer.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_window.cpp" />
+    <ClCompile Include="..\CPP_Sources\timer.cpp" />
     <ClCompile Include="..\CPP_Sources\timers.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Disabled</Optimization>
     </ClCompile>
@@ -73,6 +74,7 @@
     <ClInclude Include="..\CPP_Sources\sdl_thread.h" />
     <ClInclude Include="..\CPP_Sources\sdl_timer.h" />
     <ClInclude Include="..\CPP_Sources\sdl_window.h" />
+    <ClInclude Include="..\CPP_Sources\timer.h" />
     <ClInclude Include="..\CPP_Sources\timers.h" />
     <ClInclude Include="..\CPP_Sources\window.h" />
   </ItemGroup>
