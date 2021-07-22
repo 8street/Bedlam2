@@ -1,6 +1,5 @@
 #include "timers.h"
 #include "bedlam2.h"
-#include "ddraw_func.h"
 #include "mouse.h"
 #include "palette.h"
 
@@ -12,15 +11,15 @@ uint32_t TIMER_EVENT;
 // 0044DE58 Bedlam 1
 void timer_callback(UINT uTimerID, UINT uMsg, DWORD_PTR dwUser, DWORD_PTR dw1, DWORD_PTR dw2)
 {
-    struct tagPOINT cursor; // [esp+0h] [ebp-8h] BYREF
+    //struct tagPOINT cursor; // [esp+0h] [ebp-8h] BYREF
 
-    timer_update();
+    //timer_update();
 
-    if (UPDATE_CURSOR_BY_TIMER == 1 && !IS_BLITTING)
-    {
-        GetCursorPos(&cursor);
-        blit_cursor(cursor.x, cursor.y);
-    }
+    //if (UPDATE_CURSOR_BY_TIMER == 1 && !IS_BLITTING)
+    //{
+    //    GetCursorPos(&cursor);
+    //    blit_cursor(cursor.x, cursor.y);
+    //}
 }
 
 // 0041BFB6 Bedlam 1
@@ -67,7 +66,3 @@ void timer_deinit()
     }
 }
 
-void dos_sleep(uint32_t time)
-{
-    Sleep(time);
-}

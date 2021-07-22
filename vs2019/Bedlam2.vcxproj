@@ -26,14 +26,6 @@
     <None Include="..\README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\CPP_Sources\ddraw_func.cpp">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Disabled</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Disabled</Optimization>
-      <IntrinsicFunctions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</IntrinsicFunctions>
-      <IntrinsicFunctions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</IntrinsicFunctions>
-      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Speed</FavorSizeOrSpeed>
-      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Neither</FavorSizeOrSpeed>
-    </ClCompile>
     <ClCompile Include="..\CPP_Sources\dsound_func.cpp" />
     <ClCompile Include="..\CPP_Sources\file.cpp" />
     <ClCompile Include="..\CPP_Sources\helper.cpp" />
@@ -53,13 +45,9 @@
     <ClCompile Include="..\CPP_Sources\timers.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Disabled</Optimization>
     </ClCompile>
-    <ClCompile Include="..\CPP_Sources\window.cpp">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Disabled</Optimization>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CPP_Sources\bedlam2.h" />
-    <ClInclude Include="..\CPP_Sources\ddraw_func.h" />
     <ClInclude Include="..\CPP_Sources\dsound_func.h" />
     <ClInclude Include="..\CPP_Sources\file.h" />
     <ClInclude Include="..\CPP_Sources\helper.h" />
@@ -76,7 +64,6 @@
     <ClInclude Include="..\CPP_Sources\sdl_window.h" />
     <ClInclude Include="..\CPP_Sources\timer.h" />
     <ClInclude Include="..\CPP_Sources\timers.h" />
-    <ClInclude Include="..\CPP_Sources\window.h" />
   </ItemGroup>
   <ItemGroup>
     <MASM Include="..\ASM_Sources\bedlam2.asm" />

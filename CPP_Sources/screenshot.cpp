@@ -2,10 +2,10 @@
 #include <cstdint>
 #include <stdio.h>
 
-
-#include "ddraw_func.h"
+#include "sdl_draw.h"
 #include "helper.h"
 #include "screenshot.h"
+#include "palette.h"
 
 #ifdef _MSC_VER
 // For use sprintf, fopen
@@ -36,13 +36,14 @@ int save_screenshot()
     n = 0;
     pal_indx = 0;
     null = 0;
+    uint8_t *pal = get_RGB_palette_ptr();
     do
     {
         n += 3;
-        buffer1_1[n + 1] = PALETTEENTRY_BUFFER[pal_indx + 1].peRed;
-        buffer1_1[n + 2] = PALETTEENTRY_BUFFER[pal_indx + 1].peGreen;
-        buffer1_1[n + 3] = PALETTEENTRY_BUFFER[++pal_indx].peBlue;
-        ;
+        buffer1_1[n + 1] = pal[pal_indx];
+        buffer1_1[n + 2] = pal[pal_indx + 1];
+        buffer1_1[n + 3] = pal[pal_indx + 2];
+        pal_indx++;
     } while (pal_indx != 256);
     while (1)
     {

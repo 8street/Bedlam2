@@ -6,7 +6,6 @@
 #include "dsound_func.h"
 #include "file.h"
 #include "helper.h"
-#include "window.h"
 
 LPDIRECTSOUND ppDS;
 
@@ -44,12 +43,12 @@ int init_dsound()
         DSOUND_ERRORCODE = -1;
         DSOUND_INNITED = 0;
     }
-    else if ((uint32_t)ppDS->SetCooperativeLevel(WINDOW_HWND, DSSCL_PRIORITY))
+   /* else if ((uint32_t)ppDS->SetCooperativeLevel(WINDOW_HWND, DSSCL_PRIORITY))
     {
         ret_val = 2;
         DSOUND_ERRORCODE = -1;
         DSOUND_INNITED = 0;
-    }
+    }*/
     else
     {
         memset(&waveformat, 0, sizeof(waveformat));

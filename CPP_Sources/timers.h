@@ -11,4 +11,3 @@ void timer_callback(UINT uTimerID, UINT uMsg, DWORD_PTR dwUser, DWORD_PTR dw1, D
 void timer_update();
 void increment_timers();
 void timer_deinit();
-extern "C" void dos_sleep(uint32_t time);

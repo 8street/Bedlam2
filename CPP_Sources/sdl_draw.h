@@ -3,6 +3,14 @@
 #include <SDL.h>
 #include <cstdint>
 
+extern int32_t GAME_WIDTH;
+extern int32_t GAME_HEIGHT;
+
+extern volatile uint8_t FULLSCREEN;
+
+extern "C" volatile uint32_t SCREEN_SURFACE_WIDTH;
+extern volatile uint32_t SCREEN_SURFACE_HEIGHT;
+
 extern SDL_Surface *SCREEN_SURFACE;
 
 extern "C" uint8_t *SCREEN_BUFFER_PTR;
@@ -22,3 +30,7 @@ extern "C" void draw_map_and_game_screen();
 void dead_screen_scaler();
 extern "C" void copy_screen_to_buffer(uint8_t *buffer_ptr);
 SDL_Texture *MY_CreateTextureFromSurface(SDL_Renderer *renderer, const SDL_Surface *surface);
+extern "C" void get_screen_buffer_ptr();
+uint8_t *lock_and_get_surface_ptr();
+void unlock_surface();
+uint8_t *get_RGB_palette_ptr();

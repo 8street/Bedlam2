@@ -54,3 +54,8 @@ Uint32 sdl_timer_callback(Uint32 interval, void *param)
 
     return (interval);
 }
+
+void dos_sleep(uint32_t time)
+{
+    SDL_Delay(time);
+}
