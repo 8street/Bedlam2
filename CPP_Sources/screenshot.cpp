@@ -37,12 +37,13 @@ int save_screenshot()
     pal_indx = 0;
     null = 0;
     uint8_t *pal = get_RGB_palette_ptr();
+    memset(buffer1_1, 0, sizeof(buffer1_1));
     do
     {
         n += 3;
-        buffer1_1[n + 1] = pal[pal_indx];
-        buffer1_1[n + 2] = pal[pal_indx + 1];
-        buffer1_1[n + 3] = pal[pal_indx + 2];
+        buffer1_1[n + 1] = pal[pal_indx * 3] * 4;
+        buffer1_1[n + 2] = pal[pal_indx * 3 + 1] * 4;
+        buffer1_1[n + 3] = pal[pal_indx * 3 + 2] * 4;
         pal_indx++;
     } while (pal_indx != 256);
     while (1)
