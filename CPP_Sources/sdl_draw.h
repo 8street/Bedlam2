@@ -19,3 +19,4 @@ int clear_game_viewport();
 extern "C" void draw_map_and_game_screen();
 void dead_screen_scaler();
 extern "C" void copy_screen_to_buffer(uint8_t *buffer_ptr);
+SDL_Texture *MY_CreateTextureFromSurface(SDL_Renderer *renderer, const SDL_Surface *surface);

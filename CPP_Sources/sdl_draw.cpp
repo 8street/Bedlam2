@@ -117,9 +117,8 @@ void clear_screen()
     {
         SDL_LockSurface(SCREEN_SURFACE);
     }
-    SCREEN_SURFACE->pixels ;
-    //memset(SCREEN_SURFACE->pixels, 0, GAME_WIDTH * GAME_HEIGHT);
-    memset(SCREEN_BUFFER_PTR, 0, GAME_WIDTH * GAME_HEIGHT);
+    memset(SCREEN_SURFACE->pixels, 0, GAME_WIDTH * GAME_HEIGHT);
+    //memset(SCREEN_BUFFER_PTR, 0, GAME_WIDTH * GAME_HEIGHT);
     if (SDL_MUSTLOCK(SCREEN_SURFACE))
     {
         SDL_UnlockSurface(SCREEN_SURFACE);
@@ -152,19 +151,20 @@ void redraw()
     // unlock_surface();
     // SCREEN_BUFFER_PTR = 0;
     // blit_second_surface_to_screen();
-
-    SDL_Texture *t = SDL_CreateTextureFromSurface(RENDER, SCREEN_SURFACE);
+    SDL_Texture *t;
+    
     //if (!t)
     //{
     //    std::cout << "ERROR: creating texture from surface \n";
     //}
     //else
     //{
-        //SDL_RenderClear(RENDER);
-        SDL_events();
-        SDL_RenderCopy(RENDER, t, NULL, NULL);
-        SDL_RenderPresent(RENDER);
-        SDL_DestroyTexture(t);
+
+    t = MY_CreateTextureFromSurface(RENDER, SCREEN_SURFACE);
+    SDL_RenderCopy(RENDER, t, NULL, NULL);
+    SDL_RenderPresent(RENDER);
+    SDL_DestroyTexture(t);
+    SDL_events();
     //}
 }
 
@@ -289,4 +289,36 @@ void copy_screen_to_buffer(uint8_t *buffer_ptr)
     {
         SDL_UnlockSurface(SCREEN_SURFACE);
     }
+}
+
+SDL_Texture *MY_CreateTextureFromSurface(SDL_Renderer *renderer, const SDL_Surface *surface)
+{
+    int errorcode = 0;
+    SDL_Texture *t = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, surface->w, surface->h);
+    if (!t)
+    {
+        errorcode |= 1;
+    }
+    //errorcode |= SDL_SetTextureBlendMode(t, SDL_BLENDMODE_BLEND);
+    uint8_t *bytes = nullptr;
+    int pitch = 0;
+    errorcode |= SDL_LockTexture(t, nullptr, reinterpret_cast<void **>(&bytes), &pitch);
+    for (int y = 0; y < surface->h; y++)
+    {
+        for (int x = 0; x < surface->w; x++)
+        {
+            uint8_t index = ((uint8_t *)surface->pixels)[y * surface->w + x];
+            bytes[y * pitch + x * 4 + 0] = surface->format->palette->colors[index].r;
+            bytes[y * pitch + x * 4 + 1] = surface->format->palette->colors[index].g;
+            bytes[y * pitch + x * 4 + 2] = surface->format->palette->colors[index].b;
+            // if you need alpha texture with opacue instead black color change 0xFF to index ? 255 : 0;
+            bytes[y * pitch + x * 4 + 3] = 0xFF; 
+        }
+    }
+    SDL_UnlockTexture(t);
+    if (errorcode)
+    {
+        std::cout << "ERROR: creating texture \n";
+    }
+    return t;
 }
