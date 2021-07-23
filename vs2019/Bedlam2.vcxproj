@@ -37,6 +37,7 @@
     <ClCompile Include="..\CPP_Sources\main.cpp" />
     <ClCompile Include="..\CPP_Sources\mouse.cpp" />
     <ClCompile Include="..\CPP_Sources\palette.cpp" />
+    <ClCompile Include="..\CPP_Sources\raw_file.cpp" />
     <ClCompile Include="..\CPP_Sources\screenshot.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_cursor.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_draw.cpp" />
@@ -58,6 +59,7 @@
     <ClInclude Include="..\CPP_Sources\main.h" />
     <ClInclude Include="..\CPP_Sources\mouse.h" />
     <ClInclude Include="..\CPP_Sources\palette.h" />
+    <ClInclude Include="..\CPP_Sources\raw_file.h" />
     <ClInclude Include="..\CPP_Sources\screenshot.h" />
     <ClInclude Include="..\CPP_Sources\sdl_cursor.h" />
     <ClInclude Include="..\CPP_Sources\sdl_draw.h" />
@@ -165,7 +167,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>sdl2.lib;SDL2main.lib;legacy_stdio_definitions.lib;dsound.lib;Winmm.lib;ddraw.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2_mixer.lib;sdl2.lib;SDL2main.lib;legacy_stdio_definitions.lib;dsound.lib;Winmm.lib;ddraw.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <MASM>
@@ -197,7 +199,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>false</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>sdl2.lib;SDL2main.lib;legacy_stdio_definitions.lib;dsound.lib;Winmm.lib;ddraw.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2_mixer.lib;sdl2.lib;SDL2main.lib;legacy_stdio_definitions.lib;dsound.lib;Winmm.lib;ddraw.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
     </Link>
@@ -219,7 +221,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>sdl2.lib;SDL2main.lib;legacy_stdio_definitions.lib;dsound.lib;Winmm.lib;ddraw.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2_mixer.lib;sdl2.lib;SDL2main.lib;legacy_stdio_definitions.lib;dsound.lib;Winmm.lib;ddraw.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <MASM>
@@ -247,7 +249,7 @@
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>sdl2.lib;SDL2main.lib;legacy_stdio_definitions.lib;dsound.lib;Winmm.lib;ddraw.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2_mixer.lib;sdl2.lib;SDL2main.lib;legacy_stdio_definitions.lib;dsound.lib;Winmm.lib;ddraw.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
     </Link>
