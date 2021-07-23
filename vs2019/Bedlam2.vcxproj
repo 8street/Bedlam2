@@ -41,6 +41,7 @@
     <ClCompile Include="..\CPP_Sources\sdl_cursor.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_draw.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_event.cpp" />
+    <ClCompile Include="..\CPP_Sources\sdl_sound.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_texture.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_timer.cpp" />
     <ClCompile Include="..\CPP_Sources\timer.cpp" />
@@ -61,6 +62,7 @@
     <ClInclude Include="..\CPP_Sources\sdl_cursor.h" />
     <ClInclude Include="..\CPP_Sources\sdl_draw.h" />
     <ClInclude Include="..\CPP_Sources\sdl_event.h" />
+    <ClInclude Include="..\CPP_Sources\sdl_sound.h" />
     <ClInclude Include="..\CPP_Sources\sdl_texture.h" />
     <ClInclude Include="..\CPP_Sources\sdl_timer.h" />
     <ClInclude Include="..\CPP_Sources\timer.h" />
@@ -124,30 +126,30 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(SolutionDir)$(Configuration)\temp\</IntDir>
-    <IncludePath>$(SolutionDir)..\SDL2\include;$(SolutionDir)..\CPP_Sources;$(SolutionDir)..\ASM_Sources;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)..\SDL2_mixer\include;$(SolutionDir)..\SDL2\include;$(SolutionDir)..\CPP_Sources;$(SolutionDir)..\ASM_Sources;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <SourcePath>$(SolutionDir)..\CPP_Sources;$(SolutionDir)..\ASM_Sources;$(VC_SourcePath);</SourcePath>
-    <LibraryPath>$(SolutionDir)..\SDL2\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <LibraryPath>$(SolutionDir)..\SDL2_mixer\lib\x86;$(SolutionDir)..\SDL2\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)$(Configuration)\temp\</IntDir>
-    <IncludePath>$(SolutionDir)..\SDL2\include;$(SolutionDir)..\CPP_Sources;$(SolutionDir)..\ASM_Sources;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)..\SDL2_mixer\include;$(SolutionDir)..\SDL2\include;$(SolutionDir)..\CPP_Sources;$(SolutionDir)..\ASM_Sources;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <SourcePath>$(SolutionDir)..\CPP_Sources;$(SolutionDir)..\ASM_Sources;$(VC_SourcePath);</SourcePath>
-    <LibraryPath>$(SolutionDir)..\SDL2\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <LibraryPath>$(SolutionDir)..\SDL2_mixer\lib\x86;$(SolutionDir)..\SDL2\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\temp\</IntDir>
-    <IncludePath>$(SolutionDir)..\SDL2\include;$(SolutionDir)..\CPP_Sources;$(SolutionDir)..\ASM_Sources;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)..\SDL2_mixer\include;$(SolutionDir)..\SDL2\include;$(SolutionDir)..\CPP_Sources;$(SolutionDir)..\ASM_Sources;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <SourcePath>$(SolutionDir)..\CPP_Sources;$(SolutionDir)..\ASM_Sources;$(VC_SourcePath);</SourcePath>
-    <LibraryPath>$(SolutionDir)..\SDL2\lib\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <LibraryPath>$(SolutionDir)..\SDL2_mixer\lib\x64;$(SolutionDir)..\SDL2\lib\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\temp\</IntDir>
-    <IncludePath>$(SolutionDir)..\SDL2\include;$(SolutionDir)..\CPP_Sources;$(SolutionDir)..\ASM_Sources;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)..\SDL2_mixer\include;$(SolutionDir)..\SDL2\include;$(SolutionDir)..\CPP_Sources;$(SolutionDir)..\ASM_Sources;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <SourcePath>$(SolutionDir)..\CPP_Sources;$(SolutionDir)..\ASM_Sources;$(VC_SourcePath);</SourcePath>
-    <LibraryPath>$(SolutionDir)..\SDL2\lib\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <LibraryPath>$(SolutionDir)..\SDL2_mixer\lib\x64;$(SolutionDir)..\SDL2\lib\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -158,6 +160,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <CallingConvention>Cdecl</CallingConvention>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -187,6 +190,7 @@
       <OmitFramePointers>false</OmitFramePointers>
       <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -210,6 +214,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -235,6 +240,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
