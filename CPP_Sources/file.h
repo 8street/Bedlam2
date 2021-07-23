@@ -22,9 +22,11 @@ public:
     size_t get_size() const;
 
 private:
+    virtual int load_data();
+    int set_path(const std::string &path);
+
+protected:
     std::filesystem::path m_file;
     std::vector<uint8_t> m_data;
     size_t m_file_size;
-    int load_data();
-    int set_path(const std::string &path);
 };

@@ -27,7 +27,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CPP_Sources\bin_file.cpp" />
-    <ClCompile Include="..\CPP_Sources\dsound_func.cpp" />
     <ClCompile Include="..\CPP_Sources\exported_func.cpp" />
     <ClCompile Include="..\CPP_Sources\file.cpp" />
     <ClCompile Include="..\CPP_Sources\helper.cpp" />
@@ -50,7 +49,6 @@
   <ItemGroup>
     <ClInclude Include="..\CPP_Sources\bedlam2.h" />
     <ClInclude Include="..\CPP_Sources\bin_file.h" />
-    <ClInclude Include="..\CPP_Sources\dsound_func.h" />
     <ClInclude Include="..\CPP_Sources\exported_func.h" />
     <ClInclude Include="..\CPP_Sources\file.h" />
     <ClInclude Include="..\CPP_Sources\helper.h" />

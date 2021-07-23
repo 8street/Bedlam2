@@ -9,6 +9,7 @@ public:
     RAW_File();
     RAW_File(const std::string &path);
     ~RAW_File();
+    RAW_File(const RAW_File &raw);
 
     int load_raw(const std::string &path);
     Mix_Chunk *get_chunk();
@@ -18,4 +19,5 @@ private:
     Mix_Chunk *m_raw_chunk = nullptr; 
     int load_chunk();
     int destroy();
+    virtual int load_data();
 };
