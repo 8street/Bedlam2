@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 
-#pragma pack(1)
+#pragma pack(push, 1)
 typedef struct tagBITMAPINFOHEADER
 {
     uint32_t biSize;
@@ -25,5 +25,5 @@ typedef struct tagBITMAPFILEHEADER
     uint16_t bfReserved2;
     uint32_t bfOffBits;
 } BITMAPFILEHEADER;
-
+#pragma pack(pop)
 int save_screenshot();
