@@ -190,6 +190,7 @@ int SDL_events()
                     WINDOW_HEIGHT = WINDOW_WIDTH * 3 / 4;
                 }
                 break;
+                redraw();
             case SDL_WINDOWEVENT_SIZE_CHANGED:
                 // SDL_DisplayMode DM;
                 // SDL_GetCurrentDisplayMode(0, &DM);
@@ -204,6 +205,7 @@ int SDL_events()
                 // SDL_Log("Window %d maximized", event->window.windowID);
                 break;
             case SDL_WINDOWEVENT_RESTORED:
+                redraw();
                 // SDL_Log("Window %d restored", event->window.windowID);
                 break;
             case SDL_WINDOWEVENT_ENTER:
@@ -214,6 +216,7 @@ int SDL_events()
                 // SDL_Log("Mouse left window %d", event->window.windowID);
                 break;
             case SDL_WINDOWEVENT_FOCUS_GAINED:
+                redraw();
                 // SDL_Log("Window %d gained keyboard focus",
                 // event->window.windowID);
                 break;

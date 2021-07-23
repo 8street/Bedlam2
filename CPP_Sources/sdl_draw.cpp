@@ -1,4 +1,6 @@
 #include <iostream>
+#include <thread>
+#include <vector>
 
 #include "bedlam2.h"
 #include "sdl_draw.h"
@@ -20,6 +22,7 @@ volatile uint32_t SCREEN_SURFACE_HEIGHT;
 SDL_Window *WINDOW;
 SDL_Renderer *RENDER;
 SDL_Surface *SCREEN_SURFACE;
+SDL_Texture *SCREEN_TEXTURE; 
 
 #define SIDEBAR_WIDTH 160
 
@@ -77,6 +80,13 @@ int init_video()
     if (!SCREEN_SURFACE)
     {
         std::cout << "ERROR: created screen surface. \n";
+        ret_val |= 1;
+    }
+
+    SCREEN_TEXTURE = SDL_CreateTexture(RENDER, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, GAME_WIDTH, GAME_HEIGHT);
+    if (!SCREEN_TEXTURE)
+    {
+        std::cout << "ERROR: created screen texture. \n";
         ret_val |= 1;
     }
 
@@ -159,8 +169,8 @@ void copy_buffer_to_screen_and_unlock(uint8_t *buffer)
 // 00425A03 Bedlam 1
 void redraw()
 {
-    //Timer tim;
-    SDL_Texture *t = MY_CreateTextureFromSurface(RENDER, SCREEN_SURFACE);
+    Timer tim;
+    fill_screen_texture(RENDER, SCREEN_SURFACE, SCREEN_TEXTURE);
 
     SDL_Rect dstrect;
 
@@ -168,11 +178,10 @@ void redraw()
     dstrect.y = 0;
     dstrect.w = WINDOW_WIDTH;
     dstrect.h = WINDOW_HEIGHT;
-    SDL_RenderCopy(RENDER, t, NULL, &dstrect);
-    //volatile double a = tim.elapsed();
-    //a = 0.0;
+    SDL_RenderCopy(RENDER, SCREEN_TEXTURE, NULL, &dstrect);
+    volatile double a = tim.elapsed();
+    a = 0.0;
     SDL_RenderPresent(RENDER);
-    SDL_DestroyTexture(t);
     SDL_events();
 }
 
@@ -303,20 +312,15 @@ void copy_screen_to_buffer(uint8_t *buffer_ptr)
     }
 }
 
-SDL_Texture *MY_CreateTextureFromSurface(SDL_Renderer *renderer, const SDL_Surface *surface)
+int fill_screen_texture(SDL_Renderer *renderer, SDL_Surface *surface, SDL_Texture *texture)
 {
     int errorcode = 0;
-    SDL_Texture *t = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, surface->w, surface->h);
-    if (!t)
-    {
-        errorcode |= 1;
-    }
     uint8_t *bytes = nullptr;
     int pitch = 0;
-    errorcode |= SDL_LockTexture(t, nullptr, reinterpret_cast<void **>(&bytes), &pitch);
-    if (SDL_MUSTLOCK(SCREEN_SURFACE))
+    errorcode |= SDL_LockTexture(texture, nullptr, reinterpret_cast<void **>(&bytes), &pitch);
+    if (SDL_MUSTLOCK(surface))
     {
-        SDL_LockSurface(SCREEN_SURFACE);
+        errorcode |= SDL_LockSurface(surface);
     }
     for (int y = 0; y < surface->h; y++)
     {
@@ -326,17 +330,43 @@ SDL_Texture *MY_CreateTextureFromSurface(SDL_Renderer *renderer, const SDL_Surfa
             ((SDL_Color *)bytes)[y * surface->w + x] = surface->format->palette->colors[index];
         }
     }
-    if (SDL_MUSTLOCK(SCREEN_SURFACE))
+
+    // It is 4 times slower than a single thread
+    //std::vector<std::thread> threads;
+    //int step = surface->h / SDL_GetCPUCount();
+    //int y = 0;
+    //for (int i = 0; i < SDL_GetCPUCount(); i++)
+    //{
+    //    std::thread t(&fill_part_screen_texture, std::move(surface), std::move(bytes), y, y + step);
+    //    threads.push_back(move(t));
+    //    y += step;
+    //}
+    //for (std::thread &t : threads)
+    //{
+    //    t.join();
+    //}
+
+    if (SDL_MUSTLOCK(surface))
     {
         SDL_UnlockSurface(SCREEN_SURFACE);
     }
-    SDL_UnlockTexture(t);
-    if (errorcode)
-    {
-        std::cout << "ERROR: creating texture \n";
-    }
-    return t;
+    SDL_UnlockTexture(texture);
+    return errorcode;
 }
+
+void fill_part_screen_texture(SDL_Surface *s, uint8_t *buf, int start_y, int stop_y)
+{
+    //thread_struct *str1 = (thread_struct *)ptr;
+    for (int y = start_y; y < stop_y; y++)
+    {
+        for (int x = 0; x < s->w; x++)
+        {
+            uint8_t index = ((uint8_t *)s->pixels)[y * s->w + x];
+            ((SDL_Color *)buf)[y * s->w + x] = s->format->palette->colors[index];
+        }
+    }
+}
+
 
 extern "C" void get_screen_buffer_ptr()
 {
