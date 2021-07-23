@@ -22,9 +22,6 @@
     <None Include="..\.clang-format" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\CPP_Sources\dsound_func.cpp">
-      <Filter>CPP Sources</Filter>
-    </ClCompile>
     <ClCompile Include="..\CPP_Sources\file.cpp">
       <Filter>CPP Sources</Filter>
     </ClCompile>
@@ -84,9 +81,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\CPP_Sources\dsound_func.h">
-      <Filter>CPP Sources</Filter>
-    </ClInclude>
     <ClInclude Include="..\CPP_Sources\file.h">
       <Filter>CPP Sources</Filter>
     </ClInclude>

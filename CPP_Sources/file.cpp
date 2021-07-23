@@ -1,6 +1,8 @@
+#include <fstream>
+#include <iostream>
 
 #include "file.h"
-#include <fstream>
+
 
 File::File()
 {
@@ -68,7 +70,7 @@ int File::load_data()
     file.open(get_full_path().c_str(), std::ios_base::in | std::ios_base::binary);
     if (!file.is_open())
     {
-        printf("Unable to open file %s.", get_full_path().c_str());
+        std::cout << "Unable to open file %s." << get_full_path().c_str() << "\n";
         exit(404);
     }
 
