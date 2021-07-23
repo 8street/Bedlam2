@@ -76,6 +76,9 @@
     <ClCompile Include="..\CPP_Sources\sdl_texture.cpp">
       <Filter>CPP Sources</Filter>
     </ClCompile>
+    <ClCompile Include="..\CPP_Sources\sdl_sound.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CPP_Sources\dsound_func.h">
@@ -130,6 +133,9 @@
       <Filter>CPP Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\CPP_Sources\sdl_texture.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\sdl_sound.h">
       <Filter>CPP Sources</Filter>
     </ClInclude>
   </ItemGroup>
