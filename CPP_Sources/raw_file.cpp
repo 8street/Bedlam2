@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "raw_file.h"
+#include "sdl_event.h"
 
 RAW_File::RAW_File()
 {
@@ -96,6 +97,10 @@ int RAW_File::load_data()
         // we need 2 push back because 2 channels is active
         m_data.push_back((uint8_t)ch);
         m_data.push_back((uint8_t)ch);
+        if (i % 512 == 0)
+        {
+            SDL_events();
+        }
     }
 
     m_file_size *= 2;
