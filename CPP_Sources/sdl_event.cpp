@@ -66,98 +66,11 @@ int SDL_events()
         }
         if (event.type == SDL_KEYDOWN)
         {
-            switch (event.key.keysym.sym)
-            {
-                case SDLK_ESCAPE:
-                    KEY_ESC = 1;
-                    break;
-                case SDLK_1:
-                    KEY_1 = 1;
-                    break;
-                case SDLK_2:
-                    KEY_2 = 1;
-                    break;
-                case SDLK_3:
-                    KEY_3 = 1;
-                    break;
-                case SDLK_4:
-                    KEY_4 = 1;
-                    break;
-                case SDLK_5:
-                    KEY_5 = 1;
-                    break;
-                case SDLK_6:
-                    KEY_6 = 1;
-                    break;
-                case SDLK_7:
-                    KEY_7 = 1;
-                    break;
-                case SDLK_F1:
-                    KEY_F1 = 1;
-                    break;
-                case SDLK_F2:
-                    KEY_F2 = 1;
-                    break;
-                case SDLK_F3:
-                    KEY_F3 = 1;
-                    break;
-                case SDLK_p:
-                    KEY_P = 1;
-                    break;
-                case SDLK_m:
-                case SDLK_SPACE:
-                    KEY_M = 1;
-                    break;
-                case SDLK_PRINTSCREEN:
-                    save_screenshot();
-                    break;
-            }
+            GAME_KEYBOARD.key_down(event.key.keysym.sym);
         }
         if (event.type == SDL_KEYUP)
         {
-            switch (event.key.keysym.sym)
-            {
-                case SDLK_ESCAPE:
-                    KEY_ESC = 0;
-                    break;
-                case SDLK_1:
-                    KEY_1 = 0;
-                    break;
-                case SDLK_2:
-                    KEY_2 = 0;
-                    break;
-                case SDLK_3:
-                    KEY_3 = 0;
-                    break;
-                case SDLK_4:
-                    KEY_4 = 0;
-                    break;
-                case SDLK_5:
-                    KEY_5 = 0;
-                    break;
-                case SDLK_6:
-                    KEY_6 = 0;
-                    break;
-                case SDLK_7:
-                    KEY_7 = 0;
-                    break;
-                case SDLK_F1:
-                    KEY_F1 = 0;
-                    break;
-                case SDLK_F2:
-                    KEY_F2 = 0;
-                    break;
-                case SDLK_F3:
-                    KEY_F3 = 0;
-                    break;
-                case SDLK_p:
-                    KEY_P = 0;
-                    break;
-                case SDLK_m:
-                case SDLK_SPACE:
-                    KEY_M = 0;
-                    break;
-            }
+            GAME_KEYBOARD.key_up(event.key.keysym.sym);
         }
 
         switch (event.window.event)
