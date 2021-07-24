@@ -169,7 +169,7 @@ void copy_buffer_to_screen_and_unlock(uint8_t *buffer)
 // 00425A03 Bedlam 1
 void redraw()
 {
-    Timer tim;
+    //volatile Timer tim;
     fill_screen_texture(RENDER, SCREEN_SURFACE, SCREEN_TEXTURE);
 
     SDL_Rect dstrect;
@@ -179,8 +179,8 @@ void redraw()
     dstrect.w = WINDOW_WIDTH;
     dstrect.h = WINDOW_HEIGHT;
     SDL_RenderCopy(RENDER, SCREEN_TEXTURE, NULL, &dstrect);
-    volatile double a = tim.elapsed();
-    a = 0.0;
+    //volatile double elapsed = tim.elapsed();
+    //elapsed = 0.0;
     SDL_RenderPresent(RENDER);
     SDL_events();
 }
@@ -193,7 +193,6 @@ int unlock_surface_and_wait(int time_to_waiting)
         SDL_UnlockSurface(SCREEN_SURFACE);
     }
     WAITING_TIMER = 0;
-    //redraw();
     while (time_to_waiting > WAITING_TIMER)
     {
         SDL_events();
