@@ -9,9 +9,15 @@ This game has been ported on SDL2 library.
 
 This repository does not contain any original game resources.
 
+---
+
+![Bedlam 2 Preview](https://www.old-games.ru/forum/attachments/bedlam2-png.241732/)
+
+---
+
 # Project State
 
-The sources can be compiled and fully playable. All crashes have been fixed.
+The sources can be compiled and fully playable. Rare crashes are possible.
 
 # Contributing
 
@@ -20,13 +26,13 @@ Patches and improvements are welcome.
 
 # Compiling
 
-### Windows users
+### Windows
 
 1. Open solution vs2019/Bedlam2.sln in Visual Studio 2019
 2. Compile x86 platform
 3. Put compiled .exe file in your Bedlam2 folder. Or put Bedlam2 files in VS output directory
 4. Run
 
-### Linux, Mac users
+### Linux, Mac
 
-Source codes can be compiled. You will have to modify the sources that so the save paths is be not "C:/MIRAGE/AD_BED". Other modifications may be required.
+Source codes can be compiled because SDL2 is platform free lib. You will have to modify the sources so that the save paths is be not "C:/MIRAGE/AD_BED". Other modifications may be required.
