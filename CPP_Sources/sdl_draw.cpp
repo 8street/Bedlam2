@@ -193,7 +193,7 @@ int unlock_surface_and_wait(int time_to_waiting)
         SDL_UnlockSurface(SCREEN_SURFACE);
     }
     WAITING_TIMER = 0;
-    redraw();
+    //redraw();
     while (time_to_waiting > WAITING_TIMER)
     {
         SDL_events();
@@ -205,6 +205,7 @@ int unlock_surface_and_wait(int time_to_waiting)
 // 0001256B Bedlam 1
 void redraw_copy_buff_to_screen_and_unlock(uint8_t *screen_buf)
 {
+    redraw();
     copy_buffer_to_screen_and_unlock(screen_buf);
 }
 
