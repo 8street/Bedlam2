@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <unordered_map>
 
+// exports to bedlam2.asm
 extern "C" uint8_t PRESSED_KEY_ARR[257];
 
 extern "C" int32_t KEY_ESC;
@@ -18,6 +19,7 @@ extern "C" int32_t KEY_6;
 extern "C" int32_t KEY_7;
 extern "C" int32_t KEY_P;
 extern "C" int32_t KEY_M;
+// end exports
 
 // Bedlam 2 ordinary scancodes
 enum class Scancode

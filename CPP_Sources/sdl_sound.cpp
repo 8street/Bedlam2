@@ -5,7 +5,7 @@
 #include "helper.h"
 #include "sdl_sound.h"
 
-#define MIX_EFFECTSMAXSPEED "MIX_EFFECTSMAXSPEED"
+//#define MIX_EFFECTSMAXSPEED "MIX_EFFECTSMAXSPEED"
 #define MIX_MAX_BALANCE 255
 
 Sound SOUND_SYSTEM;
@@ -30,25 +30,25 @@ int Sound::init()
         std::cout << "ERROR: SDL init audio \n";
     }
 
-    ret_val |= Mix_OpenAudio(11025, AUDIO_U8, 2, 10);
+    ret_val |= Mix_OpenAudio(11025, AUDIO_U8, 2, 16);
 
     if (ret_val)
     {
         std::cout << "ERROR: Mix_OpenAudio \n";
     }
-    
+
+    m_num_simultaneously_playing_channels = 10;
     // Allocate check
-    int num_channels = Mix_AllocateChannels(512);
-    int num_reserve_channels = Mix_ReserveChannels(512);
-    if (num_channels != 512 || num_reserve_channels != 512)
+    int max_channels = 104 * m_num_simultaneously_playing_channels;
+    int num_channels = Mix_AllocateChannels(max_channels);
+    int num_reserve_channels = Mix_ReserveChannels(max_channels);
+    if (num_channels != max_channels || num_reserve_channels != max_channels)
     {
         std::cout << "ERROR: allocate channels. Current channels number is " << num_channels << "\n";
         ret_val |= -1;
     }
 
     ret_val |= Mix_Volume(-1, MIX_MAX_VOLUME);
-
-    m_num_simultaneously_playing_channels = 5;
     
     return ret_val;
 }
@@ -66,7 +66,6 @@ int Sound::add_raw(const std::string &path)
     m_filename_index_map.emplace(path, raw_index);
     Mix_VolumeChunk(m_raws[raw_index].get_chunk(), MIX_MAX_VOLUME);
     Mix_AllocateChannels(m_num_simultaneously_playing_channels * (raw_index + 1));
-    Mix_ReserveChannels(m_num_simultaneously_playing_channels * (raw_index + 1));
     return raw_index;
 }
 
@@ -77,6 +76,7 @@ int Sound::play_raw(int index, int x, int y, bool loop)
     int l_balance = 0;
     int r_balance = 0;
     int volume = 0;
+    int palying_times = 0;
 
     if (x == -1 && y == -1)
     {
@@ -104,7 +104,11 @@ int Sound::play_raw(int index, int x, int y, bool loop)
 
     ret_val |= Mix_Volume(free_channel_index, volume);
     ret_val |= Mix_SetPanning(free_channel_index, (uint8_t)l_balance, (uint8_t)r_balance);
-    ret_val |= Mix_PlayChannel(free_channel_index, m_raws[index].get_chunk(), (int)loop);
+    if (loop)
+    {
+        palying_times = -1;
+    }
+    ret_val |= Mix_PlayChannel(free_channel_index, m_raws[index].get_chunk(), palying_times);
     return ret_val;
 }
 
@@ -170,7 +174,7 @@ int Sound::get_volume(int x, int y) const
 }
 int Sound::get_balance(int x, int y) const
 {
-    int balance = -256 * (y - screen_y_pos - (x - screen_x_pos));
+    int balance = -224 * (y - screen_y_pos - (x - screen_x_pos));
     if (balance < -32640)
     {
         balance = -32640;

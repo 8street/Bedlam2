@@ -14,8 +14,8 @@ extern volatile uint8_t FULLSCREEN;
 extern "C" volatile uint32_t SCREEN_SURFACE_WIDTH;
 extern volatile uint32_t SCREEN_SURFACE_HEIGHT;
 
+extern SDL_Window *WINDOW;
 extern SDL_Renderer *RENDER;
-
 extern SDL_Surface *SCREEN_SURFACE;
 
 extern "C" uint8_t *SCREEN_BUFFER_PTR;
