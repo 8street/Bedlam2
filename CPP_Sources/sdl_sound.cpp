@@ -39,7 +39,8 @@ int Sound::init()
     
     // Allocate check
     int num_channels = Mix_AllocateChannels(512);
-    if (num_channels != 512)
+    int num_reserve_channels = Mix_ReserveChannels(512);
+    if (num_channels != 512 || num_reserve_channels != 512)
     {
         std::cout << "ERROR: allocate channels. Current channels number is " << num_channels << "\n";
         ret_val |= -1;
@@ -65,6 +66,7 @@ int Sound::add_raw(const std::string &path)
     m_filename_index_map.emplace(path, raw_index);
     Mix_VolumeChunk(m_raws[raw_index].get_chunk(), MIX_MAX_VOLUME);
     Mix_AllocateChannels(m_num_simultaneously_playing_channels * (raw_index + 1));
+    Mix_ReserveChannels(m_num_simultaneously_playing_channels * (raw_index + 1));
     return raw_index;
 }
 

@@ -16,6 +16,7 @@ int SDL_events()
         if (event.type == SDL_QUIT)
         {
             SDL_Quit();
+            exit(0);
         }
         if (event.type == SDL_MOUSEBUTTONDOWN)
         {
