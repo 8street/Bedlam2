@@ -11,6 +11,12 @@
 int SDL_events()
 {
     SDL_Event event;
+
+    SDL_DisplayMode DM;
+    int monitor_width;
+    int monitor_height;
+    int new_width;
+    int new_height;
     while (SDL_PollEvent(&event))
     {
         if (event.type == SDL_QUIT)
@@ -76,6 +82,7 @@ int SDL_events()
         switch (event.window.event)
         {
             case SDL_WINDOWEVENT_SHOWN:
+                redraw();
                 // SDL_Log("Window %d shown", event->window.windowID);
                 break;
             case SDL_WINDOWEVENT_HIDDEN:
@@ -93,29 +100,52 @@ int SDL_events()
                 // SDL_Log("Window %d resized to %dx%d",
                 // event->window.windowID, event->window.data1,
                 // event->window.data2);
-                WINDOW_WIDTH = event.window.data1;
-                WINDOW_HEIGHT = event.window.data2;
-                if (WINDOW_WIDTH * 3 > WINDOW_HEIGHT * 4)
+                new_width = event.window.data1;
+                new_height = event.window.data2;
+                if (new_height < WINDOW_HEIGHT || new_width < WINDOW_WIDTH)
                 {
-                    WINDOW_WIDTH = WINDOW_HEIGHT * 4 / 3;
+                    if (new_width * 3 > new_height * 4)
+                    {
+                        new_width = new_height * 4 / 3;
+                    }
+                    else
+                    {
+                        new_height = new_width * 3 / 4;
+                    }
                 }
                 else
                 {
-                    WINDOW_HEIGHT = WINDOW_WIDTH * 3 / 4;
+                    if (new_width * 3 > new_height * 4)
+                    {
+                        new_height = new_width * 3 / 4;
+                    }
+                    else
+                    {
+                        new_width = new_height * 4 / 3;
+                    }
                 }
-                break;
+                WINDOW_HEIGHT = new_height;
+                WINDOW_WIDTH = new_width;
+                SDL_SetWindowSize(WINDOW, WINDOW_WIDTH, WINDOW_HEIGHT);
                 redraw();
+                break;
             case SDL_WINDOWEVENT_SIZE_CHANGED:
                 // SDL_DisplayMode DM;
                 // SDL_GetCurrentDisplayMode(0, &DM);
                 // SDL_Log("Window %d size changed to %dx%d",
                 // event->window.windowID, event->window.data1,
                 // event->window.data2);
+                //SDL_SetWindowSize(WINDOW, WINDOW_WIDTH, WINDOW_HEIGHT);
+                //redraw();
                 break;
             case SDL_WINDOWEVENT_MINIMIZED:
                 // SDL_Log("Window %d minimized", event->window.windowID);
                 break;
             case SDL_WINDOWEVENT_MAXIMIZED:
+                SDL_GetCurrentDisplayMode(0, &DM);
+                monitor_width = DM.w;
+                monitor_height = DM.h;
+                SDL_SetWindowPosition(WINDOW, (monitor_width - WINDOW_WIDTH) / 2, (monitor_height - WINDOW_HEIGHT) / 2);
                 // SDL_Log("Window %d maximized", event->window.windowID);
                 break;
             case SDL_WINDOWEVENT_RESTORED:

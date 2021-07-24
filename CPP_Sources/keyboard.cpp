@@ -1,5 +1,6 @@
 #include "keyboard.h"
 
+// exports to bedlam2.asm
 uint8_t PRESSED_KEY_ARR[257];
 
 int32_t KEY_ESC;
@@ -15,6 +16,7 @@ int32_t KEY_6;
 int32_t KEY_7;
 int32_t KEY_P;
 int32_t KEY_M;
+// end exports
 
 Keyboard GAME_KEYBOARD;
 
