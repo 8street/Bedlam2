@@ -35,4 +35,4 @@ Patches and improvements are welcome.
 
 ### Linux, Mac
 
-Source codes can be compiled because SDL2 is platform free lib. You will have to modify the sources so that the save paths is be not "C:/MIRAGE/AD_BED". Other modifications may be required.
+Source codes can be compiled because SDL2 is platform free lib. You will have to modify the sources so that the save paths are being not "C:/MIRAGE/AD_BED". Other modifications may be required.
