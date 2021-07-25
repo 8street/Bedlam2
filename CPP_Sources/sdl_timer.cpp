@@ -6,23 +6,45 @@
 #include "sdl_timer.h"
 #include "palette.h"
 
-SDL_TimerID my_timer_id;
-
 volatile int32_t WAITING_TIMER;
 volatile int32_t GAME_UPDATE_TIMER;
+static Uint32 sdl_timer_callback(Uint32 interval, void *param);
+Timer GAME_TIMER;
 
-int init_timer()
+void dos_sleep(uint32_t time)
+{
+    SDL_Delay(time);
+}
+
+Timer::Timer(int interval_ms)
+    : m_interval_ms(interval_ms)
+{
+}
+
+Timer::~Timer()
+{
+    SDL_RemoveTimer(m_timer_id);
+    SDL_QuitSubSystem(SDL_INIT_TIMER);
+}
+
+int Timer::init(int interval_ms)
+{
+    m_interval_ms = interval_ms;
+    return init();
+}
+
+
+int Timer::init()
 {
     PALETTE_TIMER = 0;
     int ret_val = 0;
-    ret_val = SDL_Init(SDL_INIT_TIMER) ;
+    ret_val = SDL_Init(SDL_INIT_TIMER);
 
-    // for more soften performance 10 be changed to 9 
-    my_timer_id = SDL_AddTimer(9, sdl_timer_callback, NULL);
-    if (ret_val || !my_timer_id)
+    m_timer_id = SDL_AddTimer(m_interval_ms, sdl_timer_callback, NULL);
+    if (ret_val || !m_timer_id)
     {
         std::cout << "ERROR: Init timer \n";
-        ret_val |= 1;
+        ret_val |= -1;
     }
     return ret_val;
 }
@@ -67,9 +89,4 @@ Uint32 sdl_timer_callback(Uint32 interval, void *param)
     }
 
     return (interval);
-}
-
-void dos_sleep(uint32_t time)
-{
-    SDL_Delay(time);
 }
