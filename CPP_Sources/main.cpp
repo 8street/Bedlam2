@@ -2,13 +2,13 @@
 #include "bedlam2.h"
 #include "main.h"
 #include "mouse.h"
-#include "sdl_draw.h"
 #include "sdl_timer.h"
 #include "sdl_sound.h"
+#include "sdl_window.h"
 
 int main(int argc, char *argv[])
 {
-    init_video();
+    GAME_WINDOW.init();
     init_timer();
     WINDOW_CURSOR.init();
     SOUND_SYSTEM.init();
@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
 
 void free_win()
 {
+    int a = 0;
     //timer_deinit();
     //ddraw_deinit();
     //dsound_deinit();

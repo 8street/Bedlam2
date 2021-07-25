@@ -52,9 +52,6 @@
     <ClCompile Include="..\CPP_Sources\sdl_event.cpp">
       <Filter>CPP Sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\CPP_Sources\sdl_draw.cpp">
-      <Filter>CPP Sources</Filter>
-    </ClCompile>
     <ClCompile Include="..\CPP_Sources\sdl_timer.cpp">
       <Filter>CPP Sources</Filter>
     </ClCompile>
@@ -77,6 +74,12 @@
       <Filter>CPP Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\CPP_Sources\raw_file.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\sdl_window.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\bedlam2_draw.cpp">
       <Filter>CPP Sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -111,9 +114,6 @@
     <ClInclude Include="..\CPP_Sources\sdl_event.h">
       <Filter>CPP Sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\CPP_Sources\sdl_draw.h">
-      <Filter>CPP Sources</Filter>
-    </ClInclude>
     <ClInclude Include="..\CPP_Sources\sdl_timer.h">
       <Filter>CPP Sources</Filter>
     </ClInclude>
@@ -136,6 +136,12 @@
       <Filter>CPP Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\CPP_Sources\raw_file.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\sdl_window.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\bedlam2_draw.h">
       <Filter>CPP Sources</Filter>
     </ClInclude>
   </ItemGroup>

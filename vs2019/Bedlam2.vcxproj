@@ -26,6 +26,7 @@
     <None Include="..\README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\CPP_Sources\bedlam2_draw.cpp" />
     <ClCompile Include="..\CPP_Sources\bin_file.cpp" />
     <ClCompile Include="..\CPP_Sources\exported_func.cpp" />
     <ClCompile Include="..\CPP_Sources\file.cpp" />
@@ -39,15 +40,16 @@
     <ClCompile Include="..\CPP_Sources\raw_file.cpp" />
     <ClCompile Include="..\CPP_Sources\screenshot.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_cursor.cpp" />
-    <ClCompile Include="..\CPP_Sources\sdl_draw.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_event.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_sound.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_texture.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_timer.cpp" />
+    <ClCompile Include="..\CPP_Sources\sdl_window.cpp" />
     <ClCompile Include="..\CPP_Sources\timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CPP_Sources\bedlam2.h" />
+    <ClInclude Include="..\CPP_Sources\bedlam2_draw.h" />
     <ClInclude Include="..\CPP_Sources\bin_file.h" />
     <ClInclude Include="..\CPP_Sources\exported_func.h" />
     <ClInclude Include="..\CPP_Sources\file.h" />
@@ -60,11 +62,11 @@
     <ClInclude Include="..\CPP_Sources\raw_file.h" />
     <ClInclude Include="..\CPP_Sources\screenshot.h" />
     <ClInclude Include="..\CPP_Sources\sdl_cursor.h" />
-    <ClInclude Include="..\CPP_Sources\sdl_draw.h" />
     <ClInclude Include="..\CPP_Sources\sdl_event.h" />
     <ClInclude Include="..\CPP_Sources\sdl_sound.h" />
     <ClInclude Include="..\CPP_Sources\sdl_texture.h" />
     <ClInclude Include="..\CPP_Sources\sdl_timer.h" />
+    <ClInclude Include="..\CPP_Sources\sdl_window.h" />
     <ClInclude Include="..\CPP_Sources\timer.h" />
   </ItemGroup>
   <ItemGroup>
