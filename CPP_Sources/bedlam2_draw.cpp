@@ -45,7 +45,7 @@ void draw_map_and_game_screen()
 
 void copy_screen_to_buffer(uint8_t *buffer_ptr)
 {
-    GAME_WINDOW.fill_screen_surface(buffer_ptr);
+    GAME_WINDOW.copy_screen_to_buffer(buffer_ptr);
 }
 
 void get_screen_buffer_ptr()
