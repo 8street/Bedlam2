@@ -49,7 +49,10 @@ int Sound::init()
         ret_val |= -1;
     }
 
-    ret_val |= Mix_Volume(-1, MIX_MAX_VOLUME);
+    if (Mix_Volume(-1, MIX_MAX_VOLUME) != MIX_MAX_VOLUME)
+    {
+        ret_val |= -1;
+    }
     
     return ret_val;
 }
