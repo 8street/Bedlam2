@@ -1,3 +1,4 @@
+#include <iostream>
 
 #include "bedlam2.h"
 #include "main.h"
@@ -8,18 +9,22 @@
 
 int main(int argc, char *argv[])
 {
+#ifdef _DEBUG
+    setvbuf(stdout, NULL, _IONBF, 0);
+    setvbuf(stderr, NULL, _IONBF, 0);
+    //atexit([] { system("PAUSE"); });
+#endif
     GAME_WINDOW.init();
-    init_timer();
     WINDOW_CURSOR.init();
+    GAME_TIMER.init(10);
     SOUND_SYSTEM.init();
 
+    // Run bedlam 2 main function
     return main_(0, NULL, NULL);
 }
 
 void free_win()
 {
-    int a = 0;
-    //timer_deinit();
-    //ddraw_deinit();
-    //dsound_deinit();
+    // Place all destroy and deinits here
+
 }

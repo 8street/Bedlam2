@@ -1,5 +1,6 @@
 #include <SDL.h>
 
+#include "main.h"
 #include "sdl_event.h"
 #include "mouse.h"
 #include "sdl_timer.h"
@@ -15,6 +16,7 @@ int SDL_events()
     {
         if (event.type == SDL_QUIT)
         {
+            free_win();
             SDL_Quit();
             exit(0);
         }
