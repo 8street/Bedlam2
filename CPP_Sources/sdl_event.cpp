@@ -69,6 +69,10 @@ int SDL_events()
         if (event.type == SDL_KEYDOWN)
         {
             GAME_KEYBOARD.key_down(event.key.keysym.sym);
+            if (event.key.keysym.sym == SDLK_PRINTSCREEN)
+            {
+                save_screenshot();
+            }
         }
         if (event.type == SDL_KEYUP)
         {
