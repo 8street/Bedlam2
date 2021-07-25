@@ -1,4 +1,5 @@
 #include <iostream>
+#include <SDL.h>
 
 #include "bedlam2.h"
 #include "main.h"
@@ -12,12 +13,28 @@ int main(int argc, char *argv[])
 #ifdef _DEBUG
     setvbuf(stdout, NULL, _IONBF, 0);
     setvbuf(stderr, NULL, _IONBF, 0);
-    //atexit([] { system("PAUSE"); });
+    atexit([] { system("PAUSE"); });
 #endif
-    GAME_WINDOW.init();
-    WINDOW_CURSOR.init();
-    GAME_TIMER.init(10);
-    SOUND_SYSTEM.init();
+
+    if (GAME_WINDOW.init())
+    {
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Problem", "Error init video!", NULL);
+        return 1;
+    }
+    if (WINDOW_CURSOR.init())
+    {  
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Problem", "Error init cursor!", NULL);   
+    }
+    // timer changed to 9 for more smoothly performance
+    if(GAME_TIMER.init(9))
+    {
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Problem", "Error init timer!", NULL);   
+        return 2;
+    }
+    if(SOUND_SYSTEM.init())
+    {
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Problem", "Error init sound!", NULL);
+    }
 
     // Run bedlam 2 main function
     return main_(0, NULL, NULL);
