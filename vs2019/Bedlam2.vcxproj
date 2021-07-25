@@ -31,6 +31,7 @@
     <ClCompile Include="..\CPP_Sources\exported_func.cpp" />
     <ClCompile Include="..\CPP_Sources\file.cpp" />
     <ClCompile Include="..\CPP_Sources\helper.cpp" />
+    <ClCompile Include="..\CPP_Sources\ingame_music.cpp" />
     <ClCompile Include="..\CPP_Sources\keyboard.cpp" />
     <ClCompile Include="..\CPP_Sources\library_func.cpp" />
     <ClCompile Include="..\CPP_Sources\main.cpp" />
@@ -53,6 +54,7 @@
     <ClInclude Include="..\CPP_Sources\exported_func.h" />
     <ClInclude Include="..\CPP_Sources\file.h" />
     <ClInclude Include="..\CPP_Sources\helper.h" />
+    <ClInclude Include="..\CPP_Sources\ingame_music.h" />
     <ClInclude Include="..\CPP_Sources\keyboard.h" />
     <ClInclude Include="..\CPP_Sources\main.h" />
     <ClInclude Include="..\CPP_Sources\mouse.h" />
