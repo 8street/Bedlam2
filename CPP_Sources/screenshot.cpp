@@ -1,16 +1,12 @@
 #include <string>
 #include <cstdint>
+#include <iostream>
 #include <stdio.h>
 
-#include "sdl_draw.h"
+#include "sdl_window.h"
 #include "helper.h"
 #include "screenshot.h"
 #include "palette.h"
-
-#ifdef _MSC_VER
-// For use sprintf, fopen
-#    pragma warning(disable : 4996)
-#endif
 
 int NUM_SCREENSHOTS;
 
@@ -36,7 +32,7 @@ int save_screenshot()
     n = 0;
     pal_indx = 0;
     null = 0;
-    uint8_t *pal = get_RGB_palette_ptr();
+    uint8_t *pal = GAME_WINDOW.get_RGB_palette_ptr();
     memset(buffer1_1, 0, sizeof(buffer1_1));
     do
     {
@@ -48,20 +44,20 @@ int save_screenshot()
     } while (pal_indx != 256);
     while (1)
     {
-        sprintf(filename, "SS%04d.BMP", NUM_SCREENSHOTS);
+        sprintf_s(filename, sizeof(filename), "SS%04d.BMP", NUM_SCREENSHOTS);
         NUM_SCREENSHOTS++;
         if (NUM_SCREENSHOTS > 9999)
         {
             NUM_SCREENSHOTS = 9999;
         }
-        file = fopen(filename, "rb");
+        fopen_s(&file, filename, "rb");
         if (!file)
         {
             break;
         }
         fclose(file);
     }
-    file = fopen(filename, "wb");
+    fopen_s(&file, filename, "wb");
     if (file)
     {
         bmp_file_header.bfType = 'MB';
@@ -76,10 +72,10 @@ int save_screenshot()
         bmp_info_header.biSize = sizeof(bmp_info_header);
         bmp_info_header.biBitCount = 8;
         bmp_info_header.biSizeImage = 0;
-        bmp_info_header.biWidth = GAME_WIDTH;
+        bmp_info_header.biWidth = GAME_WINDOW.get_game_width();
         bmp_info_header.biXPelsPerMeter = 0;
         bmp_info_header.biClrUsed = 0;
-        bmp_info_header.biHeight = GAME_HEIGHT;
+        bmp_info_header.biHeight = GAME_WINDOW.get_game_height();
         bmp_info_header.biPlanes = 1;
         fwrite((char *)&bmp_info_header, 1, sizeof(bmp_info_header), file);
         ii = 0;
@@ -95,14 +91,14 @@ int save_screenshot()
         fseek(file, 10, SEEK_SET);
         fwrite(&filesize, 1, sizeof(filesize), file);
         fseek(file, 0, SEEK_END);
-        screen_surface_ptr = lock_and_get_surface_ptr();
-        height = GAME_HEIGHT - 1;
+        screen_surface_ptr = GAME_WINDOW.lock_and_get_surface_ptr();
+        height = GAME_WINDOW.get_game_height() - 1;
         if (height > -1)
         {
             bytes_writted = 0;
             for (i = 0;; i = 0)
             {
-                while (i < GAME_WIDTH)
+                while (i < GAME_WINDOW.get_game_width())
                 {
                     current_screen_point = &screen_surface_ptr[i + SCREEN_SURFACE_WIDTH * height];
                     bytes_writted += fwrite(current_screen_point, 1, 1, file);
@@ -120,12 +116,12 @@ int save_screenshot()
         fwrite(&filesize, 1, sizeof(filesize), file);
         fseek(file, 0, SEEK_END);
         fclose(file);
-        unlock_surface();
+        GAME_WINDOW.unlock_screen_surface();
         return 0;
     }
     else
     {
-        printf("Unable to save screenshot. The file %s does not open.", filename);
+        std::cout << "Unable to save screenshot. The file " << filename << " does not open.\n";
         return -1;
     }
 }

@@ -1,6 +1,6 @@
 #include "helper.h"
 #include "palette.h"
-#include "sdl_draw.h"
+#include "sdl_window.h"
 #include "sdl_event.h"
 
 volatile int32_t PALETTE_TIMER;
@@ -22,7 +22,7 @@ void set_palette(uint8_t *pal_file)
     {
         num_entries = 256;
     }
-    sdl_set_palette(pal_ptr, offset, num_entries);
+    GAME_WINDOW.set_palette(pal_ptr, offset, num_entries);
 }
 
 // 00425901 Bedlam 1
@@ -59,7 +59,7 @@ void swap_palette_with_animation(uint8_t *palette_file_ptr, int time)
     PALETTE_TIMER = 0;
     palette_ptr = palette_file_ptr + 2;
     buf_file = ANIMATE_PALETTE_BUFER;
-    screen_palette_ptr = get_RGB_palette_ptr();
+    screen_palette_ptr = GAME_WINDOW.get_RGB_palette_ptr();
     end_pallete = screen_palette_ptr + 768;
     while (screen_palette_ptr != end_pallete)
     {

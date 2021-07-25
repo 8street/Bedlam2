@@ -3,7 +3,6 @@
 #include "sdl_cursor.h"
 #include "mouse.h"
 #include "exported_func.h"
-#include "sdl_draw.h"
 #include "file.h"
 
 cursor::cursor()

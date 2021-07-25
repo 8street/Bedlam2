@@ -2,7 +2,7 @@
 
 #include "mouse.h"
 #include "bedlam2.h"
-#include "sdl_draw.h"
+#include "sdl_window.h"
 #include "helper.h"
 
 cursor WINDOW_CURSOR;
@@ -88,8 +88,8 @@ int hide_cursor()
 void get_cursor_pos(int *x, int *y)
 {
     SDL_GetMouseState(x, y);
-    *x = *x * GAME_WIDTH / WINDOW_WIDTH; 
-    *y = *y * GAME_HEIGHT / WINDOW_HEIGHT;
+    *x = *x * GAME_WINDOW.get_game_width() / GAME_WINDOW.get_window_width(); 
+    *y = *y * GAME_WINDOW.get_game_height() / GAME_WINDOW.get_window_height();
 }
 
 void show_cursor()

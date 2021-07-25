@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "sdl_texture.h"
-#include "sdl_draw.h"
+#include "sdl_window.h"
 #include "exported_func.h"
 
 texture::texture()
@@ -43,7 +43,7 @@ texture::texture(const texture &t)
     {
         destroy();
 
-        m_texture = SDL_CreateTexture(RENDER, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, t.width, t.height);
+        m_texture = SDL_CreateTexture(GAME_WINDOW.get_renderer(), SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, t.width, t.height);
         if (m_texture == NULL)
         {
             std::cout << "ERROR: create SDL texture in copy constructor. " << SDL_GetError() << ".\n";
@@ -89,7 +89,8 @@ texture::texture(int width, int height)
     , offset_x(0)
     , offset_y(0)
 {
-    m_texture = SDL_CreateTexture(RENDER, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, width, height);
+    m_texture = SDL_CreateTexture(
+        GAME_WINDOW.get_renderer(), SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, width, height);
     int error_val = SDL_SetTextureBlendMode(m_texture, SDL_BLENDMODE_BLEND);
     if (error_val || m_texture == NULL)
     {
@@ -114,7 +115,8 @@ texture &texture::operator=(const texture &t)
 
         destroy();
 
-        m_texture = SDL_CreateTexture(RENDER, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, t.width, t.height);
+        m_texture = SDL_CreateTexture(
+            GAME_WINDOW.get_renderer(), SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, t.width, t.height);
 
         error_val |= SDL_LockTexture(m_texture, nullptr, reinterpret_cast<void **>(&dest_arr), &dest_pitch);
         error_val |= SDL_LockTexture(t.m_texture, nullptr, reinterpret_cast<void **>(&source_arr), &source_pitch);
@@ -206,7 +208,8 @@ int texture::create_texture(int img, const BIN_File &bin, const File &pal)
         }
     }
 
-    m_texture = SDL_CreateTexture(RENDER, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, width, height);
+    m_texture = SDL_CreateTexture(
+        GAME_WINDOW.get_renderer(), SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, width, height);
     if (m_texture == NULL)
     {
         ret_val |= 1;
@@ -240,25 +243,26 @@ int texture::draw(int x, int y) const
 {
     int ret_val = 0;
     SDL_Rect destination = { offset_x + x, offset_y + y, width, height };
-    ret_val |= SDL_RenderCopy(RENDER, m_texture, NULL, &destination);
+    ret_val |= SDL_RenderCopy(GAME_WINDOW.get_renderer(), m_texture, NULL, &destination);
     return ret_val;
 }
 
+// Not tested in this project
 int texture::stretch_draw(int x, int y) const
 {
     int ret_val = 0;
-    int w = GAME_WIDTH;
-    int h = GAME_HEIGHT;
-    if (GAME_WIDTH * 3 > GAME_HEIGHT * 4)
+    int w = GAME_WINDOW.get_game_width();
+    int h = GAME_WINDOW.get_game_height();
+    if (w * 3 > h * 4)
     {
-        w = GAME_HEIGHT * 4 / 3;
+        w = w * 4 / 3;
     }
     else
     {
-        h = GAME_WIDTH * 3 / 4;
+        h = h * 3 / 4;
     }
     SDL_Rect destination = { (offset_x + x) * w / 640, (offset_y + y) * h / 480, width * w / 640, height * h / 480 };
-    ret_val |= SDL_RenderCopy(RENDER, m_texture, NULL, &destination);
+    ret_val |= SDL_RenderCopy(GAME_WINDOW.get_renderer(), m_texture, NULL, &destination);
     return ret_val;
 }
 
