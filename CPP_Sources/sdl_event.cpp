@@ -73,6 +73,14 @@ int SDL_events()
             {
                 save_screenshot();
             }
+            if (event.key.keysym.sym == SDLK_KP_PLUS)
+            {
+                GAME_WINDOW.increase_viewport_scale();
+            }
+            if (event.key.keysym.sym == SDLK_KP_MINUS)
+            {
+                GAME_WINDOW.decrease_viewport_scale();
+            }
         }
         if (event.type == SDL_KEYUP)
         {

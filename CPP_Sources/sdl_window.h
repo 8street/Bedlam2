@@ -30,7 +30,9 @@ public:
     int set_window_pos(int pos_x, int pos_y);
     int set_window_pos_center();
     SDL_Renderer *get_renderer();
-    
+    int increase_viewport_scale();
+    int decrease_viewport_scale();
+
 private:
     int dead_screen_scaler(uint8_t *game_screen_ptr, int32_t dead_screen_scale);
     int fill_screen_texture_from_surface();
@@ -44,7 +46,9 @@ private:
     SDL_Surface *m_screen_surface = nullptr;
     SDL_Texture *m_screen_texture = nullptr;
     bool m_must_lock_surface = false;
-    SDL_Rect m_dest_rect = {0};
+    SDL_Rect m_source_viewport_rect = { 0 };
+    SDL_Rect m_destination_viewport_rect = { 0 };
+    int m_viewport_scale = 0;
 };
 
 extern "C" uint8_t *SCREEN_BUFFER_PTR;

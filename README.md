@@ -17,7 +17,7 @@ This repository does not contain any original game resources.
 
 # Project State
 
-The sources can be compiled and fully playable. Rare crashes are possible.
+The sources can be compiled and fully playable. Very rare crashes are possible.
 
 # Contributing
 
@@ -35,4 +35,4 @@ Patches and improvements are welcome.
 
 ### Linux, Mac
 
-Source codes can be compiled because SDL2 is platform free lib. You will have to modify the sources so that the save paths are being not "C:/MIRAGE/AD_BED". Other modifications may be required.
+Source codes can be compiled because SDL2 is platform free lib. You will have to modify the sources so that the save paths are being not "C:/MIRAGE/AB_BED". Other modifications may be required.
