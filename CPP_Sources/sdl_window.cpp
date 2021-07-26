@@ -4,6 +4,8 @@
 #include "sdl_event.h"
 #include "sdl_window.h"
 
+#define SIDEBAR_HEIGHT 480
+
 uint8_t *SCREEN_BUFFER_PTR;
 uint8_t GAME_SCREEN_PTR[409600];
 volatile uint32_t SCREEN_SURFACE_WIDTH;
@@ -189,11 +191,22 @@ int Window::redraw()
     int ret_val = 0;
     // volatile Timer tim;
     ret_val |= fill_screen_texture_from_surface();
-    m_dest_rect.x = 0;
-    m_dest_rect.y = 0;
-    m_dest_rect.w = m_window_width;
-    m_dest_rect.h = m_window_height;
-    ret_val |= SDL_RenderCopy(m_renderer, m_screen_texture, NULL, &m_dest_rect);
+
+    ret_val |= SDL_RenderCopy(m_renderer, m_screen_texture, NULL, NULL);
+
+    if (m_viewport_scale && game_is_playing && !map_active)
+    {
+        m_source_viewport_rect.x = 0 + m_viewport_scale / 2;
+        m_source_viewport_rect.y = 0 + m_viewport_scale / 2;
+        m_source_viewport_rect.w = m_screen_surface->w - SIDEBAR_WIDTH - m_viewport_scale;
+        m_source_viewport_rect.h = m_screen_surface->h - m_viewport_scale;
+        m_destination_viewport_rect.x = 0;
+        m_destination_viewport_rect.y = 0;
+        m_destination_viewport_rect.w = (m_game_width - SIDEBAR_WIDTH) * m_window_width / m_game_width;
+        m_destination_viewport_rect.h = m_window_height;
+        ret_val |= SDL_RenderCopy(m_renderer, m_screen_texture, &m_source_viewport_rect, &m_destination_viewport_rect);
+    }
+
     // volatile double elapsed = tim.elapsed();
     // elapsed = 0.0;
     SDL_RenderPresent(m_renderer);
@@ -381,6 +394,26 @@ int Window::set_window_pos_center()
 SDL_Renderer *Window::get_renderer()
 {
     return m_renderer;
+}
+
+int Window::increase_viewport_scale()
+{
+    m_viewport_scale += 10;
+    if (m_viewport_scale > m_game_width / 2)
+    {
+        m_viewport_scale = m_game_width / 2;
+    }
+    return 0;
+}
+
+int Window::decrease_viewport_scale()
+{
+    m_viewport_scale -= 10;
+    if (m_viewport_scale < 0)
+    {
+        m_viewport_scale = 0;
+    }
+    return 0;
 }
 
 int Window::dead_screen_scaler(uint8_t *game_screen_ptr, int32_t dead_screen_scale)
