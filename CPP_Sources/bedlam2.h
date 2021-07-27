@@ -6,7 +6,7 @@
 ////////////////////////////////////////////////////
 
 extern "C" {
-int __cdecl main_(int, const char **, const char **);
+int main_(int, const char **, const char **);
 void level_clock();
 }
 

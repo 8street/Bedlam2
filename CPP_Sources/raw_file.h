@@ -1,5 +1,9 @@
 #pragma once
-#include <SDL_mixer.h>
+#ifdef _MSC_VER
+#    include <SDL_mixer.h>
+#else
+#    include <SDL2/SDL_mixer.h>
+#endif
 #include "file.h"
 
 

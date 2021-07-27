@@ -8,6 +8,10 @@
 #include "screenshot.h"
 #include "palette.h"
 
+#ifdef _MSC_VER
+#pragma warning(disable : 4996)
+#endif
+
 int NUM_SCREENSHOTS;
 
 // 0044CEB0 Bedlam 1
@@ -44,20 +48,20 @@ int save_screenshot()
     } while (pal_indx != 256);
     while (1)
     {
-        sprintf_s(filename, sizeof(filename), "SS%04d.BMP", NUM_SCREENSHOTS);
+        sprintf(filename, "SS%04d.BMP", NUM_SCREENSHOTS);
         NUM_SCREENSHOTS++;
         if (NUM_SCREENSHOTS > 9999)
         {
             NUM_SCREENSHOTS = 9999;
         }
-        fopen_s(&file, filename, "rb");
+        file = fopen(filename, "rb");
         if (!file)
         {
             break;
         }
         fclose(file);
     }
-    fopen_s(&file, filename, "wb");
+    file = fopen(filename, "wb");
     if (file)
     {
         bmp_file_header.bfType = 'MB';
