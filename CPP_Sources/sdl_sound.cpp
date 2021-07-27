@@ -140,7 +140,7 @@ int Sound::fade_stop(int index, int ms)
 int Sound::set_volume(int new_volume)
 {
     int old_volume = m_volume;
-    m_volume = new_volume * MIX_MAX_VOLUME / 100;
+    m_volume = std::clamp(new_volume * MIX_MAX_VOLUME / 100, 0, 100);
     int old_volume_from_mix = Mix_Volume(-1, m_volume);
     if (old_volume_from_mix != old_volume)
     {
