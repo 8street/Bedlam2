@@ -49,7 +49,8 @@ int Sound::init()
         ret_val |= -1;
     }
 
-    if (Mix_Volume(-1, MIX_MAX_VOLUME) != MIX_MAX_VOLUME)
+    m_volume = MIX_MAX_VOLUME;
+    if (Mix_Volume(-1, m_volume) != MIX_MAX_VOLUME)
     {
         ret_val |= -1;
     }
@@ -79,18 +80,18 @@ int Sound::play_raw(int index, int x, int y, bool loop)
     int balance = 0;
     int l_balance = 0;
     int r_balance = 0;
-    int volume = 0;
+    int volume_from_distance = 0;
     int palying_times = 0;
 
     if (x == -1 && y == -1)
     {
-        volume = MIX_MAX_VOLUME;
+        volume_from_distance = MIX_MAX_VOLUME;
         l_balance = MIX_MAX_BALANCE;
         r_balance = MIX_MAX_BALANCE;
     }
     else
     {
-        volume = get_volume(x, y) >> 8; // max 128
+        volume_from_distance = get_volume(x, y) >> 8; // max 128
         balance = get_balance(x, y) >> 7; // max 255
         if (balance > 0)
         {
@@ -106,13 +107,14 @@ int Sound::play_raw(int index, int x, int y, bool loop)
 
     int free_channel_index = get_first_free_channel(index);
 
-    ret_val |= Mix_Volume(free_channel_index, volume);
+    Mix_Chunk *play_chunk = m_raws[index].get_chunk();
+    ret_val |= Mix_VolumeChunk(play_chunk, volume_from_distance);
     ret_val |= Mix_SetPanning(free_channel_index, (uint8_t)l_balance, (uint8_t)r_balance);
     if (loop)
     {
         palying_times = -1;
     }
-    ret_val |= Mix_PlayChannel(free_channel_index, m_raws[index].get_chunk(), palying_times);
+    ret_val |= Mix_PlayChannel(free_channel_index, play_chunk, palying_times);
     return ret_val;
 }
 
@@ -133,6 +135,18 @@ int Sound::fade_stop(int ms)
 int Sound::fade_stop(int index, int ms)
 {
     return Mix_FadeOutChannel(index, ms);
+}
+
+int Sound::set_volume(int new_volume)
+{
+    int old_volume = m_volume;
+    m_volume = std::clamp(new_volume * MIX_MAX_VOLUME / 100, 0, 100);
+    int old_volume_from_mix = Mix_Volume(-1, m_volume);
+    if (old_volume_from_mix != old_volume)
+    {
+        return -1;
+    }
+    return 0;
 }
 
 int Sound::get_raw_index(const std::string &path) const
@@ -215,4 +229,9 @@ int play_music(int raw_index, int x, int y, int flag)
 void stop_music()
 {
     SOUND_SYSTEM.fade_stop(10);
+}
+
+void set_volume(int volume)
+{
+    SOUND_SYSTEM.set_volume(volume);
 }

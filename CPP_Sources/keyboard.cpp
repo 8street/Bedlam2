@@ -131,10 +131,6 @@ int Keyboard::key_down(SDL_Keycode sdl_keycode)
 // 0041BE05 Bedlam 1
 void Keyboard::bedlam_keystates_update(uint8_t scan_code, uint8_t key_up)
 {
-    if (scan_code == 72 || scan_code == 80 || scan_code == 75 || scan_code == 77)
-    {
-        scan_code += 128;
-    }
     if (scan_code >= 0 && scan_code < 256)
         PRESSED_KEY_ARR[scan_code] = key_up == 0;
     if (PRESSED_KEY_ARR[1]) // esc
