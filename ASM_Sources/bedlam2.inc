@@ -39,6 +39,7 @@ extrn load_music:proc
 extrn play_sound:proc
 extrn play_music:proc
 extrn stop_music:proc
+extrn set_volume:proc
 
 extrn play_wav_music:proc
 extrn stop_wav_music:proc
