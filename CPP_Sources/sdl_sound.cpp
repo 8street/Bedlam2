@@ -104,7 +104,7 @@ int Sound::play_raw(int index, int x, int y, bool loop)
             r_balance = balance + MIX_MAX_BALANCE;
         }
     }
-    volume *= m_master_volume / 100;
+    volume = volume * m_master_volume / 100;
 
     int free_channel_index = get_first_free_channel(index);
 
