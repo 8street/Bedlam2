@@ -72,18 +72,18 @@ int cursor::load_cursors(const BIN_File &general_bin, const File &pal_file)
 
     // load default cursor
     img = 93;
-    texture default_cursor_texture(img, general_bin, pal_file);
+    Texture default_cursor_texture(img, general_bin, pal_file);
     m_default = load_cursor(default_cursor_texture);
 
     // load crosshair cursor
     img = 0;
-    texture crosshair_texture(img, general_bin, pal_file);
+    Texture crosshair_texture(img, general_bin, pal_file);
     m_crosshair = load_cursor(crosshair_texture);
 
     // load waiting cursor
     for (img = ICON_WAIT; img < 152; img++)
     {
-        texture waiting_cursor_texture(img, general_bin, pal_file);
+        Texture waiting_cursor_texture(img, general_bin, pal_file);
         SDL_Cursor *c = load_cursor(waiting_cursor_texture);
         m_waiting_cursor.push_back(c);
         if (c == NULL)
@@ -141,7 +141,7 @@ int cursor::get_cursor_img() const
    return m_img;
 }
 
-SDL_Cursor *cursor::load_cursor(const texture &cursor_texture)
+SDL_Cursor *cursor::load_cursor(const Texture &cursor_texture)
 {
     int ret_val = 0;
     SDL_Surface *cursor_surface = nullptr;

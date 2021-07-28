@@ -4,39 +4,39 @@
 #include "sdl_window.h"
 #include "exported_func.h"
 
-texture::texture()
+Texture::Texture()
 {
 }
 
-texture::texture(int img, const BIN_File &bin)
+Texture::Texture(int img, const BIN_File &bin)
 {
     create_texture(img, bin);
 }
 
-texture::texture(int img, const BIN_File &bin, const File &pal)
+Texture::Texture(int img, const BIN_File &bin, const File &pal)
 {
     create_texture(img, bin, pal);
 }
 
-texture::texture(SDL_Texture *texture, int width, int height)
+Texture::Texture(SDL_Texture *texture, int width, int height)
     : width(width)
     , height(height)
 {
     m_texture = texture;
-    offset_x = 0;
-    offset_y = 0;
+    m_offset_x = 0;
+    m_offset_y = 0;
 }
 
-texture::~texture()
+Texture::~Texture()
 {
     destroy();
 }
 
-texture::texture(const texture &t)
+Texture::Texture(const Texture &t)
     : width(t.width)
     , height(t.height)
-    , offset_x(t.offset_x)
-    , offset_y(t.offset_y)
+    , m_offset_x(t.m_offset_x)
+    , m_offset_y(t.m_offset_y)
 {
     int error_val = 0;
     if (t.m_texture)
@@ -44,7 +44,7 @@ texture::texture(const texture &t)
         destroy();
 
         m_texture = SDL_CreateTexture(GAME_WINDOW.get_renderer(), SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, t.width, t.height);
-        if (m_texture == NULL)
+        if (m_texture == nullptr)
         {
             std::cout << "ERROR: create SDL texture in copy constructor. " << SDL_GetError() << ".\n";
         }
@@ -83,22 +83,22 @@ texture::texture(const texture &t)
     }
 }
 
-texture::texture(int width, int height)
+Texture::Texture(int width, int height)
     : width(width)
     , height(height)
-    , offset_x(0)
-    , offset_y(0)
+    , m_offset_x(0)
+    , m_offset_y(0)
 {
     m_texture = SDL_CreateTexture(
         GAME_WINDOW.get_renderer(), SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, width, height);
     int error_val = SDL_SetTextureBlendMode(m_texture, SDL_BLENDMODE_BLEND);
-    if (error_val || m_texture == NULL)
+    if (error_val || m_texture == nullptr)
     {
         std::cout << "ERROR: create SDL texture. " << SDL_GetError() << ".\n";
     }
 }
 
-texture &texture::operator=(const texture &t)
+Texture &Texture::operator=(const Texture &t)
 {
     int error_val = 0;
     if (this == &t)
@@ -124,7 +124,7 @@ texture &texture::operator=(const texture &t)
         int dest_width = t.width;
         int dest_height = t.height;
 
-        if (error_val || m_texture == NULL)
+        if (error_val || m_texture == nullptr)
         {
             std::cout << "ERROR: operator=. " << SDL_GetError() << ".\n";
         }
@@ -142,28 +142,28 @@ texture &texture::operator=(const texture &t)
         }
         width = t.width;
         height = t.height;
-        offset_x = t.offset_x;
-        offset_y = t.offset_y;
+        m_offset_x = t.m_offset_x;
+        m_offset_y = t.m_offset_y;
     }
     else
     {
         m_texture = nullptr;
         width = 0;
         height = 0;
-        offset_x = 0;
-        offset_y = 0;
+        m_offset_x = 0;
+        m_offset_y = 0;
     }
 
     return *this;
 }
 
-int texture::create_texture(int img, const BIN_File &bin)
+int Texture::create_texture(int img, const BIN_File &bin)
 {
     const File pal;
     return create_texture(img, bin, pal);
 }
 
-int texture::create_texture(int img, const BIN_File &bin, const File &pal)
+int Texture::create_texture(int img, const BIN_File &bin, const File &pal)
 {
     // Fill texture in buffer via standard bedlam function,
     // then create texture from buffer with palette colors
@@ -175,8 +175,8 @@ int texture::create_texture(int img, const BIN_File &bin, const File &pal)
     width = bin.get_img_width(img);
     height = bin.get_img_height(img);
 
-    offset_x = bin.get_img_x_offset(img);
-    offset_y = bin.get_img_y_offset(img);
+    m_offset_x = bin.get_img_x_offset(img);
+    m_offset_y = bin.get_img_y_offset(img);
 
     std::vector<uint8_t> buffer(640 * 480, 0);
 
@@ -210,7 +210,7 @@ int texture::create_texture(int img, const BIN_File &bin, const File &pal)
 
     m_texture = SDL_CreateTexture(
         GAME_WINDOW.get_renderer(), SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, width, height);
-    if (m_texture == NULL)
+    if (m_texture == nullptr)
     {
         ret_val |= 1;
         std::cout << "ERROR: create SDL texture. " << SDL_GetError() << ". " << bin.get_full_path() << " Img: " << img << "\n";
@@ -227,7 +227,7 @@ int texture::create_texture(int img, const BIN_File &bin, const File &pal)
         {
             for (int x = 0; x < width; x++)
             {
-                int index = buffer[(offset_y + y) * 640 + x + offset_x];
+                int index = buffer[(m_offset_y + y) * 640 + x + m_offset_x];
                 bytes[y * pitch + x * 4 + 0] = 4 * palette[index * 3 + 0];
                 bytes[y * pitch + x * 4 + 1] = 4 * palette[index * 3 + 1];
                 bytes[y * pitch + x * 4 + 2] = 4 * palette[index * 3 + 2];
@@ -239,16 +239,74 @@ int texture::create_texture(int img, const BIN_File &bin, const File &pal)
     return ret_val;
 }
 
-int texture::draw(int x, int y) const
+int Texture::create_texture_from_surface(SDL_Surface *surface, SDL_Rect *texture_rect)
 {
     int ret_val = 0;
-    SDL_Rect destination = { offset_x + x, offset_y + y, width, height };
+    if (m_texture)
+    {
+        ret_val |= destroy();
+    }
+    if (!texture_rect->w || texture_rect->w > surface->w)
+    {
+        texture_rect->w = surface->w;
+    }
+    if (!texture_rect->h || texture_rect->h > surface->h)
+    {
+        texture_rect->h = surface->h;
+    }
+    width = texture_rect->w;
+    height = texture_rect->h;
+    m_offset_x = texture_rect->x;
+    m_offset_y = texture_rect->y;
+
+    m_texture = SDL_CreateTexture(
+        GAME_WINDOW.get_renderer(), SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, width, height);
+    if (m_texture == nullptr)
+    {
+        ret_val |= 1;
+        std::cout << "ERROR: create SDL texture. " << SDL_GetError() << "\n";
+    }
+    ret_val |= fill_texture_from_surface(surface, texture_rect);
+    return ret_val;
+}
+
+int Texture::fill_texture_from_surface(SDL_Surface *surface, SDL_Rect *texture_rect)
+{
+    int ret_val = 0;
+    uint8_t *bytes = nullptr;
+    int pitch = 0;
+    ret_val |= SDL_LockTexture(m_texture, nullptr, reinterpret_cast<void **>(&bytes), &pitch);
+    bool must_lock = SDL_MUSTLOCK(surface);
+    if (must_lock)
+    {
+        ret_val |= SDL_LockSurface(surface);
+    }
+    for (int y = texture_rect->y; y < texture_rect->h; y++)
+    {
+        for (int x = texture_rect->x; x < texture_rect->w; x++)
+        {
+            uint8_t index = ((uint8_t *)surface->pixels)[y * surface->w + x];
+            ((SDL_Color *)bytes)[y * surface->w + x] = surface->format->palette->colors[index];
+        }
+    }
+    if (must_lock)
+    {
+        SDL_UnlockSurface(surface);
+    }
+    SDL_UnlockTexture(m_texture);
+    return ret_val;
+}
+
+int Texture::draw(int x, int y) const
+{
+    int ret_val = 0;
+    SDL_Rect destination = { m_offset_x + x, m_offset_y + y, width, height };
     ret_val |= SDL_RenderCopy(GAME_WINDOW.get_renderer(), m_texture, NULL, &destination);
     return ret_val;
 }
 
 // Not tested in this project
-int texture::stretch_draw(int x, int y) const
+int Texture::stretch_draw(int x, int y) const
 {
     int ret_val = 0;
     int w = GAME_WINDOW.get_game_width();
@@ -261,12 +319,12 @@ int texture::stretch_draw(int x, int y) const
     {
         h = h * 3 / 4;
     }
-    SDL_Rect destination = { (offset_x + x) * w / 640, (offset_y + y) * h / 480, width * w / 640, height * h / 480 };
+    SDL_Rect destination = { (m_offset_x + x) * w / 640, (m_offset_y + y) * h / 480, width * w / 640, height * h / 480 };
     ret_val |= SDL_RenderCopy(GAME_WINDOW.get_renderer(), m_texture, NULL, &destination);
     return ret_val;
 }
 
-int texture::merge_with(const texture &t, int x, int y)
+int Texture::merge_with(const Texture &t, int x, int y)
 {
     int ret_val = 0;
 
@@ -317,7 +375,7 @@ int texture::merge_with(const texture &t, int x, int y)
     return ret_val;
 }
 
-int texture::destroy()
+int Texture::destroy()
 {
     if (m_texture)
     {
@@ -327,12 +385,12 @@ int texture::destroy()
     return 0;
 }
 
-SDL_Texture *texture::get()
+SDL_Texture *Texture::get()
 {
     return m_texture;
 }
 
-SDL_Texture *const texture::get() const
+SDL_Texture *const Texture::get() const
 {
     return m_texture;
 }

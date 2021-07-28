@@ -39,6 +39,7 @@
     <ClCompile Include="..\CPP_Sources\palette.cpp" />
     <ClCompile Include="..\CPP_Sources\raw_file.cpp" />
     <ClCompile Include="..\CPP_Sources\screenshot.cpp" />
+    <ClCompile Include="..\CPP_Sources\screen_data.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_cursor.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_event.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_sound.cpp" />
@@ -61,6 +62,7 @@
     <ClInclude Include="..\CPP_Sources\palette.h" />
     <ClInclude Include="..\CPP_Sources\raw_file.h" />
     <ClInclude Include="..\CPP_Sources\screenshot.h" />
+    <ClInclude Include="..\CPP_Sources\screen_data.h" />
     <ClInclude Include="..\CPP_Sources\sdl_cursor.h" />
     <ClInclude Include="..\CPP_Sources\sdl_event.h" />
     <ClInclude Include="..\CPP_Sources\sdl_sound.h" />

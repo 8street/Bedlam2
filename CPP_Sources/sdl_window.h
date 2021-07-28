@@ -2,6 +2,8 @@
 #include <SDL.h>
 #include <cstdint>
 
+#include "screen_data.h"
+
 #define SIDEBAR_WIDTH 160
 
 class Window
@@ -35,7 +37,6 @@ public:
 
 private:
     int dead_screen_scaler(uint8_t *game_screen_ptr, int32_t dead_screen_scale);
-    int fill_screen_texture_from_surface();
 
     int m_window_width = 0;
     int m_window_height = 0;
@@ -43,12 +44,12 @@ private:
     int m_game_height = 0;
     SDL_Window *m_window = nullptr;
     SDL_Renderer *m_renderer = nullptr;
-    SDL_Surface *m_screen_surface = nullptr;
-    SDL_Texture *m_screen_texture = nullptr;
-    bool m_must_lock_surface = false;
+
     SDL_Rect m_source_viewport_rect = { 0 };
     SDL_Rect m_destination_viewport_rect = { 0 };
     int m_viewport_scale = 0;
+
+    Screen_data m_screen;
 };
 
 extern "C" uint8_t *SCREEN_BUFFER_PTR;
