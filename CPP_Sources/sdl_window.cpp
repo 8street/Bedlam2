@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "timer.h"
 #include "bedlam2.h"
 #include "sdl_event.h"
 #include "sdl_window.h"
@@ -16,6 +17,8 @@ Window::~Window()
     SDL_DestroyRenderer(m_renderer);
     SDL_DestroyWindow(m_window);
     delete[] SCREEN_BUFFER_PTR;
+    delete[] SIDEBAR_BUFFER_PTR;
+    delete[] MAP_BUFFER_PTR;
     SDL_VideoQuit();
 }
 
@@ -66,7 +69,34 @@ int Window::init()
 
     ret_val |= SDL_RenderClear(m_renderer);
     SDL_RenderPresent(m_renderer);
-    SCREEN_BUFFER_PTR = new uint8_t[m_game_width * m_game_height];
+
+    if (MAP_BUFFER_PTR == nullptr)
+    {
+        MAP_BUFFER_PTR = new uint8_t[640 * 480];
+        if (MAP_BUFFER_PTR == nullptr)
+        {
+            std::cout << "ERROR: Could't allocate map buffer \n";
+            ret_val |= 1;
+        }
+    }
+    if (SIDEBAR_BUFFER_PTR == nullptr)
+    {
+        SIDEBAR_BUFFER_PTR = new uint8_t[640 * 480];
+        if (SIDEBAR_BUFFER_PTR == nullptr)
+        {
+            std::cout << "ERROR: Could't allocate sidebar buffer \n";
+            ret_val |= 1;
+        }
+    }
+    if (SCREEN_BUFFER_PTR == nullptr)
+    {
+        SCREEN_BUFFER_PTR = new uint8_t[m_game_width * m_game_height];
+        if (SCREEN_BUFFER_PTR == nullptr)
+        {
+            std::cout << "ERROR: Could't allocate screen buffer \n";
+            ret_val |= 1;
+        }
+    }
     memset(SCREEN_BUFFER_PTR, 0, m_game_width * m_game_height);
 
     SCREEN_SURFACE_WIDTH = m_game_width;
@@ -108,11 +138,24 @@ int Window::unlock_screen_surface() const
 int Window::redraw()
 {
     int ret_val = 0;
-    // volatile Timer tim;
+    //Timer tim;
     if (game_is_playing)
     {
         // copy sidebar to screen surface
-        m_screen.fill_screen_surface(SIDEBAR_SURFACE_ARR, m_game_width - SIDEBAR_WIDTH, 0, 480, 0, SIDEBAR_WIDTH, SIDEBAR_HEIGHT, 640);
+        m_screen.fill_screen_surface(SIDEBAR_BUFFER_PTR, m_game_width - SIDEBAR_WIDTH, 0, 480, 0, SIDEBAR_WIDTH, SIDEBAR_HEIGHT, 640);
+        if (map_active)
+        {
+            if (m_game_height > 480)
+            {
+                // draw map bottom right
+                m_screen.fill_screen_surface(MAP_BUFFER_PTR, m_game_width - 480, m_game_height - 480, 0, 0, 480, 480, 640); 
+            }
+            else
+            {
+                // draw map center
+                m_screen.fill_screen_surface(MAP_BUFFER_PTR, 0, 0, 0, 0, 480, 480, 640); 
+            }
+        }
     }
     ret_val |= SDL_RenderCopy(m_renderer, m_screen.get_texture(), NULL, NULL);
 
@@ -129,8 +172,8 @@ int Window::redraw()
         ret_val |= SDL_RenderCopy(m_renderer, m_screen_texture, &m_source_viewport_rect, &m_destination_viewport_rect);
     }*/
 
-    // volatile double elapsed = tim.elapsed();
-    // elapsed = 0.0;
+    //double elapsed = tim.elapsed();
+    //elapsed = 0.0;
     SDL_RenderPresent(m_renderer);
     SDL_events();
     return ret_val;
