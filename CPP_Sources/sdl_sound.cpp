@@ -49,8 +49,8 @@ int Sound::init()
         ret_val |= -1;
     }
 
-    m_volume = MIX_MAX_VOLUME;
-    if (Mix_Volume(-1, m_volume) != MIX_MAX_VOLUME)
+    m_master_volume = 100;
+    if (Mix_Volume(-1, MIX_MAX_VOLUME) != MIX_MAX_VOLUME)
     {
         ret_val |= -1;
     }
@@ -80,18 +80,18 @@ int Sound::play_raw(int index, int x, int y, bool loop)
     int balance = 0;
     int l_balance = 0;
     int r_balance = 0;
-    int volume_from_distance = 0;
+    int volume = 0;
     int palying_times = 0;
 
     if (x == -1 && y == -1)
     {
-        volume_from_distance = MIX_MAX_VOLUME;
+        volume = MIX_MAX_VOLUME;
         l_balance = MIX_MAX_BALANCE;
         r_balance = MIX_MAX_BALANCE;
     }
     else
     {
-        volume_from_distance = get_volume(x, y) >> 8; // max 128
+        volume = get_volume(x, y) >> 8; // max 128
         balance = get_balance(x, y) >> 7; // max 255
         if (balance > 0)
         {
@@ -104,17 +104,17 @@ int Sound::play_raw(int index, int x, int y, bool loop)
             r_balance = balance + MIX_MAX_BALANCE;
         }
     }
+    volume *= m_master_volume / 100;
 
     int free_channel_index = get_first_free_channel(index);
 
-    Mix_Chunk *play_chunk = m_raws[index].get_chunk();
-    ret_val |= Mix_VolumeChunk(play_chunk, volume_from_distance);
+    ret_val |= Mix_Volume(free_channel_index, volume);
     ret_val |= Mix_SetPanning(free_channel_index, (uint8_t)l_balance, (uint8_t)r_balance);
     if (loop)
     {
         palying_times = -1;
     }
-    ret_val |= Mix_PlayChannel(free_channel_index, play_chunk, palying_times);
+    ret_val |= Mix_PlayChannel(free_channel_index, m_raws[index].get_chunk(), palying_times);
     return ret_val;
 }
 
@@ -139,13 +139,7 @@ int Sound::fade_stop(int index, int ms)
 
 int Sound::set_volume(int new_volume)
 {
-    int old_volume = m_volume;
-    m_volume = std::clamp(new_volume * MIX_MAX_VOLUME / 100, 0, 100);
-    int old_volume_from_mix = Mix_Volume(-1, m_volume);
-    if (old_volume_from_mix != old_volume)
-    {
-        return -1;
-    }
+    m_master_volume = std::clamp(new_volume, 0, 100);
     return 0;
 }
 
