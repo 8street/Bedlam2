@@ -13,14 +13,15 @@
 class Screen_data
 {
 public:
-    Screen_data(uint8_t *screen_buffer, int surface_width, int surface_height);
+    Screen_data(uint8_t *screen_buffer, int surface_width, int surface_height, int offset_x = 0, int offset_y = 0);
     Screen_data();
     ~Screen_data();
 
-    int init(uint8_t *screen_buffer, int surface_width, int surface_height);
+    int init(uint8_t *screen_buffer, int surface_width, int surface_height, int offset_x = 0, int offset_y = 0);
     int set_palette(uint8_t *pal_ptr, int offset, int num_entries);
     uint8_t *get_RGB_palette_ptr();
     int fill_screen_surface(uint8_t *buffer_ptr);
+    int fill_screen_surface(uint8_t *buffer_ptr, int screen_x, int screen_y, int buffer_x, int buffer_y, int buffer_count_w, int buffer_count_h, int buffer_w);
     int update_texture();
     uint8_t *lock_and_get_surface_ptr();
     int unlock_surface() const;

@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #include "sdl_window.h"
+#include "bedlam2_draw.h"
 #include "helper.h"
 #include "screenshot.h"
 #include "palette.h"

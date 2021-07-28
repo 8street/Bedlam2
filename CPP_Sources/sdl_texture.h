@@ -26,6 +26,7 @@ public:
     int destroy();
     SDL_Texture *get();
     SDL_Texture *const get() const;
+    SDL_Rect *const get_rect() const;
 
     int width = 0;
     int height = 0;

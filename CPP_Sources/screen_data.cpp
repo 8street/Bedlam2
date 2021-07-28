@@ -6,9 +6,9 @@ Screen_data::Screen_data()
 {
 }
 
-Screen_data::Screen_data(uint8_t *screen_buffer, int surface_width, int surface_height)
-{ 
-    init(screen_buffer, surface_width, surface_height);
+Screen_data::Screen_data(uint8_t *screen_buffer, int surface_width, int surface_height, int offset_x, int offset_y)
+{
+    init(screen_buffer, surface_width, surface_height, offset_x, offset_y);
 }
 
 Screen_data::~Screen_data()
@@ -26,7 +26,7 @@ int Screen_data::destroy()
     return m_screen_texture.destroy();
 }
 
-int Screen_data::init(uint8_t* screen_buffer, int surface_width, int surface_height)
+int Screen_data::init(uint8_t *screen_buffer, int surface_width, int surface_height, int offset_x, int offset_y)
 {
     int ret_val = 0;
     ret_val |= destroy();
@@ -41,15 +41,20 @@ int Screen_data::init(uint8_t* screen_buffer, int surface_width, int surface_hei
     {
         m_must_lock_surface = true;
     }
-    m_texture_coord_in_surface.x = 0;
-    m_texture_coord_in_surface.y = 0;
-    m_texture_coord_in_surface.w = surface_width;
-    m_texture_coord_in_surface.h = surface_height;
+    if (surface_width - offset_x < 0 || surface_height - offset_y < 0)
+    {
+        std::cout << "ERROR: screen data invalid surface and offset params. \n";
+        ret_val |= -1;
+    }
+    m_texture_coord_in_surface.x = offset_x;
+    m_texture_coord_in_surface.y = offset_y;
+    m_texture_coord_in_surface.w = surface_width - offset_x;
+    m_texture_coord_in_surface.h = surface_height - offset_y;
     ret_val |= m_screen_texture.create_texture_from_surface(m_screen_surface, &m_texture_coord_in_surface);
     return ret_val;
 }
 
-int Screen_data::set_palette(uint8_t* pal_ptr, int offset, int num_entries)
+int Screen_data::set_palette(uint8_t *pal_ptr, int offset, int num_entries)
 {
     int ret_val = 0;
     SDL_Color color;
@@ -124,6 +129,39 @@ int Screen_data::fill_screen_surface(uint8_t *buffer_ptr)
     }
     return ret_val;
 }
+
+int Screen_data::fill_screen_surface(
+    uint8_t *buffer_ptr, int screen_x, int screen_y, int buffer_x, int buffer_y, int buffer_count_w, int buffer_count_h,
+    int buffer_w)
+{
+    uint8_t *destin;
+    int ret_val = 0;
+    if (m_must_lock_surface)
+    {
+        ret_val |= SDL_LockSurface(m_screen_surface);
+    }
+    destin = (uint8_t *)m_screen_surface->pixels;
+    if (buffer_y + buffer_count_h > m_screen_surface->h)
+    {
+        buffer_count_h = m_screen_surface->h - buffer_y;
+    }
+    if (screen_x + buffer_count_w > m_screen_surface->w)
+    {
+        buffer_count_w = m_screen_surface->w - screen_x;
+    }
+    for (int y = 0; y < buffer_count_h; y++)
+    {
+        memcpy(
+            &destin[screen_x + (y + screen_y) * m_screen_surface->w], &buffer_ptr[buffer_x + (y + buffer_y) * buffer_w],
+            buffer_count_w);
+    }
+    if (m_must_lock_surface)
+    {
+        SDL_UnlockSurface(m_screen_surface);
+    }
+    return ret_val;
+}
+
 int Screen_data::update_texture()
 {
     return m_screen_texture.fill_texture_from_surface(m_screen_surface, &m_texture_coord_in_surface);

@@ -266,6 +266,7 @@ int Texture::create_texture_from_surface(SDL_Surface *surface, SDL_Rect *texture
         ret_val |= 1;
         std::cout << "ERROR: create SDL texture. " << SDL_GetError() << "\n";
     }
+    ret_val |= SDL_SetTextureBlendMode(m_texture, SDL_BLENDMODE_NONE);
     ret_val |= fill_texture_from_surface(surface, texture_rect);
     return ret_val;
 }
@@ -393,4 +394,14 @@ SDL_Texture *Texture::get()
 SDL_Texture *const Texture::get() const
 {
     return m_texture;
+}
+
+SDL_Rect *const Texture::get_rect() const
+{
+    static SDL_Rect ret_rect;
+    ret_rect.x = m_offset_x;
+    ret_rect.y = m_offset_y;
+    ret_rect.w = width;
+    ret_rect.h = height;
+    return &ret_rect;
 }

@@ -3,13 +3,7 @@
 #include "bedlam2.h"
 #include "sdl_event.h"
 #include "sdl_window.h"
-
-#define SIDEBAR_HEIGHT 480
-
-uint8_t *SCREEN_BUFFER_PTR;
-uint8_t GAME_SCREEN_PTR[409600];
-volatile uint32_t SCREEN_SURFACE_WIDTH;
-volatile uint32_t SCREEN_SURFACE_HEIGHT;
+#include "bedlam2_draw.h"
 
 Window GAME_WINDOW;
 
@@ -115,7 +109,11 @@ int Window::redraw()
 {
     int ret_val = 0;
     // volatile Timer tim;
-
+    if (game_is_playing)
+    {
+        // copy sidebar to screen surface
+        m_screen.fill_screen_surface(SIDEBAR_SURFACE_ARR, m_game_width - SIDEBAR_WIDTH, 0, 480, 0, SIDEBAR_WIDTH, SIDEBAR_HEIGHT, 640);
+    }
     ret_val |= SDL_RenderCopy(m_renderer, m_screen.get_texture(), NULL, NULL);
 
    /* if (m_viewport_scale && game_is_playing && !map_active)
@@ -140,24 +138,9 @@ int Window::redraw()
 
 int Window::clear_game_viewport()
 {
- /*   uint8_t *destination;
     int ret_val = 0;
-    if (m_must_lock_surface)
-    {
-        ret_val |= SDL_LockSurface(m_screen_surface);
-    }
-    destination = SCREEN_BUFFER_PTR;
-    for (int y = 0; y < m_screen_surface->h; y++)
-    {
-        memset(destination, 0, m_game_width - SIDEBAR_WIDTH);
-        destination += m_screen_surface->w;
-    }
-    if (m_must_lock_surface)
-    {
-        SDL_UnlockSurface(m_screen_surface);
-    }
-    return ret_val;*/
-    return 0;
+    ret_val |= m_screen.clear();
+    return ret_val;
 }
 
 int Window::copy_screen_to_buffer(uint8_t *buffer_ptr)

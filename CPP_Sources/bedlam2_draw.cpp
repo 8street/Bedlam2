@@ -4,6 +4,12 @@
 #include "sdl_timer.h"
 #include "sdl_window.h"
 
+uint8_t SIDEBAR_SURFACE_ARR[409600];
+uint8_t *SCREEN_BUFFER_PTR;
+uint8_t GAME_SCREEN_PTR[409600];
+volatile uint32_t SCREEN_SURFACE_WIDTH;
+volatile uint32_t SCREEN_SURFACE_HEIGHT;
+
 void clear_screen()
 {
     GAME_WINDOW.clear_screen();

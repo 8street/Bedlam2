@@ -4,7 +4,6 @@
 
 #include "screen_data.h"
 
-#define SIDEBAR_WIDTH 160
 
 class Window
 {
@@ -51,10 +50,5 @@ private:
 
     Screen_data m_screen;
 };
-
-extern "C" uint8_t *SCREEN_BUFFER_PTR;
-extern uint8_t GAME_SCREEN_PTR[409600];
-extern "C" volatile uint32_t SCREEN_SURFACE_WIDTH;
-extern volatile uint32_t SCREEN_SURFACE_HEIGHT;
 
 extern Window GAME_WINDOW;

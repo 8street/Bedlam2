@@ -50,6 +50,7 @@ extrn SDL_events:proc
 
 extrn SCREEN_BUFFER_PTR:dword
 extrn SCREEN_SURFACE_WIDTH:dword
+extrn SIDEBAR_SURFACE_ARR:dword
 extrn CURSOR_ICON:dword
 extrn CURSOR_POS_X:dword
 extrn CURSOR_POS_Y:dword
