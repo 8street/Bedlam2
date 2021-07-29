@@ -26,6 +26,8 @@ extern "C" uint8_t *SCREEN_BUFFER_PTR;
 extern "C" uint8_t *GAME_SCREEN_PTR;
 extern "C" volatile int32_t GAME_SCREEN_WIDTH;
 extern "C" volatile int32_t GAME_SCREEN_SIZE;
+extern "C" volatile int32_t LIMIT_GAME_SCREEN_WIDTH;
+extern "C" volatile int32_t LIMIT_GAME_SCREEN_HEIGHT;
 
 extern "C" volatile uint32_t SCREEN_SURFACE_WIDTH;
 extern volatile uint32_t SCREEN_SURFACE_HEIGHT;

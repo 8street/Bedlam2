@@ -10,7 +10,6 @@ int __cdecl main_(int, const char **, const char **);
 void level_clock();
 }
 
-extern "C" uint8_t *general_bin_ptr;
 extern "C" volatile int32_t screen_x_pos;
 extern "C" volatile int32_t screen_y_pos;
 extern "C" volatile int32_t game_is_playing;

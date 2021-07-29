@@ -54,6 +54,8 @@ extrn SIDEBAR_BUFFER_PTR:dword
 extrn MAP_BUFFER_PTR:dword
 extrn GAME_SCREEN_PTR:dword
 extrn GAME_SCREEN_WIDTH:dword
+extrn LIMIT_GAME_SCREEN_WIDTH:dword
+extrn LIMIT_GAME_SCREEN_HEIGHT:dword
 extrn GAME_SCREEN_SIZE:dword
 extrn CURSOR_ICON:dword
 extrn CURSOR_POS_X:dword
@@ -85,7 +87,6 @@ extrn KEY_M:dword
 
 ;==========================================================
 
-public general_bin_ptr
 public game_screen_ptr
 public screen_x_pos
 public screen_y_pos

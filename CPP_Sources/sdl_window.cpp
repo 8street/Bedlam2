@@ -116,6 +116,8 @@ int Window::init()
             ret_val |= 1;
         }
     }
+    LIMIT_GAME_SCREEN_WIDTH = m_game_width + TILE_WIDTH;
+    LIMIT_GAME_SCREEN_HEIGHT = m_game_height + TILE_HEIGHT * 18;
 
     SCREEN_SURFACE_WIDTH = m_game_width;
     SCREEN_SURFACE_HEIGHT = m_game_height;
@@ -270,12 +272,12 @@ int Window::draw_game_or_map(uint8_t *game_screen_ptr, int32_t map_active, int32
                               + 64                                                               // x offset
                               + (((screen_x_pos & 31) - (screen_y_pos & 31) + 32) & 63)];        // x
         }
-        destination_ptr = SCREEN_BUFFER_PTR;
+        destination_ptr = m_screen.lock_and_get_surface_ptr();
         int screen_line = m_game_height;
         do
         {
             memcpy(destination_ptr, source_ptr, m_game_width);
-            source_ptr += m_game_width;
+            source_ptr += GAME_SCREEN_WIDTH;
             destination_ptr += surf_width;
             --screen_line;
         } while (screen_line);

@@ -10,6 +10,8 @@ uint8_t *SCREEN_BUFFER_PTR = nullptr;
 uint8_t *GAME_SCREEN_PTR = nullptr;
 volatile int32_t GAME_SCREEN_WIDTH;
 volatile int32_t GAME_SCREEN_SIZE;
+volatile int32_t LIMIT_GAME_SCREEN_WIDTH;
+volatile int32_t LIMIT_GAME_SCREEN_HEIGHT;
 
 volatile uint32_t SCREEN_SURFACE_WIDTH;
 volatile uint32_t SCREEN_SURFACE_HEIGHT;
