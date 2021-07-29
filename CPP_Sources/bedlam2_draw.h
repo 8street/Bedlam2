@@ -10,8 +10,8 @@ extern "C" uint8_t *SIDEBAR_BUFFER_PTR;
 extern "C" uint8_t *MAP_BUFFER_PTR;
 // Should be in user window resolution when game is playing
 extern "C" uint8_t *SCREEN_BUFFER_PTR;
-// Should be in user window resolution plus one tile porch in from each side
-extern uint8_t GAME_SCREEN_PTR[409600];
+// Should be in user window resolution plus one tile porch in from each side to avoid black holes
+extern "C" uint8_t *GAME_SCREEN_PTR;
 
 extern "C" volatile uint32_t SCREEN_SURFACE_WIDTH;
 extern volatile uint32_t SCREEN_SURFACE_HEIGHT;

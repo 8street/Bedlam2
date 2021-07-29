@@ -19,6 +19,7 @@ Window::~Window()
     delete[] SCREEN_BUFFER_PTR;
     delete[] SIDEBAR_BUFFER_PTR;
     delete[] MAP_BUFFER_PTR;
+    delete[] GAME_SCREEN_PTR;
     SDL_VideoQuit();
 }
 
@@ -98,6 +99,16 @@ int Window::init()
         }
     }
     memset(SCREEN_BUFFER_PTR, 0, m_game_width * m_game_height);
+
+    if (GAME_SCREEN_PTR == nullptr)
+    {
+        GAME_SCREEN_PTR = new uint8_t[m_game_width * m_game_width];
+        if (GAME_SCREEN_PTR == nullptr)
+        {
+            std::cout << "ERROR: Could't allocate game level screen buffer \n";
+            ret_val |= 1;
+        }
+    }
 
     SCREEN_SURFACE_WIDTH = m_game_width;
     SCREEN_SURFACE_HEIGHT = m_game_height;
@@ -248,7 +259,7 @@ int Window::draw_game_or_map(uint8_t *game_screen_ptr, int32_t map_active, int32
         int screen_line = m_game_height;
         do
         {
-            memcpy(destination_ptr, source_ptr, m_game_width - SIDEBAR_WIDTH);
+            memcpy(destination_ptr, source_ptr, m_game_width);
             source_ptr += m_game_width;
             destination_ptr += surf_width;
             --screen_line;

@@ -7,7 +7,7 @@
 uint8_t *SIDEBAR_BUFFER_PTR = nullptr;
 uint8_t *MAP_BUFFER_PTR = nullptr;
 uint8_t *SCREEN_BUFFER_PTR = nullptr;
-uint8_t GAME_SCREEN_PTR[409600];
+uint8_t *GAME_SCREEN_PTR = nullptr;
 volatile uint32_t SCREEN_SURFACE_WIDTH;
 volatile uint32_t SCREEN_SURFACE_HEIGHT;
 
@@ -47,7 +47,7 @@ void redraw_copy_buff_to_screen_and_unlock(uint8_t *screen_buf)
 // Copy map or game screen in screen surface
 void draw_map_and_game_screen()
 {
-    GAME_WINDOW.draw_game_or_map(game_screen_ptr, map_active, dead_screen_scale);
+    GAME_WINDOW.draw_game_or_map(GAME_SCREEN_PTR, map_active, dead_screen_scale);
 }
 
 void copy_screen_to_buffer(uint8_t *buffer_ptr)
