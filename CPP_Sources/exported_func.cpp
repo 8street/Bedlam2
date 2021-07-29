@@ -42,15 +42,15 @@ void draw_IMG_in_buffer(
 
     transparent1 = transparent;
     v6 = &bin_ptr[4 * image_number + 2 + *(uint32_t *)&bin_ptr[4 * image_number + 2]];
-    v7 = *(unsigned __int16 *)v6;
+    v7 = *(uint16_t *)v6;
     v8 = v6 + 2;
     img_header = v7;
     if (bittest(v7, 1u))
     {
-        v9 = *(unsigned __int16 *)v8;
+        v9 = *(uint16_t *)v8;
         v10 = v8 + 2;
         y_pos += v9;
-        x_pos += *(unsigned __int16 *)v10;
+        x_pos += *(uint16_t *)v10;
         v8 = v10 + 2;
     }
     img_y_pos = y_pos;
@@ -58,9 +58,9 @@ void draw_IMG_in_buffer(
     img_height1 = *(uint16_t *)v8;
     if (*(uint16_t *)v8)
     {
-        img_x_size = *(unsigned __int16 *)v8;
+        img_x_size = *(uint16_t *)v8;
         v12 = v8 + 2;
-        img_height1 = *(unsigned __int16 *)v12;
+        img_height1 = *(uint16_t *)v12;
         if (*(uint16_t *)v12)
         {
             v13 = v12 + 2;
@@ -68,7 +68,7 @@ void draw_IMG_in_buffer(
             v14 = &buffer[640 * img_y_pos + img_x_pos];
             img_x_size1 = img_x_size;
             v16 = img_height1;
-            img_height1 = (unsigned __int16)img_header;
+            img_height1 = (uint16_t)img_header;
             if (bittest(img_height1, 0))
             {
                 if (transparent1)
@@ -80,7 +80,7 @@ void draw_IMG_in_buffer(
                         {
                             while (1)
                             {
-                                v18 = *(unsigned __int16 *)v13;
+                                v18 = *(uint16_t *)v13;
                                 v13 += 2;
                                 if (!bittest(v18, 0xFu))
                                     break;
@@ -91,7 +91,7 @@ void draw_IMG_in_buffer(
                             }
                             img_height1 = v18;
                             v27 = v18;
-                            for (i = (unsigned __int16)(v18 & 0xFFF) >> 1; i; --i)
+                            for (i = (uint16_t)(v18 & 0xFFF) >> 1; i; --i)
                             {
                                 *(uint16_t *)v14 = *(uint16_t *)v13;
                                 v13 += 2;
@@ -114,7 +114,7 @@ void draw_IMG_in_buffer(
                         {
                             while (1)
                             {
-                                v20 = *(unsigned __int16 *)v13;
+                                v20 = *(uint16_t *)v13;
                                 v13 += 2;
                                 if (bittest(v20, 0xFu))
                                     break;
@@ -240,19 +240,19 @@ void draw_tile(int32_t img_num, int32_t ofst, uint8_t *palette, uint8_t *screen_
 
     img_adr = &bin_ptr[4 * img_num + 2];
     img_ptr = &img_adr[*(uint32_t *)img_adr];
-    if (*(unsigned __int16 *)img_ptr >= 4u)
+    if (*(uint16_t *)img_ptr >= 4u)
     {
         line_ofst_ptr = img_ptr + 2;
-        line_ofst = 640 * *(unsigned __int16 *)line_ofst_ptr;
+        line_ofst = 640 * *(uint16_t *)line_ofst_ptr;
         line_ofst_ptr += 2;
-        img_ofst = *(unsigned __int16 *)line_ofst_ptr + line_ofst;
+        img_ofst = *(uint16_t *)line_ofst_ptr + line_ofst;
         line_ofst_ptr += 2;
         line_ofst = *(uint16_t *)line_ofst_ptr;
         v24 = line_ofst_ptr + 2;
         if (line_ofst)
         {
             screen_pos_1 = &screen_pos[img_ofst];
-            unkn1 = *(unsigned __int16 *)v24;
+            unkn1 = *(uint16_t *)v24;
             v26 = v24 + 2;
             v27 = unkn1;
             if (unkn1)
@@ -358,16 +358,16 @@ void draw_tile(int32_t img_num, int32_t ofst, uint8_t *palette, uint8_t *screen_
     else if (*(uint16_t *)img_ptr)
     {
         v7 = img_ptr + 2;
-        v8 = 640 * *(unsigned __int16 *)v7;
+        v8 = 640 * *(uint16_t *)v7;
         v7 += 2;
-        v9 = *(unsigned __int16 *)v7 + v8;
+        v9 = *(uint16_t *)v7 + v8;
         v7 += 2;
-        unkn3 = *(unsigned __int16 *)v7;
+        unkn3 = *(uint16_t *)v7;
         v11 = v7 + 2;
         if (unkn3)
         {
             v12 = &screen_pos[v9];
-            unkn3 = *(unsigned __int16 *)v11;
+            unkn3 = *(uint16_t *)v11;
             v13 = v11 + 2;
             v14 = unkn3;
             if (unkn3)
@@ -382,7 +382,7 @@ void draw_tile(int32_t img_num, int32_t ofst, uint8_t *palette, uint8_t *screen_
                         {
                             while (1)
                             {
-                                v39 = *(unsigned __int16 *)v13;
+                                v39 = *(uint16_t *)v13;
                                 v13 += 2;
                                 unkn4 = v39;
                                 if (bittest(unkn4, 0xFu))
@@ -425,7 +425,7 @@ void draw_tile(int32_t img_num, int32_t ofst, uint8_t *palette, uint8_t *screen_
                         {
                             while (1)
                             {
-                                v16 = *(unsigned __int16 *)v13;
+                                v16 = *(uint16_t *)v13;
                                 v13 += 2;
                                 unkn6 = v16;
                                 if (bittest(unkn6, 0xFu))

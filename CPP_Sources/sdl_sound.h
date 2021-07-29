@@ -1,5 +1,10 @@
 #pragma once
+//#ifdef _MSC_VER
 #include <SDL_mixer.h>
+//#else
+//#include <SDL2/SDL_mixer.h>
+//#endif
+
 #include <vector>
 #include <unordered_map>
 
@@ -28,7 +33,7 @@ private:
     std::vector<RAW_File> m_raws;
     std::unordered_map<std::string, int> m_filename_index_map;
     int m_num_simultaneously_playing_channels = 0;
-    int m_volume = 0;
+    int m_master_volume = 0;
 };
 
 extern Sound SOUND_SYSTEM;
