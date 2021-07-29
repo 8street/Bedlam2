@@ -33,6 +33,10 @@ Patches and improvements are welcome.
 3. Put compiled .exe file in your Bedlam2 folder. Or put Bedlam2 files in VS output directory
 4. Run
 
-### Linux, Mac
+### Linux
 
-Source codes can be compiled because SDL2 is platform free lib. You will have to modify the sources so that the save paths are being not "C:/MIRAGE/AB_BED". Other modifications may be required.
+Please read [linux.md](linux/linux.md).
+
+### Mac
+
+Source codes can be compiled because SDL2 is platform free lib.
