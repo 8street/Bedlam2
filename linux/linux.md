@@ -24,7 +24,7 @@ make
 sudo cp jwasm /usr/local/bin 
 ```
 
-3. Instal x86 lib SDL2 not lower than version SDL 2.0.12. You may compile it yourself
+3. Install x86 lib SDL2 not lower than version SDL 2.0.12. You may compile it yourself
 
 ```bash
 git clone https://github.com/libsdl-org/SDL
@@ -36,7 +36,7 @@ make
 sudo make install
 ```
 
-4. Instal x86 lib SDL2_mixer. You may compile it yourself
+4. Install x86 lib SDL2_mixer. You may compile it yourself
 
 ```bash
 git clone https://github.com/libsdl-org/SDL_mixer
@@ -48,7 +48,7 @@ make
 sudo make install
 ```
 
-5. Run build script from this_repo/linux folder 
+5. Run build script from Bedlam2/linux folder 
 
 ```bash
 git clone https://github.com/8street/Bedlam2
