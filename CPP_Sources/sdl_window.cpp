@@ -20,6 +20,10 @@ Window::~Window()
     delete[] SIDEBAR_BUFFER_PTR;
     delete[] MAP_BUFFER_PTR;
     delete[] GAME_SCREEN_PTR;
+    SCREEN_BUFFER_PTR = nullptr;
+    SIDEBAR_BUFFER_PTR = nullptr;
+    MAP_BUFFER_PTR = nullptr;
+    GAME_SCREEN_PTR = nullptr;
     SDL_VideoQuit();
 }
 
@@ -27,8 +31,8 @@ int Window::init()
 {
     int ret_val = 0;
 
-    m_game_width = 640;
-    m_game_height = 480;
+    m_game_width = ORIGINAL_GAME_WIDTH;
+    m_game_height = ORIGINAL_GAME_HEIGHT;
     m_window_width = m_game_width;
     m_window_height = m_game_height;
 
@@ -56,7 +60,7 @@ int Window::init()
         }
     }
 
-    SDL_SetWindowMinimumSize(m_window, 640, 480);
+    SDL_SetWindowMinimumSize(m_window, ORIGINAL_GAME_WIDTH, ORIGINAL_GAME_HEIGHT);
     if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2"))
     {
         if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
@@ -73,7 +77,7 @@ int Window::init()
 
     if (MAP_BUFFER_PTR == nullptr)
     {
-        MAP_BUFFER_PTR = new uint8_t[640 * 480];
+        MAP_BUFFER_PTR = new uint8_t[ORIGINAL_GAME_WIDTH * ORIGINAL_GAME_HEIGHT]();
         if (MAP_BUFFER_PTR == nullptr)
         {
             std::cout << "ERROR: Could't allocate map buffer \n";
@@ -82,7 +86,7 @@ int Window::init()
     }
     if (SIDEBAR_BUFFER_PTR == nullptr)
     {
-        SIDEBAR_BUFFER_PTR = new uint8_t[640 * 480];
+        SIDEBAR_BUFFER_PTR = new uint8_t[ORIGINAL_GAME_WIDTH * ORIGINAL_GAME_HEIGHT]();
         if (SIDEBAR_BUFFER_PTR == nullptr)
         {
             std::cout << "ERROR: Could't allocate sidebar buffer \n";
@@ -91,18 +95,21 @@ int Window::init()
     }
     if (SCREEN_BUFFER_PTR == nullptr)
     {
-        SCREEN_BUFFER_PTR = new uint8_t[m_game_width * m_game_height];
+        SCREEN_BUFFER_PTR = new uint8_t[m_game_width * m_game_height]();
         if (SCREEN_BUFFER_PTR == nullptr)
         {
             std::cout << "ERROR: Could't allocate screen buffer \n";
             ret_val |= 1;
         }
     }
-    memset(SCREEN_BUFFER_PTR, 0, m_game_width * m_game_height);
 
+    // Additional tile width needs to avoid black holes
+    GAME_SCREEN_WIDTH = m_game_width + TILE_WIDTH * 2;
+    // Additional tile height needs to avoid black holes and draw all Z levels in screen bottom
+    GAME_SCREEN_SIZE = GAME_SCREEN_WIDTH * (m_game_height + TILE_HEIGHT * 20);
     if (GAME_SCREEN_PTR == nullptr)
     {
-        GAME_SCREEN_PTR = new uint8_t[m_game_width * m_game_width];
+        GAME_SCREEN_PTR = new uint8_t[GAME_SCREEN_SIZE]();
         if (GAME_SCREEN_PTR == nullptr)
         {
             std::cout << "ERROR: Could't allocate game level screen buffer \n";
@@ -112,7 +119,6 @@ int Window::init()
 
     SCREEN_SURFACE_WIDTH = m_game_width;
     SCREEN_SURFACE_HEIGHT = m_game_height;
-
     m_screen.init(SCREEN_BUFFER_PTR, SCREEN_SURFACE_WIDTH, SCREEN_SURFACE_HEIGHT);
 
     if (ret_val)
@@ -125,7 +131,9 @@ int Window::init()
 
 int Window::set_palette(uint8_t *pal_ptr, int offset, int num_entries)
 {
-    return m_screen.set_palette(pal_ptr, offset, num_entries);
+    int ret_val = 0;
+    ret_val |= m_screen.set_palette(pal_ptr, offset, num_entries);
+    return ret_val;
 }
 
 int Window::clear_screen()
@@ -133,17 +141,21 @@ int Window::clear_screen()
     int ret_val = 0;
     ret_val |= m_screen.clear();
     ret_val |= redraw();
-    return 0;
+    return ret_val;
 }
 
 int Window::fill_screen_surface(uint8_t *buffer)
 {
-    return m_screen.fill_screen_surface(buffer);
+    int ret_val = 0;
+    ret_val |= m_screen.fill_screen_surface(buffer);
+    return ret_val;
 }
 
 int Window::unlock_screen_surface() const
 {
-    return m_screen.unlock_surface();
+    int ret_val = 0;
+    ret_val |= m_screen.unlock_surface();
+    return ret_val;
 }
 
 int Window::redraw()
@@ -153,18 +165,21 @@ int Window::redraw()
     if (game_is_playing)
     {
         // copy sidebar to screen surface
-        m_screen.fill_screen_surface(SIDEBAR_BUFFER_PTR, m_game_width - SIDEBAR_WIDTH, 0, 480, 0, SIDEBAR_WIDTH, SIDEBAR_HEIGHT, 640);
+       // m_screen.fill_screen_surface(
+        //    SIDEBAR_BUFFER_PTR, m_game_width - SIDEBAR_WIDTH, 0, 480, 0, SIDEBAR_WIDTH, SIDEBAR_HEIGHT, ORIGINAL_GAME_WIDTH);
         if (map_active)
         {
             if (m_game_height > 480)
             {
                 // draw map bottom right
-                m_screen.fill_screen_surface(MAP_BUFFER_PTR, m_game_width - 480, m_game_height - 480, 0, 0, 480, 480, 640); 
+                m_screen.fill_screen_surface(
+                    MAP_BUFFER_PTR, m_game_width - MAP_WIDTH, m_game_height - MAP_HEIGHT, 0, 0, MAP_WIDTH, MAP_HEIGHT,
+                    ORIGINAL_GAME_WIDTH); 
             }
             else
             {
                 // draw map center
-                m_screen.fill_screen_surface(MAP_BUFFER_PTR, 0, 0, 0, 0, 480, 480, 640); 
+                m_screen.fill_screen_surface(MAP_BUFFER_PTR, 0, 0, 0, 0, MAP_WIDTH, MAP_HEIGHT, ORIGINAL_GAME_WIDTH); 
             }
         }
     }
