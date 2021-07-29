@@ -104,7 +104,7 @@ int Window::init()
     }
 
     // Additional tile width needs to avoid black holes
-    GAME_SCREEN_WIDTH = m_game_width + TILE_WIDTH * 2;
+    GAME_SCREEN_WIDTH = m_game_width + TILE_WIDTH * 3;
     // Additional tile height needs to avoid black holes and draw all Z levels in screen bottom
     GAME_SCREEN_SIZE = GAME_SCREEN_WIDTH * (m_game_height + TILE_HEIGHT * 20);
     if (GAME_SCREEN_PTR == nullptr)
@@ -116,7 +116,7 @@ int Window::init()
             ret_val |= 1;
         }
     }
-    LIMIT_GAME_SCREEN_WIDTH = m_game_width + TILE_WIDTH;
+    LIMIT_GAME_SCREEN_WIDTH = GAME_SCREEN_WIDTH - TILE_WIDTH;
     LIMIT_GAME_SCREEN_HEIGHT = m_game_height + TILE_HEIGHT * 18;
 
     SCREEN_SURFACE_WIDTH = m_game_width;
@@ -267,10 +267,11 @@ int Window::draw_game_or_map(uint8_t *game_screen_ptr, int32_t map_active, int32
         else
         {
             source_ptr = &game_screen_ptr
-                             [m_game_width * (((screen_y_pos & 31) + (screen_x_pos & 31u)) >> 1) // y
-                              + 64 * m_game_width                                                // y offset (64 is tile size)
+                             [GAME_SCREEN_WIDTH * (((screen_y_pos & 31) + (screen_x_pos & 31u)) >> 1) // y
+                              + 64 * GAME_SCREEN_WIDTH                                    // y offset (64 is tile size)
                               + 64                                                               // x offset
                               + (((screen_x_pos & 31) - (screen_y_pos & 31) + 32) & 63)];        // x
+            //source_ptr = game_screen_ptr;
         }
         destination_ptr = m_screen.lock_and_get_surface_ptr();
         int screen_line = m_game_height;

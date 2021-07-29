@@ -28,6 +28,7 @@ public:
     int get_game_width() const;
     int draw_game_or_map(uint8_t *game_screen_ptr, int32_t map_active, int32_t dead_screen_scale);
     int resize_window(int new_width, int new_height);
+    int resize_game(int new_width, int new_height);
     int set_window_pos(int pos_x, int pos_y);
     int set_window_pos_center();
     SDL_Renderer *get_renderer();
