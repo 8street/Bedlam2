@@ -21,7 +21,7 @@ git clone https://github.com/JWasm/JWasm.git
 cd JWasm 
 cmake . 
 make
-cp jwasm /usr/local/bin 
+sudo cp jwasm /usr/local/bin 
 ```
 
 3. Instal x86 lib SDL2 not lower than version SDL 2.0.12. You may compile it yourself
