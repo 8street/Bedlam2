@@ -20,7 +20,7 @@ int BIN_File::get_img_count() const
 int BIN_File::get_img_height(int img) const
 {
     const uint8_t* img_ptr = get_img_header_ptr(img);
-    const uint16_t img_header = *(unsigned __int16*)img_ptr;
+    const uint16_t img_header = *(uint16_t *)img_ptr;
     if (img_ptr) {
         if (img_header & 0b10) {
             img_ptr += 4;
@@ -34,7 +34,7 @@ int BIN_File::get_img_height(int img) const
 int BIN_File::get_img_width(int img) const
 {
     const uint8_t* img_ptr = get_img_header_ptr(img);
-    const uint16_t img_header = *(unsigned __int16*)img_ptr;
+    const uint16_t img_header = *(uint16_t*)img_ptr;
     if (img_ptr) {
         if (img_header & 0b10) {
             img_ptr += 4;
@@ -50,7 +50,7 @@ int BIN_File::get_img_x_offset(int img) const
     const uint8_t* img_ptr = get_img_header_ptr(img);
 
     if (img_ptr) {
-        const uint16_t img_header = *(unsigned __int16*)img_ptr;
+        const uint16_t img_header = *(uint16_t*)img_ptr;
         if (img_header & 0b10) {
             img_ptr += 4;
             return *(uint16_t*)img_ptr;
@@ -63,7 +63,7 @@ int BIN_File::get_img_y_offset(int img) const
 {
     const uint8_t* img_ptr = get_img_header_ptr(img);
     if (img_ptr) {
-        const uint16_t img_header = *(unsigned __int16*)img_ptr;
+        const uint16_t img_header = *(uint16_t*)img_ptr;
         if (img_header & 0b10) {
             img_ptr += 2;
             return *(uint16_t*)img_ptr;

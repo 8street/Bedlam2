@@ -5,19 +5,19 @@
 #include "helper.h"
 
 // 00402965 Bedlam 1
-void _fastcall clear_buffer(uint32_t size, uint8_t *buffer)
+void clear_buffer(uint32_t size, uint8_t *buffer)
 {
     memset(buffer, 0, size);
 }
 
 // not present
-bool _fastcall bittest(int32_t value, int32_t bit)
+bool bittest(int32_t value, int32_t bit)
 {
     return value & (1 << bit);
 }
 
 // not present
-uint8_t _fastcall BYTE2(uint32_t value)
+uint8_t BYTE2(uint32_t value)
 {
     uint32_t ret = (value & 0x00FF0000) >> 16;
     return static_cast<uint8_t>(ret);
@@ -25,7 +25,7 @@ uint8_t _fastcall BYTE2(uint32_t value)
 
 // 0041EBF8 Bedlam 1
 // Hack equival SQRT(X^2 + Y^2)
-int _fastcall get_distance(int delta_x, int delta_y)
+int get_distance(int delta_x, int delta_y)
 {
     int x1 = abs(delta_x);
     int y1 = abs(delta_y);
