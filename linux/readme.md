@@ -47,7 +47,7 @@ make
 sudo make install
 ```
 
-# Compile
+### Compile
 
 To compile run build script from Bedlam2/linux folder 
 
