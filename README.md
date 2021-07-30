@@ -33,6 +33,8 @@ Patches and improvements are welcome.
 3. Put compiled .exe file in your Bedlam2 folder. Or put Bedlam2 files in VS output directory
 4. Run
 
+You can download executable file from [releases](releases).
+
 ### Linux
 
 Please read [linux.md](linux/linux.md).
