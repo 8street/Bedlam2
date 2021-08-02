@@ -1,10 +1,10 @@
 #include <iostream>
 
-#include "timer.h"
 #include "bedlam2.h"
+#include "bedlam2_draw.h"
 #include "sdl_event.h"
 #include "sdl_window.h"
-#include "bedlam2_draw.h"
+#include "timer.h"
 
 Window GAME_WINDOW;
 
@@ -78,50 +78,13 @@ int Window::init()
     if (MAP_BUFFER_PTR == nullptr)
     {
         MAP_BUFFER_PTR = new uint8_t[ORIGINAL_GAME_WIDTH * ORIGINAL_GAME_HEIGHT]();
-        if (MAP_BUFFER_PTR == nullptr)
-        {
-            std::cout << "ERROR: Could't allocate map buffer \n";
-            ret_val |= 1;
-        }
     }
     if (SIDEBAR_BUFFER_PTR == nullptr)
     {
         SIDEBAR_BUFFER_PTR = new uint8_t[ORIGINAL_GAME_WIDTH * ORIGINAL_GAME_HEIGHT]();
-        if (SIDEBAR_BUFFER_PTR == nullptr)
-        {
-            std::cout << "ERROR: Could't allocate sidebar buffer \n";
-            ret_val |= 1;
-        }
-    }
-    if (SCREEN_BUFFER_PTR == nullptr)
-    {
-        SCREEN_BUFFER_PTR = new uint8_t[m_game_width * m_game_height]();
-        if (SCREEN_BUFFER_PTR == nullptr)
-        {
-            std::cout << "ERROR: Could't allocate screen buffer \n";
-            ret_val |= 1;
-        }
     }
 
-    // Additional tile width needs to avoid black holes
-    GAME_SCREEN_WIDTH = m_game_width + TILE_WIDTH * 3;
-    // Additional tile height needs to avoid black holes and draw all Z levels in screen bottom
-    GAME_SCREEN_SIZE = GAME_SCREEN_WIDTH * (m_game_height + TILE_HEIGHT * 20);
-    if (GAME_SCREEN_PTR == nullptr)
-    {
-        GAME_SCREEN_PTR = new uint8_t[GAME_SCREEN_SIZE]();
-        if (GAME_SCREEN_PTR == nullptr)
-        {
-            std::cout << "ERROR: Could't allocate game level screen buffer \n";
-            ret_val |= 1;
-        }
-    }
-    LIMIT_GAME_SCREEN_WIDTH = GAME_SCREEN_WIDTH - TILE_WIDTH;
-    LIMIT_GAME_SCREEN_HEIGHT = m_game_height + TILE_HEIGHT * 18;
-
-    SCREEN_SURFACE_WIDTH = m_game_width;
-    SCREEN_SURFACE_HEIGHT = m_game_height;
-    m_screen.init(SCREEN_BUFFER_PTR, SCREEN_SURFACE_WIDTH, SCREEN_SURFACE_HEIGHT);
+    reinit_screen_data(m_game_width, m_game_height);
 
     if (ret_val)
     {
@@ -163,12 +126,12 @@ int Window::unlock_screen_surface() const
 int Window::redraw()
 {
     int ret_val = 0;
-    //Timer tim;
+    // Timer tim;
     if (game_is_playing)
     {
         // copy sidebar to screen surface
-       // m_screen.fill_screen_surface(
-        //    SIDEBAR_BUFFER_PTR, m_game_width - SIDEBAR_WIDTH, 0, 480, 0, SIDEBAR_WIDTH, SIDEBAR_HEIGHT, ORIGINAL_GAME_WIDTH);
+        m_screen.fill_screen_surface(
+            SIDEBAR_BUFFER_PTR, m_game_width - SIDEBAR_WIDTH, 0, 480, 0, SIDEBAR_WIDTH, SIDEBAR_HEIGHT, ORIGINAL_GAME_WIDTH);
         if (map_active)
         {
             if (m_game_height > 480)
@@ -176,18 +139,19 @@ int Window::redraw()
                 // draw map bottom right
                 m_screen.fill_screen_surface(
                     MAP_BUFFER_PTR, m_game_width - MAP_WIDTH, m_game_height - MAP_HEIGHT, 0, 0, MAP_WIDTH, MAP_HEIGHT,
-                    ORIGINAL_GAME_WIDTH); 
+                    ORIGINAL_GAME_WIDTH);
             }
             else
             {
                 // draw map center
-                m_screen.fill_screen_surface(MAP_BUFFER_PTR, 0, 0, 0, 0, MAP_WIDTH, MAP_HEIGHT, ORIGINAL_GAME_WIDTH); 
+                m_screen.fill_screen_surface(MAP_BUFFER_PTR, 0, 0, 0, 0, MAP_WIDTH, MAP_HEIGHT, ORIGINAL_GAME_WIDTH);
             }
         }
     }
     ret_val |= SDL_RenderCopy(m_renderer, m_screen.get_texture(), NULL, NULL);
 
-   /* if (m_viewport_scale && game_is_playing && !map_active)
+    // old scale
+    /* if (m_viewport_scale && game_is_playing && !map_active)
     {
         m_source_viewport_rect.x = 0 + m_viewport_scale / 2;
         m_source_viewport_rect.y = 0 + m_viewport_scale / 2;
@@ -200,8 +164,8 @@ int Window::redraw()
         ret_val |= SDL_RenderCopy(m_renderer, m_screen_texture, &m_source_viewport_rect, &m_destination_viewport_rect);
     }*/
 
-    //double elapsed = tim.elapsed();
-    //elapsed = 0.0;
+    // double elapsed = tim.elapsed();
+    // elapsed = 0.0;
     SDL_RenderPresent(m_renderer);
     SDL_events();
     return ret_val;
@@ -269,9 +233,9 @@ int Window::draw_game_or_map(uint8_t *game_screen_ptr, int32_t map_active, int32
             source_ptr = &game_screen_ptr
                              [GAME_SCREEN_WIDTH * (((screen_y_pos & 31) + (screen_x_pos & 31u)) >> 1) // y
                               + 64 * GAME_SCREEN_WIDTH                                    // y offset (64 is tile size)
-                              + 64                                                               // x offset
-                              + (((screen_x_pos & 31) - (screen_y_pos & 31) + 32) & 63)];        // x
-            //source_ptr = game_screen_ptr;
+                              + 64                                                        // x offset
+                              + (((screen_x_pos & 31) - (screen_y_pos & 31) + 32) & 63)]; // x
+            // source_ptr = game_screen_ptr;
         }
         destination_ptr = m_screen.lock_and_get_surface_ptr();
         int screen_line = m_game_height;
@@ -288,7 +252,7 @@ int Window::draw_game_or_map(uint8_t *game_screen_ptr, int32_t map_active, int32
 
 int Window::resize_window(int new_width, int new_height)
 {
-    // size decreases 
+    // size decreases
     if (new_height < m_window_height || new_width < m_window_width)
     {
         // keep aspect ratio
@@ -301,7 +265,7 @@ int Window::resize_window(int new_width, int new_height)
             new_height = new_width * 3 / 4;
         }
     }
-    // size increases 
+    // size increases
     else
     {
         // keep aspect ratio
@@ -322,6 +286,50 @@ int Window::resize_window(int new_width, int new_height)
         return redraw();
     }
     return -1;
+}
+
+int Window::reinit_screen_data(int new_width, int new_height)
+{
+    int ret_val = 0;
+    m_game_width = new_width;
+    m_game_height = new_height;
+
+    ret_val |= m_screen.destroy();
+
+    if (SCREEN_BUFFER_PTR)
+    {
+        delete[] SCREEN_BUFFER_PTR;
+        SCREEN_BUFFER_PTR = nullptr;
+    }
+    SCREEN_BUFFER_PTR = new uint8_t[m_game_width * m_game_height]();
+
+    SCREEN_SURFACE_WIDTH = m_game_width;
+    SCREEN_SURFACE_HEIGHT = m_game_height;
+
+    ret_val |= m_screen.init(SCREEN_BUFFER_PTR, m_game_width, m_game_height);
+    ret_val |= reinit_game_screen_buffer(m_game_width, m_game_height);
+    return ret_val;
+}
+
+int Window::reinit_game_screen_buffer(int new_width, int new_height)
+{
+    // Additional tile width needs to avoid black holes
+    GAME_SCREEN_WIDTH = new_width + TILE_WIDTH * 3;
+
+    int game_screen_height = new_height + TILE_HEIGHT * 20;
+    // Additional tile height needs to avoid black holes and draw all Z levels in screen bottom
+    GAME_SCREEN_SIZE = GAME_SCREEN_WIDTH * game_screen_height;
+
+    // Limits to avoid copy sprite that exceeds screen size
+    LIMIT_GAME_SCREEN_WIDTH = GAME_SCREEN_WIDTH - TILE_WIDTH;
+    LIMIT_GAME_SCREEN_HEIGHT = game_screen_height - TILE_HEIGHT;
+    if (GAME_SCREEN_PTR)
+    {
+        delete[] GAME_SCREEN_PTR;
+        GAME_SCREEN_PTR = nullptr;
+    }
+    GAME_SCREEN_PTR = new uint8_t[GAME_SCREEN_SIZE]();
+    return 0;
 }
 
 int Window::set_window_pos(int pos_x, int pos_y)
@@ -387,7 +395,7 @@ int Window::dead_screen_scaler(uint8_t *game_screen_ptr, int32_t dead_screen_sca
                  + dead_screen_scale / 2                 // offset x
                  + dead_screen_scale / 2 * m_game_width] // offset y
                 = source_ptr
-                    [x * (m_game_width - SIDEBAR_WIDTH) / scaled_screen_height          // x
+                    [x * (m_game_width - SIDEBAR_WIDTH) / scaled_screen_height // x
                      + y * m_game_height / scaled_screen_height * surf_width]; // y
         }
     }

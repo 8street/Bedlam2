@@ -16,7 +16,8 @@ public:
     Screen_data(uint8_t *screen_buffer, int surface_width, int surface_height, int offset_x = 0, int offset_y = 0);
     Screen_data();
     ~Screen_data();
-
+    
+    int destroy();
     int init(uint8_t *screen_buffer, int surface_width, int surface_height, int offset_x = 0, int offset_y = 0);
     int set_palette(uint8_t *pal_ptr, int offset, int num_entries);
     uint8_t *get_RGB_palette_ptr();
@@ -32,7 +33,6 @@ public:
     int get_surface_height() const;
 
 private:
-    int destroy();
     SDL_Surface *m_screen_surface = nullptr;
     bool m_must_lock_surface = false;
     Texture m_screen_texture;

@@ -15,15 +15,16 @@
 #define MAP_WIDTH 480
 #define MAP_HEIGHT 480
 
-
-// Should be in original 640*480 res
+// Index8 buffer 640*480 with sidebar on right side. Should be in original resolution
 extern "C" uint8_t *SIDEBAR_BUFFER_PTR;
-// Should be in original 640*480 res
+// Index8 buffer 640*480 with map on left side. Should be in original resolution
 extern "C" uint8_t *MAP_BUFFER_PTR;
-// Should be in user window resolution when game is playing
+// Index8 buffer game_x*game_y with visible screen data
 extern "C" uint8_t *SCREEN_BUFFER_PTR;
-// Should be in user window resolution plus one tile porch in from each side to avoid black holes
+// Index8 buffer (game_x+dx)*(game_y+dy)
+// Game render sprites in this buffer in game level then copy this buffer to screen to avoid black holes on the edge
 extern "C" uint8_t *GAME_SCREEN_PTR;
+
 extern "C" volatile int32_t GAME_SCREEN_WIDTH;
 extern "C" volatile int32_t GAME_SCREEN_SIZE;
 extern "C" volatile int32_t LIMIT_GAME_SCREEN_WIDTH;
