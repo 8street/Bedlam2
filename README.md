@@ -17,7 +17,7 @@ This repository does not contain any original game resources.
 
 # Project State
 
-The sources can be compiled and fully playable. Very rare crashes are possible.
+The sources can be compiled and fully playable on Windows. All known issues have been fixed.
 
 # Contributing
 
@@ -30,15 +30,11 @@ Patches and improvements are welcome.
 
 1. Open solution vs2019/Bedlam2.sln in Visual Studio 2019
 2. Compile x86 platform
-3. Put compiled .exe file in your Bedlam2 folder. Or put Bedlam2 files in VS output directory
+3. Put compiled .exe and SDL2.dll files in your Bedlam2 folder. Or put Bedlam2 files in VS output directory
 4. Run
 
-You can download executable file from [releases](releases).
+You can download executable file from [releases](https://github.com/8street/Bedlam2/releases). You may need to install "Microsoft Visual C++ 2015 Redistributable x86" to run game.
 
 ### Linux
 
-Please read [linux.md](linux/linux.md).
-
-### Mac
-
-Source codes can be compiled because SDL2 is platform free lib.
+Please read [linux.md](https://github.com/8street/Bedlam2/blob/master/linux/readme.md).
