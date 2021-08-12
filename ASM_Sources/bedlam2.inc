@@ -57,6 +57,13 @@ extrn GAME_SCREEN_WIDTH:dword
 extrn LIMIT_GAME_SCREEN_WIDTH:dword
 extrn LIMIT_GAME_SCREEN_HEIGHT:dword
 extrn GAME_SCREEN_SIZE:dword
+
+extrn VETRICAL_TILE_LEVEL_OFFSET:dword
+extrn NUM_TILES_X:dword
+extrn NUM_TILES_Y:dword
+extrn NOT_VISIBLE_TILES_X:dword
+extrn NOT_VISIBLE_TILES_Y:dword
+
 extrn CURSOR_ICON:dword
 extrn CURSOR_POS_X:dword
 extrn CURSOR_POS_Y:dword

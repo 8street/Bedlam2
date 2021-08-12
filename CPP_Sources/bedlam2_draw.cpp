@@ -16,6 +16,13 @@ volatile int32_t LIMIT_GAME_SCREEN_HEIGHT;
 volatile uint32_t SCREEN_SURFACE_WIDTH;
 volatile uint32_t SCREEN_SURFACE_HEIGHT;
 
+int32_t VETRICAL_TILE_LEVEL_OFFSET;
+int32_t NUM_TILES_X;
+int32_t NUM_TILES_Y;
+int32_t NOT_VISIBLE_TILES_X;
+int32_t NOT_VISIBLE_TILES_Y;
+
+
 void clear_screen()
 {
     GAME_WINDOW.clear_screen();

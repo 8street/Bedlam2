@@ -33,6 +33,13 @@ extern "C" volatile int32_t LIMIT_GAME_SCREEN_HEIGHT;
 extern "C" volatile uint32_t SCREEN_SURFACE_WIDTH;
 extern volatile uint32_t SCREEN_SURFACE_HEIGHT;
 
+extern "C" int32_t VETRICAL_TILE_LEVEL_OFFSET;
+extern "C" int32_t NUM_TILES_X;
+extern "C" int32_t NUM_TILES_Y;
+extern "C" int32_t NOT_VISIBLE_TILES_X;
+extern "C" int32_t NOT_VISIBLE_TILES_Y;
+
+
 extern "C" void clear_screen();
 extern "C" void copy_buffer_to_screen_and_unlock(uint8_t *buffer);
 extern "C" void redraw();
