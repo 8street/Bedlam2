@@ -31,8 +31,8 @@ int Window::init()
 {
     int ret_val = 0;
 
-    m_game_width = ORIGINAL_GAME_WIDTH;
-    m_game_height = ORIGINAL_GAME_HEIGHT;
+    m_game_width = ORIGINAL_GAME_WIDTH + 20;
+    m_game_height = ORIGINAL_GAME_HEIGHT + 20;
     m_window_width = m_game_width;
     m_window_height = m_game_height;
 
@@ -134,7 +134,7 @@ int Window::redraw()
             SIDEBAR_BUFFER_PTR, m_game_width - SIDEBAR_WIDTH, 0, 480, 0, SIDEBAR_WIDTH, SIDEBAR_HEIGHT, ORIGINAL_GAME_WIDTH);
         if (map_active)
         {
-            if (m_game_height > 480)
+            if (m_game_height > SIDEBAR_HEIGHT + MAP_HEIGHT)
             {
                 // draw map bottom right
                 m_screen.fill_screen_surface(
