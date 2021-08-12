@@ -85,6 +85,9 @@
     <ClCompile Include="..\CPP_Sources\screen_data.cpp">
       <Filter>CPP Sources</Filter>
     </ClCompile>
+    <ClCompile Include="..\CPP_Sources\tiles.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CPP_Sources\file.h">
@@ -148,6 +151,9 @@
       <Filter>CPP Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\CPP_Sources\screen_data.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\tiles.h">
       <Filter>CPP Sources</Filter>
     </ClInclude>
   </ItemGroup>

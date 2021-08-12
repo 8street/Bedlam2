@@ -3,7 +3,7 @@
 #include <cstdint>
 
 #include "screen_data.h"
-
+#include "tiles.h"
 
 class Window
 {
@@ -51,6 +51,7 @@ private:
     int m_viewport_scale = 0;
 
     Screen_data m_screen;
+    Tiles m_tiles;
 };
 
 extern Window GAME_WINDOW;

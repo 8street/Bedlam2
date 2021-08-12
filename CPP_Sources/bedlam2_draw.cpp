@@ -21,7 +21,7 @@ int32_t NUM_TILES_X;
 int32_t NUM_TILES_Y;
 int32_t NOT_VISIBLE_TILES_X;
 int32_t NOT_VISIBLE_TILES_Y;
-
+uint32_t *Z_BUFFER_PTR;
 
 void clear_screen()
 {

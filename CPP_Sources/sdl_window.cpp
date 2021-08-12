@@ -86,12 +86,7 @@ int Window::init()
 
     reinit_screen_data(m_game_width, m_game_height);
 
-    // After changing m_game_width, m_game_height, you should change these vars
-    VETRICAL_TILE_LEVEL_OFFSET = 2;
-    NUM_TILES_X = 36;
-    NUM_TILES_Y = 36;
-    NOT_VISIBLE_TILES_X = 9;
-    NOT_VISIBLE_TILES_Y = 9;
+    m_tiles.init_vars();
 
     if (ret_val)
     {
