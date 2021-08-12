@@ -87,7 +87,6 @@ extrn KEY_M:dword
 
 ;==========================================================
 
-public game_screen_ptr
 public screen_x_pos
 public screen_y_pos
 public map_active
