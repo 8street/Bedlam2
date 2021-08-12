@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "bedlam2_draw.h"
 #include "screen_data.h"
 
 Screen_data::Screen_data()
@@ -122,7 +123,12 @@ int Screen_data::fill_screen_surface(uint8_t *buffer_ptr)
         ret_val |= SDL_LockSurface(m_screen_surface);
     }
     destin = (uint8_t *)m_screen_surface->pixels;
-    memcpy(destin, buffer_ptr, m_screen_surface->w * m_screen_surface->h);
+    for (int y = 0; y < ORIGINAL_GAME_HEIGHT; y++)
+    {
+        memcpy(destin, buffer_ptr, ORIGINAL_GAME_WIDTH);
+        destin += m_screen_surface->w;
+        buffer_ptr += ORIGINAL_GAME_WIDTH;
+    }
     if (m_must_lock_surface)
     {
         SDL_UnlockSurface(m_screen_surface);
@@ -213,7 +219,13 @@ int Screen_data::copy_surface_to_buffer(uint8_t *buffer_ptr)
     {
         ret_val |= SDL_LockSurface(m_screen_surface);
     }
-    memcpy(buffer_ptr, (uint8_t *)m_screen_surface->pixels, m_screen_surface->w * m_screen_surface->h);
+    uint8_t *source = (uint8_t *)m_screen_surface->pixels;
+    for (int y = 0; y < ORIGINAL_GAME_HEIGHT; y++)
+    {
+        memcpy(buffer_ptr, source, ORIGINAL_GAME_WIDTH);
+        buffer_ptr += ORIGINAL_GAME_WIDTH;
+        source += m_screen_surface->w;
+    }
     if (m_must_lock_surface)
     {
         SDL_UnlockSurface(m_screen_surface);
