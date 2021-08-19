@@ -31,20 +31,44 @@ int Window::init()
 {
     int ret_val = 0;
 
+    if (SDL_Init(SDL_INIT_VIDEO))
+    {
+        std::cout << "ERROR: init SDL video. " << SDL_GetError() << std::endl;
+        ret_val |= 1;
+        return ret_val;
+    }
+
+    SDL_DisplayMode DM;
+    if (SDL_GetCurrentDisplayMode(0, &DM))
+    {
+        std::cout << "ERROR: get display mode. "<< SDL_GetError() << std::endl;
+        ret_val |= 1;
+    }
+    int monitor_width = DM.w;
+    int monitor_height = DM.h;
+  
+#ifdef _DEBUG
     const Resolution_settings &resolution_settings = m_options.get_resolution_settings(Resolution(640, 480));
+#else
+    const Resolution_settings &resolution_settings = m_options.get_resolution_settings(
+        Resolution(monitor_width, monitor_height));
+#endif
 
     m_game_width = resolution_settings.m_resolution.get_width();
     m_game_height = resolution_settings.m_resolution.get_height();
     m_window_width = m_game_width;
     m_window_height = m_game_height;
 
-    ret_val |= SDL_Init(SDL_INIT_VIDEO);
     int window_flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_SHOWN;
+    if (m_window_width == monitor_width && m_window_height == monitor_height)
+    {
+        window_flags = SDL_WINDOW_BORDERLESS | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_SHOWN;
+    }
     m_window = SDL_CreateWindow(
         "Bedlam 2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_window_width, m_window_height, window_flags);
     if (!m_window)
     {
-        std::cout << "ERROR: created window. \n";
+        std::cout << "ERROR: created window. " << SDL_GetError() << std::endl;
         ret_val |= 1;
         return ret_val;
     }
@@ -52,11 +76,11 @@ int Window::init()
     m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
     if (!m_renderer)
     {
-        std::cout << "ERROR: created accelerated renderer is invalid. \n";
+        std::cout << "ERROR: created accelerated renderer is invalid. " << SDL_GetError() << std::endl;
         m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_SOFTWARE | SDL_RENDERER_TARGETTEXTURE);
         if (!m_renderer)
         {
-            std::cout << "ERROR: created software renderer is invalid. \n";
+            std::cout << "ERROR: created software renderer is invalid. " << SDL_GetError() << std::endl;
             ret_val |= 1;
             return ret_val;
         }
@@ -67,13 +91,12 @@ int Window::init()
     {
         if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
         {
-            std::cout << "ERROR: Could't set render scale quality \n";
+            std::cout << "ERROR: Could't set render scale quality. " << SDL_GetError() << std::endl;
             ret_val |= 1;
         }
     }
 
     ret_val |= SDL_SetRenderTarget(m_renderer, NULL);
-
     ret_val |= SDL_RenderClear(m_renderer);
     SDL_RenderPresent(m_renderer);
 
@@ -86,9 +109,9 @@ int Window::init()
         SIDEBAR_BUFFER_PTR = new uint8_t[ORIGINAL_GAME_WIDTH * ORIGINAL_GAME_HEIGHT]();
     }
 
-    reinit_screen_data(m_game_width, m_game_height);
+    ret_val |= reinit_screen_data(m_game_width, m_game_height);
 
-    m_tiles.init_vars(resolution_settings);
+    ret_val |= m_tiles.init_vars(resolution_settings);
 
     if (ret_val)
     {
