@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <cstdint>
 
+#include "options.h"
 #include "screen_data.h"
 #include "tiles.h"
 
@@ -52,6 +53,7 @@ private:
 
     Screen_data m_screen;
     Tiles m_tiles;
+    Options m_options;
 };
 
 extern Window GAME_WINDOW;

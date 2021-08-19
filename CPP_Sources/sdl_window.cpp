@@ -31,8 +31,10 @@ int Window::init()
 {
     int ret_val = 0;
 
-    m_game_width = ORIGINAL_GAME_WIDTH + 20;
-    m_game_height = ORIGINAL_GAME_HEIGHT + 20;
+    const Resolution_settings &resolution_settings = m_options.get_resolution_settings(Resolution(640, 480));
+
+    m_game_width = resolution_settings.m_resolution.get_width();
+    m_game_height = resolution_settings.m_resolution.get_height();
     m_window_width = m_game_width;
     m_window_height = m_game_height;
 
@@ -86,7 +88,7 @@ int Window::init()
 
     reinit_screen_data(m_game_width, m_game_height);
 
-    m_tiles.init_vars();
+    m_tiles.init_vars(resolution_settings);
 
     if (ret_val)
     {
