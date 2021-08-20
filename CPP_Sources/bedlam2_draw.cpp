@@ -21,7 +21,13 @@ int32_t NUM_TILES_X;
 int32_t NUM_TILES_Y;
 int32_t NOT_VISIBLE_TILES_X;
 int32_t NOT_VISIBLE_TILES_Y;
+int32_t TILES_START_POS_X;
+int32_t TILES_START_POS_Y;
 uint32_t *Z_BUFFER_PTR;
+
+int32_t DISPLACE_SCREEN_X;
+int32_t DISPLACE_SCREEN_Y;
+
 
 void clear_screen()
 {
@@ -71,4 +77,10 @@ void get_screen_buffer_ptr()
 {
     GAME_WINDOW.lock_and_get_surface_ptr();
     // SCREEN_BUFFER_PTR already map with SCREEN_SURFACE->pixels
+}
+
+void correct_screen_pos()
+{
+    screen_x_pos -= DISPLACE_SCREEN_X;
+    screen_y_pos -= DISPLACE_SCREEN_Y;
 }

@@ -1,6 +1,8 @@
 #include <cmath>
 
 #include "resolutions.h"
+#include "bedlam2_draw.h"
+#include "tiles.h"
 
 bool operator==(const Resolution &r1, const Resolution &r2)
 {
@@ -72,13 +74,17 @@ Resolution_settings::Resolution_settings()
 
 Resolution_settings::Resolution_settings(
     const Resolution &res, int vertical_tile_offset, int num_tiles_x, int num_tiles_y, int not_visible_tiles_x,
-    int not_visible_tiles_y)
+    int not_visible_tiles_y, int tiles_start_pos_x, int tiles_start_pos_y, int displace_screen_x, int displace_screen_y)
     : m_resolution(res)
     , m_vertical_tile_offset(vertical_tile_offset)
     , m_num_tiles_x(num_tiles_x)
     , m_num_tiles_y(num_tiles_y)
     , m_not_visible_tiles_x(not_visible_tiles_x)
     , m_not_visible_tiles_y(not_visible_tiles_y)
+    , m_tiles_start_pos_x(tiles_start_pos_x)
+    , m_tiles_start_pos_y(tiles_start_pos_y)
+    , m_displace_screen_x(displace_screen_x)
+    , m_displace_screen_y(displace_screen_y)
 {
 }
 

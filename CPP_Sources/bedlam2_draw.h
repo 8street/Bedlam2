@@ -38,7 +38,12 @@ extern "C" int32_t NUM_TILES_X;
 extern "C" int32_t NUM_TILES_Y;
 extern "C" int32_t NOT_VISIBLE_TILES_X;
 extern "C" int32_t NOT_VISIBLE_TILES_Y;
+extern "C" int32_t TILES_START_POS_X;
+extern "C" int32_t TILES_START_POS_Y;
 extern "C" uint32_t *Z_BUFFER_PTR;
+
+extern int32_t DISPLACE_SCREEN_X;
+extern int32_t DISPLACE_SCREEN_Y;
 
 extern "C" void clear_screen();
 extern "C" void copy_buffer_to_screen_and_unlock(uint8_t *buffer);
@@ -48,3 +53,4 @@ extern "C" void redraw_copy_buff_to_screen_and_unlock(uint8_t *screen_buf);
 extern "C" void draw_map_and_game_screen();
 extern "C" void copy_screen_to_buffer(uint8_t *buffer_ptr);
 extern "C" void get_screen_buffer_ptr();
+extern "C" void correct_screen_pos();

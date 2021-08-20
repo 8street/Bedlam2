@@ -18,6 +18,10 @@ int Tiles::init_vars(const Resolution_settings &settings)
     NUM_TILES_Y = settings.m_num_tiles_y;
     NOT_VISIBLE_TILES_X = settings.m_not_visible_tiles_x;
     NOT_VISIBLE_TILES_Y = settings.m_not_visible_tiles_y;
+    TILES_START_POS_X = settings.m_tiles_start_pos_x;
+    TILES_START_POS_Y = settings.m_tiles_start_pos_y;
+    DISPLACE_SCREEN_X = settings.m_displace_screen_x;
+    DISPLACE_SCREEN_Y = settings.m_displace_screen_y;
 
     if (Z_BUFFER_PTR)
     {
