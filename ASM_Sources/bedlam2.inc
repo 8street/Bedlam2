@@ -64,6 +64,8 @@ extrn NUM_TILES_X:dword
 extrn NUM_TILES_Y:dword
 extrn NOT_VISIBLE_TILES_X:dword
 extrn NOT_VISIBLE_TILES_Y:dword
+extrn TILES_START_POS_X:dword
+extrn TILES_START_POS_Y:dword
 extrn Z_BUFFER_PTR:dword
 
 extrn CURSOR_ICON:dword
