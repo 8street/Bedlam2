@@ -2,6 +2,7 @@
 
 #include "mouse.h"
 #include "bedlam2.h"
+#include "bedlam2_draw.h"
 #include "sdl_window.h"
 #include "helper.h"
 
@@ -69,7 +70,7 @@ void mouse_update()
 
     if (game_is_playing)
     {
-        if (CURSOR_POS_X < 480)
+        if (CURSOR_POS_X < GAME_WINDOW.get_game_width() - SIDEBAR_WIDTH)
         {
             CURSOR_ICON = ICON_CROSSHAIR;
         }

@@ -48,7 +48,7 @@ int Window::init()
     int monitor_height = DM.h;
   
 #ifdef _DEBUG
-    const Resolution_settings &resolution_settings = m_options.get_resolution_settings(Resolution(640, 480));
+    const Resolution_settings &resolution_settings = m_options.get_resolution_settings(Resolution(1920, 1080));
 #else
     const Resolution_settings &resolution_settings = m_options.get_resolution_settings(
         Resolution(monitor_width, monitor_height));
@@ -153,7 +153,7 @@ int Window::unlock_screen_surface() const
 int Window::redraw()
 {
     int ret_val = 0;
-    // Timer tim;
+    //Timer tim;
     if (game_is_playing)
     {
         // copy sidebar to screen surface
@@ -191,8 +191,8 @@ int Window::redraw()
         ret_val |= SDL_RenderCopy(m_renderer, m_screen_texture, &m_source_viewport_rect, &m_destination_viewport_rect);
     }*/
 
-    // double elapsed = tim.elapsed();
-    // elapsed = 0.0;
+    //double elapsed = tim.elapsed();
+    //elapsed = 0.0;
     SDL_RenderPresent(m_renderer);
     SDL_events();
     return ret_val;
@@ -341,15 +341,15 @@ int Window::reinit_screen_data(int new_width, int new_height)
 int Window::reinit_game_screen_buffer(int new_width, int new_height)
 {
     // Additional tile width needs to avoid black holes
-    GAME_SCREEN_WIDTH = new_width + TILE_WIDTH * 3;
+    GAME_SCREEN_WIDTH = new_width + TILE_WIDTH * 5;
 
     int game_screen_height = new_height + TILE_HEIGHT * 20;
     // Additional tile height needs to avoid black holes and draw all Z levels in screen bottom
     GAME_SCREEN_SIZE = GAME_SCREEN_WIDTH * game_screen_height;
 
     // Limits to avoid copy sprite that exceeds screen size
-    LIMIT_GAME_SCREEN_WIDTH = GAME_SCREEN_WIDTH - TILE_WIDTH;
-    LIMIT_GAME_SCREEN_HEIGHT = game_screen_height - TILE_HEIGHT;
+    LIMIT_GAME_SCREEN_WIDTH = GAME_SCREEN_WIDTH - 2 * TILE_WIDTH;
+    LIMIT_GAME_SCREEN_HEIGHT = game_screen_height - 2 * TILE_HEIGHT;
     if (GAME_SCREEN_PTR)
     {
         delete[] GAME_SCREEN_PTR;

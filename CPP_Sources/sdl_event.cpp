@@ -49,7 +49,7 @@ int SDL_events()
                 if (NEW_PALETTE)
                 {
                     GAME_WINDOW.set_palette((uint8_t *)NEW_PALETTE, 0, 256);
-                    GAME_WINDOW.redraw();
+                    //GAME_WINDOW.redraw();
                     NEW_PALETTE = NULL;
                 }
             }
