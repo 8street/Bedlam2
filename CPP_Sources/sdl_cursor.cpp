@@ -31,7 +31,7 @@ int cursor::init()
     show_cursor();
     if (ret_val)
     {
-        std::cout << "ERROR: Init cursor \n";
+        std::cout << "ERROR: Init cursor." << std::endl;
     }
     return ret_val;
 }
@@ -153,7 +153,7 @@ SDL_Cursor *cursor::load_cursor(const Texture &cursor_texture)
 
     if (ret_val || cursor == NULL)
     {
-        std::cout << "ERROR: create cursor. " << SDL_GetError() << ".\n";
+        std::cout << "ERROR: create cursor. " << SDL_GetError() << std::endl;
     }
 
     return cursor;

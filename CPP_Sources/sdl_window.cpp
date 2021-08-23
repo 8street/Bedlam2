@@ -159,7 +159,7 @@ int Window::redraw()
     {
         // copy sidebar to screen surface
         m_screen.fill_screen_surface(
-            SIDEBAR_BUFFER_PTR, m_game_width - SIDEBAR_WIDTH, 0, 480, 0, SIDEBAR_WIDTH, SIDEBAR_HEIGHT, ORIGINAL_GAME_WIDTH);
+            SIDEBAR_BUFFER_PTR, SIDEBAR_START_POS_X, 0, 480, 0, SIDEBAR_WIDTH, SIDEBAR_HEIGHT, ORIGINAL_GAME_WIDTH);
         if (map_active)
         {
             if (m_game_height > SIDEBAR_HEIGHT + MAP_HEIGHT)

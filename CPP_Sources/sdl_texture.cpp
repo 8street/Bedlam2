@@ -46,7 +46,8 @@ Texture::Texture(const Texture &t)
         m_texture = SDL_CreateTexture(GAME_WINDOW.get_renderer(), SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, t.width, t.height);
         if (m_texture == nullptr)
         {
-            std::cout << "ERROR: create SDL texture in copy constructor. " << SDL_GetError() << ".\n";
+            std::cout << "ERROR: create SDL texture in copy constructor. " << SDL_GetError() << std::endl;
+            error_val |= -1;
         }
 
         uint8_t *dest_arr = nullptr;
@@ -62,7 +63,7 @@ Texture::Texture(const Texture &t)
 
         if (error_val)
         {
-            std::cout << "ERROR: texture copy initialization. " << SDL_GetError() << ".\n";
+            std::cout << "ERROR: texture copy initialization. " << SDL_GetError() << std::endl;
         }
         else
         {
@@ -74,7 +75,7 @@ Texture::Texture(const Texture &t)
         error_val |= SDL_SetTextureBlendMode(m_texture, SDL_BLENDMODE_BLEND);
         if (error_val)
         {
-            std::cout << "ERROR: texture copy initialization. " << SDL_GetError() << ".\n";
+            std::cout << "ERROR: texture copy initialization. " << SDL_GetError() << std::endl;
         }
     }
     else
@@ -94,7 +95,7 @@ Texture::Texture(int width, int height)
     int error_val = SDL_SetTextureBlendMode(m_texture, SDL_BLENDMODE_BLEND);
     if (error_val || m_texture == nullptr)
     {
-        std::cout << "ERROR: create SDL texture. " << SDL_GetError() << ".\n";
+        std::cout << "ERROR: create SDL texture. " << SDL_GetError() << std::endl;
     }
 }
 
@@ -126,7 +127,7 @@ Texture &Texture::operator=(const Texture &t)
 
         if (error_val || m_texture == nullptr)
         {
-            std::cout << "ERROR: operator=. " << SDL_GetError() << ".\n";
+            std::cout << "ERROR: operator=. " << SDL_GetError() << std::endl;
         }
         else
         {
@@ -138,7 +139,7 @@ Texture &Texture::operator=(const Texture &t)
         error_val |= SDL_SetTextureBlendMode(m_texture, SDL_BLENDMODE_BLEND);
         if (error_val)
         {
-            std::cout << "ERROR: texture operator=. " << SDL_GetError() << ".\n";
+            std::cout << "ERROR: texture operator=. " << SDL_GetError() << std::endl;
         }
         width = t.width;
         height = t.height;
@@ -213,7 +214,8 @@ int Texture::create_texture(int img, const BIN_File &bin, const File &pal)
     if (m_texture == nullptr)
     {
         ret_val |= 1;
-        std::cout << "ERROR: create SDL texture. " << SDL_GetError() << ". " << bin.get_full_path() << " Img: " << img << "\n";
+        std::cout << "ERROR: create SDL texture. " << SDL_GetError() << ". " << bin.get_full_path() << " Img: " << img
+                  << std::endl;
     }
     else
     {
@@ -264,7 +266,7 @@ int Texture::create_texture_from_surface(SDL_Surface *surface, SDL_Rect *texture
     if (m_texture == nullptr)
     {
         ret_val |= 1;
-        std::cout << "ERROR: create SDL texture. " << SDL_GetError() << "\n";
+        std::cout << "ERROR: create SDL texture. " << SDL_GetError() << std::endl;
     }
     ret_val |= SDL_SetTextureBlendMode(m_texture, SDL_BLENDMODE_NONE);
     ret_val |= fill_texture_from_surface(surface, texture_rect);
@@ -371,7 +373,7 @@ int Texture::merge_with(const Texture &t, int x, int y)
 
     if (ret_val)
     {
-        std::cout << "ERROR: texture merge. " << SDL_GetError() << ".\n";
+        std::cout << "ERROR: texture merge. " << SDL_GetError() << std::endl;
     }
     return ret_val;
 }

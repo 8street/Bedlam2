@@ -24,18 +24,17 @@ Sound::~Sound()
 int Sound::init()
 {
     int ret_val = 0;
-    ret_val |= SDL_Init(SDL_INIT_AUDIO);
-
-    if (ret_val)
+    
+    if (SDL_Init(SDL_INIT_AUDIO))
     {
-        std::cout << "ERROR: SDL init audio \n";
+        std::cout << "ERROR: SDL init audio. " << SDL_GetError() << std::endl;
+        ret_val |= -1;
     }
 
-    ret_val |= Mix_OpenAudio(11025, AUDIO_U8, 2, 16);
-
-    if (ret_val)
+    if (Mix_OpenAudio(11025, AUDIO_U8, 2, 16))
     {
-        std::cout << "ERROR: Mix_OpenAudio \n";
+        std::cout << "ERROR: Mix_OpenAudio. " << Mix_GetError() << std::endl;
+        ret_val |= -1;
     }
 
     m_num_simultaneously_playing_channels = 10;
