@@ -80,6 +80,7 @@ extrn MOUSE_BUTTONS_STATE1:dword
 extrn UPDATE_CURSOR_BY_TIMER:dword
 extrn WAITING_TIMER:dword
 extrn GAME_UPDATE_TIMER:dword
+extrn SIDEBAR_START_POS_X:dword
 
 extrn PRESSED_KEY_ARR:byte
 extrn KEY_ESC:dword

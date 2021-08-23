@@ -70,7 +70,7 @@ void mouse_update()
 
     if (game_is_playing)
     {
-        if (CURSOR_POS_X < GAME_WINDOW.get_game_width() - SIDEBAR_WIDTH)
+        if (CURSOR_POS_X < SIDEBAR_START_POS_X)
         {
             CURSOR_ICON = ICON_CROSSHAIR;
         }

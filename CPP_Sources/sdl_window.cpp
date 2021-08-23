@@ -48,7 +48,7 @@ int Window::init()
     int monitor_height = DM.h;
   
 #ifdef _DEBUG
-    const Resolution_settings &resolution_settings = m_options.get_resolution_settings(Resolution(1920, 1080));
+    const Resolution_settings &resolution_settings = m_options.get_resolution_settings(Resolution(800, 600));
 #else
     const Resolution_settings &resolution_settings = m_options.get_resolution_settings(
         Resolution(monitor_width, monitor_height));
@@ -108,6 +108,7 @@ int Window::init()
     {
         SIDEBAR_BUFFER_PTR = new uint8_t[ORIGINAL_GAME_WIDTH * ORIGINAL_GAME_HEIGHT]();
     }
+    SIDEBAR_START_POS_X = m_game_width - SIDEBAR_WIDTH;
 
     ret_val |= reinit_screen_data(m_game_width, m_game_height);
 

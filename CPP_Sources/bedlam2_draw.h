@@ -45,6 +45,8 @@ extern "C" uint32_t *Z_BUFFER_PTR;
 extern int32_t DISPLACE_SCREEN_X;
 extern int32_t DISPLACE_SCREEN_Y;
 
+extern "C" int32_t SIDEBAR_START_POS_X;
+
 extern "C" void clear_screen();
 extern "C" void copy_buffer_to_screen_and_unlock(uint8_t *buffer);
 extern "C" void redraw();
