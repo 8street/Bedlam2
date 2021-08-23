@@ -1,5 +1,3 @@
-#include <cmath>
-
 #include "bedlam2_draw.h"
 #include "tiles.h"
 
@@ -22,8 +20,6 @@ int Tiles::init_vars(const Resolution_settings &settings)
     NOT_VISIBLE_TILES_Y = settings.m_not_visible_tiles_y;
     TILES_START_POS_X = settings.m_tiles_start_pos_x;
     TILES_START_POS_Y = settings.m_tiles_start_pos_y;
-    //DISPLACE_SCREEN_X = settings.m_displace_screen_x;
-    //DISPLACE_SCREEN_Y = settings.m_displace_screen_y;
 
     //int original_start_pos_x = 304;
     //TILES_START_POS_X = original_start_pos_x;
@@ -38,7 +34,7 @@ int Tiles::init_vars(const Resolution_settings &settings)
     //NOT_VISIBLE_TILES_X = settings.m_not_visible_tiles_x;
     //NOT_VISIBLE_TILES_Y = settings.m_not_visible_tiles_y;
 
-    DISPLACE_SCREEN_X = std::abs(ORIGINAL_GAME_WIDTH - settings.m_resolution.get_width()) / 2;
+    DISPLACE_SCREEN_X = (ORIGINAL_GAME_WIDTH - settings.m_resolution.get_width()) / 2;
     DISPLACE_SCREEN_Y = 0;
 
     if (Z_BUFFER_PTR)

@@ -81,6 +81,6 @@ void get_screen_buffer_ptr()
 
 void correct_screen_pos()
 {
-    screen_x_pos -= DISPLACE_SCREEN_X;
-    screen_y_pos -= DISPLACE_SCREEN_Y;
+    screen_x_pos += DISPLACE_SCREEN_X;
+    screen_y_pos += DISPLACE_SCREEN_Y;
 }

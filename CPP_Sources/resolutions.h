@@ -32,8 +32,7 @@ public:
     Resolution_settings();
     Resolution_settings(
         const Resolution &res, int vertical_tile_offset = 0, int num_tiles_x = 0, int num_tiles_y = 0,
-        int not_visible_tiles_x = 0, int not_visible_tiles_y = 0, int tiles_start_pos_x = 0, int tiles_start_pos_y = 0,
-        int displace_screen_x = 0, int displace_screen_y = 0);
+        int not_visible_tiles_x = 0, int not_visible_tiles_y = 0, int tiles_start_pos_x = 0, int tiles_start_pos_y = 0);
     ~Resolution_settings();
     friend bool operator<(const Resolution_settings &rs1, const Resolution_settings &rs2);
 
@@ -45,8 +44,6 @@ public:
     int m_not_visible_tiles_y = 0;
     int m_tiles_start_pos_x = 0;
     int m_tiles_start_pos_y = 0;
-    int m_displace_screen_x = 0;
-    int m_displace_screen_y = 0;
 
 private:
 
