@@ -51,6 +51,7 @@ extrn SDL_events:proc
 
 extrn SCREEN_BUFFER_PTR:dword
 extrn SCREEN_SURFACE_WIDTH:dword
+extrn SCREEN_SURFACE_HEIGHT:dword
 extrn SIDEBAR_BUFFER_PTR:dword
 extrn MAP_BUFFER_PTR:dword
 extrn GAME_SCREEN_PTR:dword

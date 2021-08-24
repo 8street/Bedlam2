@@ -31,7 +31,7 @@ extern "C" volatile int32_t LIMIT_GAME_SCREEN_WIDTH;
 extern "C" volatile int32_t LIMIT_GAME_SCREEN_HEIGHT;
 
 extern "C" volatile uint32_t SCREEN_SURFACE_WIDTH;
-extern volatile uint32_t SCREEN_SURFACE_HEIGHT;
+extern "C" volatile uint32_t SCREEN_SURFACE_HEIGHT;
 
 extern "C" int32_t VETRICAL_TILE_LEVEL_OFFSET;
 extern "C" int32_t NUM_TILES_X;
