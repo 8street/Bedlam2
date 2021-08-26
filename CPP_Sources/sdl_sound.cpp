@@ -2,6 +2,7 @@
 #include <SDL.h>
 
 #include "bedlam2.h"
+#include "bedlam2_draw.h"
 #include "helper.h"
 #include "sdl_sound.h"
 
@@ -172,7 +173,10 @@ int Sound::get_first_free_channel(int index) const
 
 int Sound::get_volume(int x, int y) const
 {
-    int volume = 32768 - 32 * get_distance(y - screen_y_pos - (x - screen_x_pos), -((x - screen_x_pos + y - screen_y_pos) >> 1));
+    // Displace screen pos for all screen resolutions
+    const int real_scr_x = screen_x_pos + DISPLACE_SCREEN_X;
+    const int real_scr_y = screen_y_pos + DISPLACE_SCREEN_Y;
+    int volume = 32768 - 32 * get_distance(y - real_scr_y - (x - real_scr_x), -((x - real_scr_x + y - real_scr_y) >> 1));
     if (volume < 0)
     {
         volume = 0;
@@ -185,7 +189,10 @@ int Sound::get_volume(int x, int y) const
 }
 int Sound::get_balance(int x, int y) const
 {
-    int balance = -224 * (y - screen_y_pos - (x - screen_x_pos));
+    // Displace screen pos for all screen resolutions
+    const int real_scr_x = screen_x_pos + DISPLACE_SCREEN_X;
+    const int real_scr_y = screen_y_pos + DISPLACE_SCREEN_Y;
+    int balance = -224 * (y - real_scr_y - (x - real_scr_x));
     if (balance < -32640)
     {
         balance = -32640;
