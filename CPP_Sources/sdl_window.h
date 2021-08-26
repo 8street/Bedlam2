@@ -27,7 +27,7 @@ public:
     int get_window_width() const;
     int get_game_height() const;
     int get_game_width() const;
-    int draw_game_or_map(uint8_t *game_screen_ptr, int32_t map_active, int32_t dead_screen_scale);
+    int draw_game_to_screen_buffer(uint8_t *game_screen_ptr, int32_t dead_screen_scale);
     int resize_window(int new_width, int new_height);
     int reinit_screen_data(int new_width, int new_height);
     int reinit_game_screen_buffer(int new_width, int new_height);

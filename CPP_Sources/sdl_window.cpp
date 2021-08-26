@@ -241,7 +241,7 @@ int Window::get_game_width() const
     return m_game_width;
 }
 
-int Window::draw_game_or_map(uint8_t *game_screen_ptr, int32_t map_active, int32_t dead_screen_scale)
+int Window::draw_game_to_screen_buffer(uint8_t *game_screen_ptr, int32_t dead_screen_scale)
 {
     uint8_t *source_ptr;
     uint8_t *destination_ptr;
@@ -252,19 +252,11 @@ int Window::draw_game_or_map(uint8_t *game_screen_ptr, int32_t map_active, int32
     else
     {
         int surf_width = m_screen.get_surface_width();
-        if (map_active)
-        {
-            source_ptr = game_screen_ptr;
-        }
-        else
-        {
-            source_ptr = &game_screen_ptr
-                             [GAME_SCREEN_WIDTH * (((screen_y_pos & 31) + (screen_x_pos & 31u)) >> 1) // y
-                              + 64 * GAME_SCREEN_WIDTH                                    // y offset (64 is tile size)
-                              + 64                                                        // x offset
-                              + (((screen_x_pos & 31) - (screen_y_pos & 31) + 32) & 63)]; // x
-            // source_ptr = game_screen_ptr;
-        }
+        source_ptr = &game_screen_ptr
+                            [GAME_SCREEN_WIDTH * (((screen_y_pos & 31) + (screen_x_pos & 31u)) >> 1) // y
+                            + 64 * GAME_SCREEN_WIDTH                                    // y offset (64 is tile size)
+                            + 64                                                        // x offset
+                            + (((screen_x_pos & 31) - (screen_y_pos & 31) + 32) & 63)]; // x
         destination_ptr = m_screen.lock_and_get_surface_ptr();
         int screen_line = m_game_height;
         do

@@ -66,7 +66,7 @@ void redraw_copy_buff_to_screen_and_unlock(uint8_t *screen_buf)
 // Copy map or game screen in screen surface
 void draw_map_and_game_screen()
 {
-    GAME_WINDOW.draw_game_or_map(GAME_SCREEN_PTR, map_active, dead_screen_scale);
+    GAME_WINDOW.draw_game_to_screen_buffer(GAME_SCREEN_PTR, dead_screen_scale);
 }
 
 void copy_screen_to_buffer(uint8_t *buffer_ptr)
