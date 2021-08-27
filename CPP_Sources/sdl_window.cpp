@@ -48,7 +48,7 @@ int Window::init()
     int monitor_height = DM.h;
   
 #ifdef _DEBUG
-    const Resolution_settings &resolution_settings = m_options.get_resolution_settings(Resolution(800, 600));
+    const Resolution_settings &resolution_settings = m_options.get_resolution_settings(Resolution(1920, 1080));
 #else
     const Resolution_settings &resolution_settings = m_options.get_resolution_settings(
         Resolution(monitor_width, monitor_height));
