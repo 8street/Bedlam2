@@ -129,7 +129,7 @@ int Window::init()
 
     if (ret_val)
     {
-        std::cout << "ERROR: init window \n";
+        std::cout << "ERROR: init window." << std::endl;
     }
 
     return ret_val;

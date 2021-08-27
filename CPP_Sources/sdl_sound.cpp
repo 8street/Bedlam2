@@ -45,7 +45,7 @@ int Sound::init()
     int num_reserve_channels = Mix_ReserveChannels(max_channels);
     if (num_channels != max_channels || num_reserve_channels != max_channels)
     {
-        std::cout << "ERROR: allocate channels. Current channels number is " << num_channels << "\n";
+        std::cout << "ERROR: allocate channels. Current channels number is " << num_channels << std::endl;
         ret_val |= -1;
     }
 

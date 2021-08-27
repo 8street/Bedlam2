@@ -82,7 +82,7 @@ int Screen_data::set_palette(const uint8_t *pal_ptr, int offset, int num_entries
     ret_val |= SDL_SetSurfacePalette(m_surface, p);
     if (ret_val)
     {
-        std::cout << "ERROR: set screen palette \n";
+        std::cout << "ERROR: set screen palette. " << SDL_GetError() << std::endl;
     }
     if (m_must_lock_surface)
     {

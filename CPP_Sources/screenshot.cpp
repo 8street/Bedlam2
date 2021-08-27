@@ -126,7 +126,7 @@ int save_screenshot()
     }
     else
     {
-        std::cout << "Unable to save screenshot. The file " << filename << " does not open.\n";
+        std::cout << "Unable to save screenshot. The file " << filename << " does not open." << std::endl;
         return -1;
     }
 }

@@ -77,7 +77,7 @@ int RAW_File::load_data()
     file.open(get_full_path().c_str(), std::ios_base::in | std::ios_base::binary);
     if (!file.is_open())
     {
-        std::cout << "Unable to open file %s." << get_full_path().c_str() << "\n";
+        std::cout << "Unable to open file %s." << get_full_path().c_str() << std::endl;
         exit(404);
     }
 
