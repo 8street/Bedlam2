@@ -284,12 +284,12 @@ int Texture::fill_texture_from_surface(SDL_Surface *surface, SDL_Rect *texture_r
     {
         ret_val |= SDL_LockSurface(surface);
     }
-    for (int y = texture_rect->y; y < texture_rect->h; y++)
+    for (int y = 0; y < texture_rect->h; y++)
     {
-        for (int x = texture_rect->x; x < texture_rect->w; x++)
+        for (int x = 0; x < texture_rect->w; x++)
         {
-            uint8_t index = ((uint8_t *)surface->pixels)[y * surface->w + x];
-            ((SDL_Color *)bytes)[y * surface->w + x] = surface->format->palette->colors[index];
+            uint8_t index = ((uint8_t *)surface->pixels)[(y + texture_rect->y) * surface->w + x + texture_rect->x];
+            ((SDL_Color *)bytes)[y * width + x] = surface->format->palette->colors[index];
         }
     }
     if (must_lock)

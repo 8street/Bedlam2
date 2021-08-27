@@ -47,11 +47,13 @@ private:
     SDL_Window *m_window = nullptr;
     SDL_Renderer *m_renderer = nullptr;
 
-    SDL_Rect m_source_viewport_rect = { 0 };
-    SDL_Rect m_destination_viewport_rect = { 0 };
-    int m_viewport_scale = 0;
+    int m_viewport_scale_x = 0;
+    int m_viewport_scale_y = 0;
 
     Screen_data m_screen;
+    Screen_data m_map;
+    Screen_data m_sidebar;
+
     Tiles m_tiles;
     Options m_options;
 };
