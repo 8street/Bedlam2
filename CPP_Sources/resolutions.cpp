@@ -73,10 +73,9 @@ Resolution_settings::Resolution_settings()
 }
 
 Resolution_settings::Resolution_settings(
-    const Resolution &res, int vertical_tile_offset, int num_tiles_x, int num_tiles_y, int not_visible_tiles_x,
+    const Resolution &res, int num_tiles_x, int num_tiles_y, int not_visible_tiles_x,
     int not_visible_tiles_y, int tiles_start_pos_x, int tiles_start_pos_y)
     : m_resolution(res)
-    , m_vertical_tile_offset(vertical_tile_offset)
     , m_num_tiles_x(num_tiles_x)
     , m_num_tiles_y(num_tiles_y)
     , m_not_visible_tiles_x(not_visible_tiles_x)

@@ -7,28 +7,30 @@ Options::Options()
 { 
     // Add your resolution setting here in following format
     // m_resolutions_settings.push_back(Resolution_settings(Resolution(x,  y),  - screen resolution
-    // vertical_tile_offset,                                                    - tiles offset in Z levels 
     // num_tiles_x, num_tiles_y,                                                - number tiles
     // not_visible_tiles_x,  not_visible_tiles_x,                               - not visible tiles
     //                                                                            or visible tiles from robot pos to screen end
     //                                                                            I not sure
     // tiles_start_pos_x, tiles_start_pos_y));                                  - all tiles represent a rhombus with a beginning
     //                                                                            position at the top of rhombus
-
+    //
     // You not need to change default tiles_start_pos_x value 304
-    
-    // For correct working vertical_tile_offset variable
+    //
+    // For correct working vertical offset
     // tiles_start_pos_y should be aliquot to value TILE_HEIGHT = 32
 
-    m_resolutions_settings.push_back(Resolution_settings(Resolution(640,  480),    1, 36,  36,  9,  9, 304, -256));
-    m_resolutions_settings.push_back(Resolution_settings(Resolution(800,  600),    1, 46,  36, 12, 12, 304, -256));
-    m_resolutions_settings.push_back(Resolution_settings(Resolution(1024, 768),    1, 56,  46, 15, 15, 304, -256));
-    m_resolutions_settings.push_back(Resolution_settings(Resolution(1280, 1024),  -3, 70,  60, 16, 18, 304, -384));
-    m_resolutions_settings.push_back(Resolution_settings(Resolution(1600, 1200),  -7, 80,  65, 16, 26, 304, -512));
-    m_resolutions_settings.push_back(Resolution_settings(Resolution(1920, 1080), -14, 90,  70, 16, 32, 304, -736));
-    m_resolutions_settings.push_back(Resolution_settings(Resolution(1920, 1200), -14, 100, 70, 16, 32, 304, -736));
-    m_resolutions_settings.push_back(Resolution_settings(Resolution(2048, 1080), -15, 100, 70, 16, 36, 304, -768));
-    m_resolutions_settings.push_back(Resolution_settings(Resolution(2560, 1440), -24, 120, 90, 16, 36, 304, -1056));
+    m_resolutions_settings.push_back(Resolution_settings(Resolution(640,  480),  36,  36,  9,  9, 304, -256));
+    m_resolutions_settings.push_back(Resolution_settings(Resolution(800,  600),  46,  36, 12, 12, 304, -256));
+    m_resolutions_settings.push_back(Resolution_settings(Resolution(1024, 768),  56,  46, 15, 15, 304, -256));
+    m_resolutions_settings.push_back(Resolution_settings(Resolution(1366, 768),  66,  56, 16, 18, 304, -448));
+    m_resolutions_settings.push_back(Resolution_settings(Resolution(1440, 900),  70,  60, 16, 18, 304, -448));
+    m_resolutions_settings.push_back(Resolution_settings(Resolution(1280, 1024), 70,  60, 16, 18, 304, -384));
+    m_resolutions_settings.push_back(Resolution_settings(Resolution(1600, 900),  70,  60, 16, 18, 304, -448));
+    m_resolutions_settings.push_back(Resolution_settings(Resolution(1600, 1200), 80,  65, 16, 26, 304, -512));
+    m_resolutions_settings.push_back(Resolution_settings(Resolution(1920, 1080), 90,  70, 16, 32, 304, -736));
+    m_resolutions_settings.push_back(Resolution_settings(Resolution(1920, 1200), 100, 70, 16, 32, 304, -736));
+    m_resolutions_settings.push_back(Resolution_settings(Resolution(2048, 1080), 100, 70, 16, 36, 304, -768));
+    m_resolutions_settings.push_back(Resolution_settings(Resolution(2560, 1440), 120, 90, 16, 36, 304, -1056));
 
     std::sort(m_resolutions_settings.begin(), m_resolutions_settings.end());
 }
