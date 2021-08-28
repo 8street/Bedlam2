@@ -279,26 +279,26 @@ int Window::resize_window(int new_width, int new_height)
     if (new_height < m_window_height || new_width < m_window_width)
     {
         // keep aspect ratio
-        if (new_width * 3 > new_height * 4)
+        if (new_width * m_window_height > new_height * m_window_width)
         {
-            new_width = new_height * 4 / 3;
+            new_width = new_height * m_window_width / m_window_height;
         }
         else
         {
-            new_height = new_width * 3 / 4;
+            new_height = new_width * m_window_height / m_window_width;
         }
     }
     // size increases
     else
     {
         // keep aspect ratio
-        if (new_width * 3 > new_height * 4)
+        if (new_width * m_window_height > new_height * m_window_width)
         {
-            new_height = new_width * 3 / 4;
+            new_height = new_width * m_window_height / m_window_width;
         }
         else
         {
-            new_width = new_height * 4 / 3;
+            new_width = new_height * m_window_width / m_window_height;
         }
     }
     if (new_width > 0 && new_height > 0)
