@@ -40,7 +40,7 @@ int Tiles::init_vars(const Resolution_settings &settings)
         Z_BUFFER_PTR = nullptr;
     }
     
-    size_t max_z_levels = 8;
+    uint32_t max_z_levels = 8;
     Z_BUFFER_PTR = new uint32_t[NUM_TILES_X * NUM_TILES_Y * max_z_levels]();
     return 0;
 }

@@ -139,7 +139,15 @@ int Sound::fade_stop(int index, int ms)
 
 int Sound::set_volume(int new_volume)
 {
-    m_master_volume = std::clamp(new_volume, 0, 100);
+    if (new_volume > 100)
+    {
+        new_volume = 100;
+    }
+    else if (new_volume < 0)
+    {
+        new_volume = 0;
+    }
+    m_master_volume = new_volume;
     return 0;
 }
 
