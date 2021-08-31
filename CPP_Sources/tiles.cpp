@@ -34,6 +34,8 @@ int Tiles::init_vars(const Resolution_settings &settings)
     DISPLACE_SCREEN_X = (ORIGINAL_GAME_WIDTH - settings.m_resolution.get_width()) / 2;
     DISPLACE_SCREEN_Y = 0;
 
+    DISPLACE_ROBOT_ORIGIN_Y = settings.m_displace_origin_y;
+
     if (Z_BUFFER_PTR)
     {
         delete[] Z_BUFFER_PTR;

@@ -28,6 +28,8 @@ uint32_t *Z_BUFFER_PTR;
 int32_t DISPLACE_SCREEN_X;
 int32_t DISPLACE_SCREEN_Y;
 
+int32_t DISPLACE_ROBOT_ORIGIN_Y;
+
 int32_t SIDEBAR_START_POS_X;
 
 void clear_screen()

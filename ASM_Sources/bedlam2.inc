@@ -68,6 +68,7 @@ extrn NOT_VISIBLE_TILES_Y:dword
 extrn TILES_START_POS_X:dword
 extrn TILES_START_POS_Y:dword
 extrn Z_BUFFER_PTR:dword
+extrn DISPLACE_ROBOT_ORIGIN_Y:dword
 
 extrn CURSOR_ICON:dword
 extrn CURSOR_POS_X:dword

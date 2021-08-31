@@ -73,8 +73,8 @@ Resolution_settings::Resolution_settings()
 }
 
 Resolution_settings::Resolution_settings(
-    const Resolution &res, int num_tiles_x, int num_tiles_y, int not_visible_tiles_x,
-    int not_visible_tiles_y, int tiles_start_pos_x, int tiles_start_pos_y)
+    const Resolution &res, int num_tiles_x, int num_tiles_y, int not_visible_tiles_x, int not_visible_tiles_y,
+    int tiles_start_pos_x, int tiles_start_pos_y, int displace_origin_y)
     : m_resolution(res)
     , m_num_tiles_x(num_tiles_x)
     , m_num_tiles_y(num_tiles_y)
@@ -82,6 +82,7 @@ Resolution_settings::Resolution_settings(
     , m_not_visible_tiles_y(not_visible_tiles_y)
     , m_tiles_start_pos_x(tiles_start_pos_x)
     , m_tiles_start_pos_y(tiles_start_pos_y)
+    , m_displace_origin_y(displace_origin_y)
 {
 }
 

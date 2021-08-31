@@ -45,6 +45,9 @@ extern "C" uint32_t *Z_BUFFER_PTR;
 extern int32_t DISPLACE_SCREEN_X;
 extern int32_t DISPLACE_SCREEN_Y;
 
+// Displace vertical robot origin for correct robot top part angle depending on mouse position
+extern "C" int32_t DISPLACE_ROBOT_ORIGIN_Y;
+
 extern "C" int32_t SIDEBAR_START_POS_X;
 
 extern "C" void clear_screen();
