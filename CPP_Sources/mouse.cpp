@@ -89,8 +89,18 @@ int hide_cursor()
 void get_cursor_pos(int *x, int *y)
 {
     SDL_GetMouseState(x, y);
-    *x = *x * GAME_WINDOW.get_game_width() / GAME_WINDOW.get_window_width(); 
-    *y = *y * GAME_WINDOW.get_game_height() / GAME_WINDOW.get_window_height();
+    if (game_is_playing)
+    {
+        *x = *x * GAME_WINDOW.get_game_width() / GAME_WINDOW.get_window_width();
+        *y = *y * GAME_WINDOW.get_game_height() / GAME_WINDOW.get_window_height();
+    }
+    else
+    {
+        int menu_width = GAME_WINDOW.get_window_height() * 4 / 3;
+        int menu_start_pos_x = (GAME_WINDOW.get_window_width() - menu_width) / 2;
+        *x = (*x - menu_start_pos_x) * ORIGINAL_GAME_WIDTH / menu_width;
+        *y = *y * ORIGINAL_GAME_HEIGHT / GAME_WINDOW.get_window_height();
+    }
 }
 
 void show_cursor()

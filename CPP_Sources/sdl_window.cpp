@@ -157,6 +157,7 @@ int Window::clear_screen()
 {
     int ret_val = 0;
     ret_val |= m_screen.clear();
+    ret_val |= SDL_RenderClear(m_renderer);
     ret_val |= redraw();
     return ret_val;
 }
@@ -180,11 +181,22 @@ int Window::redraw()
     int ret_val = 0;
     //Timer tim;
 
-    if (!game_is_playing)
+    if (game_is_playing)
     {
+        // draw all screen when game level is playing
         m_screen.set_render_source(0, 0, m_screen.get_surface_width(), m_screen.get_surface_height());
+        m_screen.set_render_destination(0, 0, m_window_width, m_window_height);
+
     }
-    ret_val |= SDL_RenderCopy(m_renderer, m_screen.get_texture(), m_screen.get_render_source(), NULL);
+    else 
+    {
+        // upscale menu, map and armory screen  
+        int menu_width = m_window_height * 4 / 3;
+        int menu_start_pos_x = (m_window_width - menu_width) / 2;
+        m_screen.set_render_source(0, 0, ORIGINAL_GAME_WIDTH, ORIGINAL_GAME_HEIGHT);
+        m_screen.set_render_destination(menu_start_pos_x, 0, menu_width, m_window_height);
+    }
+    ret_val |= SDL_RenderCopy(m_renderer, m_screen.get_texture(), m_screen.get_render_source(), m_screen.get_render_destination());
 
     if (game_is_playing)
     {
