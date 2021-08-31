@@ -47,12 +47,8 @@ int Window::init()
     int monitor_width = DM.w;
     int monitor_height = DM.h;
   
-#ifdef _DEBUG
-    const Resolution_settings &resolution_settings = m_options.get_resolution_settings(Resolution(640, 480));
-#else
     const Resolution_settings &resolution_settings = m_options.get_resolution_settings(
         Resolution(monitor_width, monitor_height));
-#endif
 
     m_game_width = resolution_settings.m_resolution.get_width();
     m_game_height = resolution_settings.m_resolution.get_height();
