@@ -187,7 +187,6 @@ void draw_IMG_in_buffer(
     }
 }
 
-
 // 00401471
 void draw_tile(int32_t img_num, int32_t ofst, uint8_t *palette, uint8_t *screen_pos, const uint8_t *bin_ptr)
 {

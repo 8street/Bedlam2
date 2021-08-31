@@ -1,12 +1,12 @@
 #include <SDL.h>
 
-#include "main.h"
-#include "sdl_event.h"
-#include "mouse.h"
-#include "sdl_timer.h"
-#include "palette.h"
 #include "keyboard.h"
+#include "main.h"
+#include "mouse.h"
+#include "palette.h"
 #include "screenshot.h"
+#include "sdl_event.h"
+#include "sdl_timer.h"
 #include "sdl_window.h"
 
 int SDL_events()
@@ -49,7 +49,7 @@ int SDL_events()
                 if (NEW_PALETTE)
                 {
                     GAME_WINDOW.set_palette((uint8_t *)NEW_PALETTE, 0, 256);
-                    GAME_WINDOW.redraw();
+                    // GAME_WINDOW.redraw();
                     NEW_PALETTE = NULL;
                 }
             }
@@ -129,7 +129,7 @@ int SDL_events()
                 break;
 #endif
             default:
-                //SDL_Log("Window %d got unknown event %d", event.window.windowID, event.window.event);
+                // SDL_Log("Window %d got unknown event %d", event.window.windowID, event.window.event);
                 break;
         }
     }

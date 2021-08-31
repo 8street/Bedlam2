@@ -4,11 +4,11 @@
 /// <summary>
 /// Class to measure code performance
 /// To use:
-/// 
+///
 /// Timer tim
 /// <your code>
 /// double elapsed = tim.elapsed();
-/// 
+///
 /// </summary>
 class Timer
 {

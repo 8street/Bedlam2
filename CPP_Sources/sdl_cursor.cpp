@@ -1,9 +1,9 @@
 #include <iostream>
 
-#include "sdl_cursor.h"
-#include "mouse.h"
 #include "exported_func.h"
 #include "file.h"
+#include "mouse.h"
+#include "sdl_cursor.h"
 
 cursor::cursor()
 {
@@ -19,7 +19,6 @@ cursor::~cursor()
     }
 }
 
-
 int cursor::init()
 {
     int ret_val = 0;
@@ -31,7 +30,7 @@ int cursor::init()
     show_cursor();
     if (ret_val)
     {
-        std::cout << "ERROR: Init cursor \n";
+        std::cout << "ERROR: Init cursor." << std::endl;
     }
     return ret_val;
 }
@@ -72,18 +71,18 @@ int cursor::load_cursors(const BIN_File &general_bin, const File &pal_file)
 
     // load default cursor
     img = 93;
-    texture default_cursor_texture(img, general_bin, pal_file);
+    Texture default_cursor_texture(img, general_bin, pal_file);
     m_default = load_cursor(default_cursor_texture);
 
     // load crosshair cursor
     img = 0;
-    texture crosshair_texture(img, general_bin, pal_file);
+    Texture crosshair_texture(img, general_bin, pal_file);
     m_crosshair = load_cursor(crosshair_texture);
 
     // load waiting cursor
     for (img = ICON_WAIT; img < 152; img++)
     {
-        texture waiting_cursor_texture(img, general_bin, pal_file);
+        Texture waiting_cursor_texture(img, general_bin, pal_file);
         SDL_Cursor *c = load_cursor(waiting_cursor_texture);
         m_waiting_cursor.push_back(c);
         if (c == NULL)
@@ -138,10 +137,10 @@ int cursor::set_default_cursor()
 }
 int cursor::get_cursor_img() const
 {
-   return m_img;
+    return m_img;
 }
 
-SDL_Cursor *cursor::load_cursor(const texture &cursor_texture)
+SDL_Cursor *cursor::load_cursor(const Texture &cursor_texture)
 {
     int ret_val = 0;
     SDL_Surface *cursor_surface = nullptr;
@@ -153,7 +152,7 @@ SDL_Cursor *cursor::load_cursor(const texture &cursor_texture)
 
     if (ret_val || cursor == NULL)
     {
-        std::cout << "ERROR: create cursor. " << SDL_GetError() << ".\n";
+        std::cout << "ERROR: create cursor. " << SDL_GetError() << std::endl;
     }
 
     return cursor;

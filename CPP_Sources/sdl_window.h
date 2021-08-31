@@ -2,7 +2,9 @@
 #include <SDL.h>
 #include <cstdint>
 
-#define SIDEBAR_WIDTH 160
+#include "options.h"
+#include "screen_data.h"
+#include "tiles.h"
 
 class Window
 {
@@ -25,8 +27,10 @@ public:
     int get_window_width() const;
     int get_game_height() const;
     int get_game_width() const;
-    int draw_game_or_map(uint8_t *game_screen_ptr, int32_t map_active, int32_t dead_screen_scale);
+    int draw_game_to_screen_buffer(uint8_t *game_screen_ptr, int32_t dead_screen_scale);
     int resize_window(int new_width, int new_height);
+    int reinit_screen_data(int new_width, int new_height);
+    int reinit_game_screen_buffer(int new_width, int new_height);
     int set_window_pos(int pos_x, int pos_y);
     int set_window_pos_center();
     SDL_Renderer *get_renderer();
@@ -34,26 +38,22 @@ public:
     int decrease_viewport_scale();
 
 private:
-    int dead_screen_scaler(uint8_t *game_screen_ptr, int32_t dead_screen_scale);
-    int fill_screen_texture_from_surface();
-
     int m_window_width = 0;
     int m_window_height = 0;
     int m_game_width = 0;
     int m_game_height = 0;
     SDL_Window *m_window = nullptr;
     SDL_Renderer *m_renderer = nullptr;
-    SDL_Surface *m_screen_surface = nullptr;
-    SDL_Texture *m_screen_texture = nullptr;
-    bool m_must_lock_surface = false;
-    SDL_Rect m_source_viewport_rect = { 0 };
-    SDL_Rect m_destination_viewport_rect = { 0 };
-    int m_viewport_scale = 0;
-};
 
-extern "C" uint8_t *SCREEN_BUFFER_PTR;
-extern uint8_t GAME_SCREEN_PTR[409600];
-extern "C" volatile uint32_t SCREEN_SURFACE_WIDTH;
-extern volatile uint32_t SCREEN_SURFACE_HEIGHT;
+    int m_viewport_scale_x = 0;
+    int m_viewport_scale_y = 0;
+
+    Screen_data m_screen;
+    Screen_data m_map;
+    Screen_data m_sidebar;
+
+    Tiles m_tiles;
+    Options m_options;
+};
 
 extern Window GAME_WINDOW;

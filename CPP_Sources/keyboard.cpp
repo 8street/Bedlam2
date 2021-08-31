@@ -21,7 +21,7 @@ int32_t KEY_M;
 Keyboard GAME_KEYBOARD;
 
 Keyboard::Keyboard()
-{ 
+{
     m_keycode_scancode_map.emplace(SDLK_ESCAPE, Scancode::ESC);
     m_keycode_scancode_map.emplace(SDLK_1, Scancode::key_1);
     m_keycode_scancode_map.emplace(SDLK_2, Scancode::key_2);

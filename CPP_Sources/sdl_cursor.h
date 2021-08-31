@@ -23,7 +23,7 @@ public:
 
 private:
     int load_cursors(const BIN_File &general_bin, const File &pal_file);
-    SDL_Cursor *load_cursor(const texture &cursor_texture);
+    SDL_Cursor *load_cursor(const Texture &cursor_texture);
 
     SDL_Cursor *m_default = nullptr;
     SDL_Cursor *m_crosshair = nullptr;

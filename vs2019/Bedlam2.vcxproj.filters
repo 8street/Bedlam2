@@ -82,6 +82,18 @@
     <ClCompile Include="..\CPP_Sources\ingame_music.cpp">
       <Filter>CPP Sources</Filter>
     </ClCompile>
+    <ClCompile Include="..\CPP_Sources\screen_data.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\tiles.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\resolutions.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\options.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CPP_Sources\file.h">
@@ -142,6 +154,18 @@
       <Filter>CPP Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\CPP_Sources\ingame_music.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\screen_data.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\tiles.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\resolutions.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\options.h">
       <Filter>CPP Sources</Filter>
     </ClInclude>
   </ItemGroup>

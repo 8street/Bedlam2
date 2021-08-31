@@ -3,8 +3,8 @@
 
 #include "bedlam2.h"
 #include "mouse.h"
-#include "sdl_timer.h"
 #include "palette.h"
+#include "sdl_timer.h"
 
 volatile int32_t WAITING_TIMER;
 volatile int32_t GAME_UPDATE_TIMER;
@@ -33,17 +33,21 @@ int Timer::init(int interval_ms)
     return init();
 }
 
-
 int Timer::init()
 {
     PALETTE_TIMER = 0;
     int ret_val = 0;
-    ret_val = SDL_Init(SDL_INIT_TIMER);
+
+    if (SDL_Init(SDL_INIT_TIMER))
+    {
+        std::cout << "ERROR: Init SDL timer. " << SDL_GetError() << std::endl;
+        ret_val |= -1;
+    }
 
     m_timer_id = SDL_AddTimer(m_interval_ms, sdl_timer_callback, NULL);
-    if (ret_val || !m_timer_id)
+    if (!m_timer_id)
     {
-        std::cout << "ERROR: Init timer \n";
+        std::cout << "ERROR: Add SDL timer. " << SDL_GetError() << std::endl;
         ret_val |= -1;
     }
     return ret_val;

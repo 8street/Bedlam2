@@ -1,9 +1,10 @@
 #include <SDL.h>
 
-#include "mouse.h"
 #include "bedlam2.h"
-#include "sdl_window.h"
+#include "bedlam2_draw.h"
 #include "helper.h"
+#include "mouse.h"
+#include "sdl_window.h"
 
 cursor WINDOW_CURSOR;
 
@@ -69,7 +70,7 @@ void mouse_update()
 
     if (game_is_playing)
     {
-        if (CURSOR_POS_X < 480)
+        if (CURSOR_POS_X < SIDEBAR_START_POS_X)
         {
             CURSOR_ICON = ICON_CROSSHAIR;
         }
@@ -88,8 +89,18 @@ int hide_cursor()
 void get_cursor_pos(int *x, int *y)
 {
     SDL_GetMouseState(x, y);
-    *x = *x * GAME_WINDOW.get_game_width() / GAME_WINDOW.get_window_width(); 
-    *y = *y * GAME_WINDOW.get_game_height() / GAME_WINDOW.get_window_height();
+    if (game_is_playing)
+    {
+        *x = *x * GAME_WINDOW.get_game_width() / GAME_WINDOW.get_window_width();
+        *y = *y * GAME_WINDOW.get_game_height() / GAME_WINDOW.get_window_height();
+    }
+    else
+    {
+        int menu_width = GAME_WINDOW.get_window_height() * 4 / 3;
+        int menu_start_pos_x = (GAME_WINDOW.get_window_width() - menu_width) / 2;
+        *x = (*x - menu_start_pos_x) * ORIGINAL_GAME_WIDTH / menu_width;
+        *y = *y * ORIGINAL_GAME_HEIGHT / GAME_WINDOW.get_window_height();
+    }
 }
 
 void show_cursor()

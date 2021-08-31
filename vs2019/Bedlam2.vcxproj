@@ -36,15 +36,19 @@
     <ClCompile Include="..\CPP_Sources\library_func.cpp" />
     <ClCompile Include="..\CPP_Sources\main.cpp" />
     <ClCompile Include="..\CPP_Sources\mouse.cpp" />
+    <ClCompile Include="..\CPP_Sources\options.cpp" />
     <ClCompile Include="..\CPP_Sources\palette.cpp" />
     <ClCompile Include="..\CPP_Sources\raw_file.cpp" />
+    <ClCompile Include="..\CPP_Sources\resolutions.cpp" />
     <ClCompile Include="..\CPP_Sources\screenshot.cpp" />
+    <ClCompile Include="..\CPP_Sources\screen_data.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_cursor.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_event.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_sound.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_texture.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_timer.cpp" />
     <ClCompile Include="..\CPP_Sources\sdl_window.cpp" />
+    <ClCompile Include="..\CPP_Sources\tiles.cpp" />
     <ClCompile Include="..\CPP_Sources\timer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -58,15 +62,19 @@
     <ClInclude Include="..\CPP_Sources\keyboard.h" />
     <ClInclude Include="..\CPP_Sources\main.h" />
     <ClInclude Include="..\CPP_Sources\mouse.h" />
+    <ClInclude Include="..\CPP_Sources\options.h" />
     <ClInclude Include="..\CPP_Sources\palette.h" />
     <ClInclude Include="..\CPP_Sources\raw_file.h" />
+    <ClInclude Include="..\CPP_Sources\resolutions.h" />
     <ClInclude Include="..\CPP_Sources\screenshot.h" />
+    <ClInclude Include="..\CPP_Sources\screen_data.h" />
     <ClInclude Include="..\CPP_Sources\sdl_cursor.h" />
     <ClInclude Include="..\CPP_Sources\sdl_event.h" />
     <ClInclude Include="..\CPP_Sources\sdl_sound.h" />
     <ClInclude Include="..\CPP_Sources\sdl_texture.h" />
     <ClInclude Include="..\CPP_Sources\sdl_timer.h" />
     <ClInclude Include="..\CPP_Sources\sdl_window.h" />
+    <ClInclude Include="..\CPP_Sources\tiles.h" />
     <ClInclude Include="..\CPP_Sources\timer.h" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,8 @@
-#include <iostream>
 #include <SDL.h>
+#include <iostream>
 
 #include "bedlam2.h"
+#include "bedlam2_draw.h"
 #include "helper.h"
 #include "sdl_sound.h"
 
@@ -24,18 +25,17 @@ Sound::~Sound()
 int Sound::init()
 {
     int ret_val = 0;
-    ret_val |= SDL_Init(SDL_INIT_AUDIO);
 
-    if (ret_val)
+    if (SDL_Init(SDL_INIT_AUDIO))
     {
-        std::cout << "ERROR: SDL init audio \n";
+        std::cout << "ERROR: SDL init audio. " << SDL_GetError() << std::endl;
+        ret_val |= -1;
     }
 
-    ret_val |= Mix_OpenAudio(11025, AUDIO_U8, 2, 16);
-
-    if (ret_val)
+    if (Mix_OpenAudio(11025, AUDIO_U8, 2, 16))
     {
-        std::cout << "ERROR: Mix_OpenAudio \n";
+        std::cout << "ERROR: Mix_OpenAudio. " << Mix_GetError() << std::endl;
+        ret_val |= -1;
     }
 
     m_num_simultaneously_playing_channels = 10;
@@ -45,7 +45,7 @@ int Sound::init()
     int num_reserve_channels = Mix_ReserveChannels(max_channels);
     if (num_channels != max_channels || num_reserve_channels != max_channels)
     {
-        std::cout << "ERROR: allocate channels. Current channels number is " << num_channels << "\n";
+        std::cout << "ERROR: allocate channels. Current channels number is " << num_channels << std::endl;
         ret_val |= -1;
     }
 
@@ -54,7 +54,7 @@ int Sound::init()
     {
         ret_val |= -1;
     }
-    
+
     return ret_val;
 }
 
@@ -91,7 +91,7 @@ int Sound::play_raw(int index, int x, int y, bool loop)
     }
     else
     {
-        volume = get_volume(x, y) >> 8; // max 128
+        volume = get_volume(x, y) >> 8;   // max 128
         balance = get_balance(x, y) >> 7; // max 255
         if (balance > 0)
         {
@@ -139,7 +139,15 @@ int Sound::fade_stop(int index, int ms)
 
 int Sound::set_volume(int new_volume)
 {
-    m_master_volume = std::clamp(new_volume, 0, 100);
+    if (new_volume > 100)
+    {
+        new_volume = 100;
+    }
+    else if (new_volume < 0)
+    {
+        new_volume = 0;
+    }
+    m_master_volume = new_volume;
     return 0;
 }
 
@@ -173,7 +181,12 @@ int Sound::get_first_free_channel(int index) const
 
 int Sound::get_volume(int x, int y) const
 {
-    int volume = 32768 - 32 * get_distance(y - screen_y_pos - (x - screen_x_pos), -((x - screen_x_pos + y - screen_y_pos) >> 1));
+    // Displace screen pos for all screen resolutions
+    const int real_scr_x = screen_x_pos - DISPLACE_SCREEN_X;
+    const int real_scr_y = screen_y_pos - DISPLACE_SCREEN_Y;
+    const int decrease_factor = 20480 / SCREEN_SURFACE_WIDTH;
+    int volume = 32768
+        - decrease_factor * get_distance(y - real_scr_y - (x - real_scr_x), -((x - real_scr_x + y - real_scr_y) >> 1));
     if (volume < 0)
     {
         volume = 0;
@@ -186,7 +199,11 @@ int Sound::get_volume(int x, int y) const
 }
 int Sound::get_balance(int x, int y) const
 {
-    int balance = -224 * (y - screen_y_pos - (x - screen_x_pos));
+    // Displace screen pos for all screen resolutions
+    const int real_scr_x = screen_x_pos - DISPLACE_SCREEN_X;
+    const int real_scr_y = screen_y_pos - DISPLACE_SCREEN_Y;
+    const int decrease_factor = 143360 / SCREEN_SURFACE_WIDTH;
+    int balance = -decrease_factor * (y - real_scr_y - (x - real_scr_x));
     if (balance < -32640)
     {
         balance = -32640;
