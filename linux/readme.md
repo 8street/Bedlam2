@@ -10,7 +10,6 @@ You need:
 
 ```bash
 sudo apt update
-sudo apt upgrade
 sudo apt install clang-12
 ```
 
@@ -48,7 +47,9 @@ make
 sudo make install
 ```
 
-5. Run build script from Bedlam2/linux folder 
+### Compile
+
+To compile run build script from Bedlam2/linux folder 
 
 ```bash
 git clone https://github.com/8street/Bedlam2
