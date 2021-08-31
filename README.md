@@ -3,9 +3,7 @@
 
 [![Lines of Code](https://tokei.rs/b1/github/8street/Bedlam2?category=code)](https://github.com/XAMPPRocky/tokei)
 
-Source code for Bedlam 2: Absolute Bedlam executable file. To preserve the cultural heritage.
-
-This game has been ported on SDL2 library.
+Source code for Bedlam 2: Absolute Bedlam executable file. To preserve the cultural heritage. Working on modern OS.
 
 This repository does not contain any original game resources.
 
@@ -17,7 +15,13 @@ This repository does not contain any original game resources.
 
 # Project State
 
-The sources can be compiled and fully playable. Very rare crashes are possible.
+The sources can be compiled and fully playable in single player mode. All known crashes has been fixed.
+
+# List of changes
+
+* Port to SDL
+* Add various screen resolutions
+* Fix some bugs
 
 # Contributing
 
@@ -30,13 +34,11 @@ Patches and improvements are welcome.
 
 1. Open solution vs2019/Bedlam2.sln in Visual Studio 2019
 2. Compile x86 platform
-3. Put compiled .exe file in your Bedlam2 folder. Or put Bedlam2 files in VS output directory
+3. Put compiled .exe, SDL2.dll, SDL2_mixer.dll files in your Bedlam2 folder. Or put Bedlam2 files in VS output directory
 4. Run
+
+You can download executable file from [releases](https://github.com/8street/Bedlam2/releases). You may need to install "Microsoft Visual C++ 2015 Redistributable x86" to run game.
 
 ### Linux
 
-Please read [linux.md](linux/linux.md).
-
-### Mac
-
-Source codes can be compiled because SDL2 is platform free lib.
+Please read [linux/readme.md](https://github.com/8street/Bedlam2/blob/master/linux/readme.md).
