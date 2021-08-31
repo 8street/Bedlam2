@@ -47,9 +47,12 @@ int Window::init()
     int monitor_width = DM.w;
     int monitor_height = DM.h;
   
+#ifdef _DEBUG
+    const Resolution_settings &resolution_settings = m_options.get_resolution_settings(Resolution(1920, 1080));
+#else
     const Resolution_settings &resolution_settings = m_options.get_resolution_settings(
         Resolution(monitor_width, monitor_height));
-
+#endif
     m_game_width = resolution_settings.m_resolution.get_width();
     m_game_height = resolution_settings.m_resolution.get_height();
     m_window_width = m_game_width;
@@ -181,7 +184,8 @@ int Window::redraw()
     {
         // draw all screen when game level is playing
         m_screen.set_render_source(0, 0, m_screen.get_surface_width(), m_screen.get_surface_height());
-        m_screen.set_render_destination(0, 0, m_window_width, m_window_height);
+        m_screen.set_render_destination(
+            dead_screen_scale / 2, dead_screen_scale / 2, m_window_width - dead_screen_scale, m_window_height - dead_screen_scale);
 
     }
     else 
@@ -258,7 +262,7 @@ int Window::draw_game_to_screen_buffer(uint8_t *game_screen_ptr, int32_t dead_sc
     uint8_t *destination_ptr;
     if (dead_screen_scale)
     {
-        dead_screen_scaler(game_screen_ptr, dead_screen_scale);
+        SDL_RenderClear(m_renderer);
     }
     else
     {
@@ -431,33 +435,4 @@ int Window::decrease_viewport_scale()
     }
     return m_screen.set_render_source(
         m_viewport_scale_x / 2, m_viewport_scale_y / 2, width - m_viewport_scale_x, height - m_viewport_scale_y);
-}
-
-int Window::dead_screen_scaler(uint8_t *game_screen_ptr, int32_t dead_screen_scale)
-{
-    clear_game_viewport();
-    uint8_t *source_ptr = &game_screen_ptr
-                              [m_game_width * (((screen_y_pos & 31) + (screen_x_pos & 31u)) >> 1) // y
-                               + 64 * m_game_width                                                // y offset (64 is tile size)
-                               + 64                                                               // x offset
-                               + (((screen_x_pos & 31) - (screen_y_pos & 31) + 32) & 63)];        // x
-    int scaled_screen_width = m_game_width - dead_screen_scale - SIDEBAR_WIDTH;
-    int scaled_screen_height = m_game_height - dead_screen_scale;
-    uint8_t *destination_ptr = m_screen.lock_and_get_surface_ptr();
-    int surf_width = m_screen.get_surface_width();
-    for (int y = 0; y < scaled_screen_height; y++)
-    {
-        for (int x = 0; x < scaled_screen_width; x++)
-        {
-            destination_ptr
-                [x                                       // x
-                 + y * m_game_width                      // y
-                 + dead_screen_scale / 2                 // offset x
-                 + dead_screen_scale / 2 * m_game_width] // offset y
-                = source_ptr
-                    [x * (m_game_width - SIDEBAR_WIDTH) / scaled_screen_height // x
-                     + y * m_game_height / scaled_screen_height * surf_width]; // y
-        }
-    }
-    return 0;
 }

@@ -287,3 +287,13 @@ const SDL_Rect* Screen_data::get_render_source() const
 {
     return &m_render_source;
 }
+
+SDL_Surface* Screen_data::get_surface()
+{
+    return m_surface;
+}
+
+const SDL_Surface *Screen_data::get_surface() const
+{
+    return m_surface;
+}

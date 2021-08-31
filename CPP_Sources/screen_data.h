@@ -41,6 +41,8 @@ public:
     const SDL_Rect *get_render_destination() const;
     int set_render_source(int x, int y, int w, int h);
     const SDL_Rect *get_render_source() const;
+    SDL_Surface *get_surface();
+    const SDL_Surface *get_surface() const;
 
 private:
     SDL_Surface *m_surface = nullptr;

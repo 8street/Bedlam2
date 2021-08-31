@@ -38,8 +38,6 @@ public:
     int decrease_viewport_scale();
 
 private:
-    int dead_screen_scaler(uint8_t *game_screen_ptr, int32_t dead_screen_scale);
-
     int m_window_width = 0;
     int m_window_height = 0;
     int m_game_width = 0;
