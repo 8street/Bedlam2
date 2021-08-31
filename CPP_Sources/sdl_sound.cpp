@@ -1,5 +1,5 @@
-#include <iostream>
 #include <SDL.h>
+#include <iostream>
 
 #include "bedlam2.h"
 #include "bedlam2_draw.h"
@@ -25,7 +25,7 @@ Sound::~Sound()
 int Sound::init()
 {
     int ret_val = 0;
-    
+
     if (SDL_Init(SDL_INIT_AUDIO))
     {
         std::cout << "ERROR: SDL init audio. " << SDL_GetError() << std::endl;
@@ -54,7 +54,7 @@ int Sound::init()
     {
         ret_val |= -1;
     }
-    
+
     return ret_val;
 }
 
@@ -91,7 +91,7 @@ int Sound::play_raw(int index, int x, int y, bool loop)
     }
     else
     {
-        volume = get_volume(x, y) >> 8; // max 128
+        volume = get_volume(x, y) >> 8;   // max 128
         balance = get_balance(x, y) >> 7; // max 255
         if (balance > 0)
         {

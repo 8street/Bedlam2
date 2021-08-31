@@ -1,9 +1,9 @@
 #include <iostream>
 
-#include "sdl_cursor.h"
-#include "mouse.h"
 #include "exported_func.h"
 #include "file.h"
+#include "mouse.h"
+#include "sdl_cursor.h"
 
 cursor::cursor()
 {
@@ -18,7 +18,6 @@ cursor::~cursor()
         SDL_FreeCursor(cur);
     }
 }
-
 
 int cursor::init()
 {
@@ -138,7 +137,7 @@ int cursor::set_default_cursor()
 }
 int cursor::get_cursor_img() const
 {
-   return m_img;
+    return m_img;
 }
 
 SDL_Cursor *cursor::load_cursor(const Texture &cursor_texture)

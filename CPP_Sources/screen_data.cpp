@@ -1,8 +1,8 @@
 #include <iostream>
 
 #include "bedlam2_draw.h"
-#include "screen_data.h"
 #include "palette.h"
+#include "screen_data.h"
 
 Screen_data::Screen_data()
 {
@@ -28,8 +28,8 @@ int Screen_data::destroy()
     return m_texture.destroy();
 }
 
-int Screen_data::init(uint8_t *screen_buffer, int surface_width, int surface_height, int img_width,
-    int img_height, int offset_x, int offset_y)
+int Screen_data::init(
+    uint8_t *screen_buffer, int surface_width, int surface_height, int img_width, int img_height, int offset_x, int offset_y)
 {
     int ret_val = 0;
     ret_val |= destroy();
@@ -270,7 +270,7 @@ int Screen_data::set_render_destination(int x, int y, int w, int h)
     return 0;
 }
 
-const SDL_Rect* Screen_data::get_render_destination() const
+const SDL_Rect *Screen_data::get_render_destination() const
 {
     return &m_render_destination;
 }
@@ -283,12 +283,12 @@ int Screen_data::set_render_source(int x, int y, int w, int h)
     m_render_source.h = h;
     return 0;
 }
-const SDL_Rect* Screen_data::get_render_source() const
+const SDL_Rect *Screen_data::get_render_source() const
 {
     return &m_render_source;
 }
 
-SDL_Surface* Screen_data::get_surface()
+SDL_Surface *Screen_data::get_surface()
 {
     return m_surface;
 }

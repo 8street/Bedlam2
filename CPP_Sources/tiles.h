@@ -6,5 +6,6 @@ public:
     Tiles();
     ~Tiles();
     int init_vars(const Resolution_settings &settings);
+
 private:
 };

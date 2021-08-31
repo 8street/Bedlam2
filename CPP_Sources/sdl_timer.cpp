@@ -3,8 +3,8 @@
 
 #include "bedlam2.h"
 #include "mouse.h"
-#include "sdl_timer.h"
 #include "palette.h"
+#include "sdl_timer.h"
 
 volatile int32_t WAITING_TIMER;
 volatile int32_t GAME_UPDATE_TIMER;
@@ -32,7 +32,6 @@ int Timer::init(int interval_ms)
     m_interval_ms = interval_ms;
     return init();
 }
-
 
 int Timer::init()
 {

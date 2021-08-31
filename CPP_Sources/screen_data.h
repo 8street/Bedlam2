@@ -3,8 +3,8 @@
 #include <cstdint>
 #include <vector>
 
-#include "sdl_texture.h"
 #include "bedlam2_draw.h"
+#include "sdl_texture.h"
 
 /// <summary>
 /// A class that binds a old output DOS format and a state of art texture format.
@@ -17,17 +17,18 @@ public:
     Screen_data(uint8_t *screen_buffer, int surface_width, int surface_height, int offset_x = 0, int offset_y = 0);
     Screen_data();
     ~Screen_data();
-    
+
     int destroy();
     int init(
-        uint8_t *screen_buffer, int surface_width, int surface_height, 
-        int img_width = ORIGINAL_GAME_WIDTH, int img_height = ORIGINAL_GAME_HEIGHT,
-        int offset_x = 0, int offset_y = 0);
+        uint8_t *screen_buffer, int surface_width, int surface_height, int img_width = ORIGINAL_GAME_WIDTH,
+        int img_height = ORIGINAL_GAME_HEIGHT, int offset_x = 0, int offset_y = 0);
     int set_palette(const uint8_t *pal_ptr, int offset, int num_entries);
     int set_palette(const File &palette_file);
     uint8_t *get_RGB_palette_ptr();
     int fill_screen_surface(uint8_t *buffer_ptr);
-    int fill_screen_surface(uint8_t *buffer_ptr, int screen_x, int screen_y, int buffer_x, int buffer_y, int buffer_count_w, int buffer_count_h, int buffer_w);
+    int fill_screen_surface(
+        uint8_t *buffer_ptr, int screen_x, int screen_y, int buffer_x, int buffer_y, int buffer_count_w, int buffer_count_h,
+        int buffer_w);
     int update_texture();
     uint8_t *lock_and_get_surface_ptr();
     int unlock_surface() const;

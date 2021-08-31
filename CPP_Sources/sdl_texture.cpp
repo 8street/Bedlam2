@@ -1,8 +1,8 @@
 #include <iostream>
 
+#include "exported_func.h"
 #include "sdl_texture.h"
 #include "sdl_window.h"
-#include "exported_func.h"
 
 Texture::Texture()
 {
@@ -43,7 +43,8 @@ Texture::Texture(const Texture &t)
     {
         destroy();
 
-        m_texture = SDL_CreateTexture(GAME_WINDOW.get_renderer(), SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, t.width, t.height);
+        m_texture = SDL_CreateTexture(
+            GAME_WINDOW.get_renderer(), SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, t.width, t.height);
         if (m_texture == nullptr)
         {
             std::cout << "ERROR: create SDL texture in copy constructor. " << SDL_GetError() << std::endl;

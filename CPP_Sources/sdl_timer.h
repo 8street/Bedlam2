@@ -1,6 +1,6 @@
 #pragma once
-#include <cstdint>
 #include <SDL.h>
+#include <cstdint>
 
 extern "C" volatile int32_t WAITING_TIMER;
 extern "C" volatile int32_t GAME_UPDATE_TIMER;

@@ -21,6 +21,7 @@ public:
     static Resolution abs(const Resolution &r);
     int get_width() const;
     int get_height() const;
+
 private:
     int m_width;
     int m_height;
@@ -31,8 +32,8 @@ class Resolution_settings
 public:
     Resolution_settings();
     Resolution_settings(
-        const Resolution &res, int num_tiles_x = 0, int num_tiles_y = 0,
-        int not_visible_tiles_x = 0, int not_visible_tiles_y = 0, int tiles_start_pos_x = 0, int tiles_start_pos_y = 0, int displace_origin_y = 0);
+        const Resolution &res, int num_tiles_x = 0, int num_tiles_y = 0, int not_visible_tiles_x = 0,
+        int not_visible_tiles_y = 0, int tiles_start_pos_x = 0, int tiles_start_pos_y = 0, int displace_origin_y = 0);
     ~Resolution_settings();
     friend bool operator<(const Resolution_settings &rs1, const Resolution_settings &rs2);
 
@@ -47,5 +48,4 @@ public:
     int m_displace_origin_y = 0;
 
 private:
-
 };

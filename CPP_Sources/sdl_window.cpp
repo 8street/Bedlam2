@@ -41,14 +41,14 @@ int Window::init()
     SDL_DisplayMode DM;
     if (SDL_GetCurrentDisplayMode(0, &DM))
     {
-        std::cout << "ERROR: get display mode. "<< SDL_GetError() << std::endl;
+        std::cout << "ERROR: get display mode. " << SDL_GetError() << std::endl;
         ret_val |= 1;
     }
     int monitor_width = DM.w;
     int monitor_height = DM.h;
-  
+
 #ifdef _DEBUG
-    const Resolution_settings &resolution_settings = m_options.get_resolution_settings(Resolution(1920, 1080));
+    const Resolution_settings &resolution_settings = m_options.get_resolution_settings(Resolution(640, 480));
 #else
     const Resolution_settings &resolution_settings = m_options.get_resolution_settings(
         Resolution(monitor_width, monitor_height));
@@ -178,25 +178,26 @@ int Window::unlock_screen_surface() const
 int Window::redraw()
 {
     int ret_val = 0;
-    //Timer tim;
+    // Timer tim;
 
     if (game_is_playing)
     {
         // draw all screen when game level is playing
         m_screen.set_render_source(0, 0, m_screen.get_surface_width(), m_screen.get_surface_height());
         m_screen.set_render_destination(
-            dead_screen_scale / 2, dead_screen_scale / 2, m_window_width - dead_screen_scale, m_window_height - dead_screen_scale);
-
+            dead_screen_scale / 2, dead_screen_scale / 2, m_window_width - dead_screen_scale,
+            m_window_height - dead_screen_scale);
     }
-    else 
+    else
     {
-        // upscale menu, map and armory screen  
+        // upscale menu, map and armory screen
         int menu_width = m_window_height * 4 / 3;
         int menu_start_pos_x = (m_window_width - menu_width) / 2;
         m_screen.set_render_source(0, 0, ORIGINAL_GAME_WIDTH, ORIGINAL_GAME_HEIGHT);
         m_screen.set_render_destination(menu_start_pos_x, 0, menu_width, m_window_height);
     }
-    ret_val |= SDL_RenderCopy(m_renderer, m_screen.get_texture(), m_screen.get_render_source(), m_screen.get_render_destination());
+    ret_val |= SDL_RenderCopy(
+        m_renderer, m_screen.get_texture(), m_screen.get_render_source(), m_screen.get_render_destination());
 
     if (game_is_playing)
     {
@@ -207,8 +208,8 @@ int Window::redraw()
         }
     }
 
-    //double elapsed = tim.elapsed();
-    //elapsed = 0.0;
+    // double elapsed = tim.elapsed();
+    // elapsed = 0.0;
     SDL_RenderPresent(m_renderer);
     SDL_events();
     return ret_val;
@@ -268,10 +269,10 @@ int Window::draw_game_to_screen_buffer(uint8_t *game_screen_ptr, int32_t dead_sc
     {
         int surf_width = m_screen.get_surface_width();
         source_ptr = &game_screen_ptr
-                            [GAME_SCREEN_WIDTH * (((screen_y_pos & 31) + (screen_x_pos & 31u)) >> 1) // y
-                            + 64 * GAME_SCREEN_WIDTH                                    // y offset (64 is tile size)
-                            + 64                                                        // x offset
-                            + (((screen_x_pos & 31) - (screen_y_pos & 31) + 32) & 63)]; // x
+                         [GAME_SCREEN_WIDTH * (((screen_y_pos & 31) + (screen_x_pos & 31u)) >> 1) // y
+                          + 64 * GAME_SCREEN_WIDTH                                                // y offset (64 is tile size)
+                          + 64                                                                    // x offset
+                          + (((screen_x_pos & 31) - (screen_y_pos & 31) + 32) & 63)];             // x
         destination_ptr = m_screen.lock_and_get_surface_ptr();
         int screen_line = m_game_height;
         do
@@ -299,7 +300,6 @@ int Window::resize_window(int new_width, int new_height)
         {
             new_height = new_width * m_window_height / m_window_width;
         }
-
     }
     // size increases
     else
@@ -323,14 +323,14 @@ int Window::resize_window(int new_width, int new_height)
     m_window_height = new_height;
     SDL_SetWindowSize(m_window, m_window_width, m_window_height);
     m_sidebar.set_render_destination(
-        SIDEBAR_START_POS_X * m_window_width / m_game_width, 0, SIDEBAR_WIDTH * m_window_width / m_game_width, SIDEBAR_HEIGHT * m_window_height / m_game_height);
+        SIDEBAR_START_POS_X * m_window_width / m_game_width, 0, SIDEBAR_WIDTH * m_window_width / m_game_width,
+        SIDEBAR_HEIGHT * m_window_height / m_game_height);
     if (m_game_height > SIDEBAR_HEIGHT + MAP_HEIGHT)
     {
         // draw map bottom right
         m_map.set_render_destination(
             (m_game_width - MAP_WIDTH) * m_window_width / m_game_width,
-            (m_game_height - MAP_HEIGHT) * m_window_height / m_game_height, 
-            MAP_WIDTH * m_window_width / m_game_width,
+            (m_game_height - MAP_HEIGHT) * m_window_height / m_game_height, MAP_WIDTH * m_window_width / m_game_width,
             MAP_HEIGHT * m_window_height / m_game_height);
     }
     else

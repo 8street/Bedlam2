@@ -1,10 +1,10 @@
 #include <SDL.h>
 
-#include "mouse.h"
 #include "bedlam2.h"
 #include "bedlam2_draw.h"
-#include "sdl_window.h"
 #include "helper.h"
+#include "mouse.h"
+#include "sdl_window.h"
 
 cursor WINDOW_CURSOR;
 

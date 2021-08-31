@@ -1,7 +1,7 @@
 #include <cmath>
 
-#include "resolutions.h"
 #include "bedlam2_draw.h"
+#include "resolutions.h"
 #include "tiles.h"
 
 bool operator==(const Resolution &r1, const Resolution &r2)
@@ -9,7 +9,7 @@ bool operator==(const Resolution &r1, const Resolution &r2)
     return r1.m_width == r2.m_width && r1.m_height == r2.m_height;
 }
 
-bool operator<=(const Resolution& r1, const Resolution& r2)
+bool operator<=(const Resolution &r1, const Resolution &r2)
 {
     return r1.m_height * r1.m_width <= r2.m_height * r2.m_width;
 }
@@ -54,7 +54,7 @@ Resolution operator-(const Resolution &r1, const Resolution &r2)
 }
 
 Resolution Resolution::abs(const Resolution &r)
-{ 
+{
     return Resolution(std::abs(r.m_width), std::abs(r.m_height));
 }
 

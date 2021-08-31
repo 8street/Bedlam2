@@ -6,7 +6,6 @@
 #endif
 #include "file.h"
 
-
 class RAW_File : public File
 {
 public:
@@ -20,7 +19,7 @@ public:
     const Mix_Chunk *get_chunk() const;
 
 private:
-    Mix_Chunk *m_raw_chunk = nullptr; 
+    Mix_Chunk *m_raw_chunk = nullptr;
     int load_chunk();
     int destroy();
     virtual int load_data();

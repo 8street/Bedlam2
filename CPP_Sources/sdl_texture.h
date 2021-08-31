@@ -36,5 +36,4 @@ public:
 
 private:
     SDL_Texture *m_texture = nullptr;
-
 };

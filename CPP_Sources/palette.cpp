@@ -1,7 +1,7 @@
-#include "helper.h"
 #include "palette.h"
-#include "sdl_window.h"
+#include "helper.h"
 #include "sdl_event.h"
+#include "sdl_window.h"
 
 volatile int32_t PALETTE_TIMER;
 uint8_t ANIMATE_PALETTE_PTR[780];

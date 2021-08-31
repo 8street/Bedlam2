@@ -3,7 +3,6 @@
 
 #include "file.h"
 
-
 File::File()
 {
     m_file_size = 0;

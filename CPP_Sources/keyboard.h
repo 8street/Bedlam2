@@ -116,7 +116,7 @@ public:
     ~Keyboard();
     int key_up(SDL_Keycode sdl_keycode);
     int key_down(SDL_Keycode sdl_keycode);
-    
+
 private:
     void bedlam_keystates_update(uint8_t scan_code, uint8_t key_up);
     uint8_t get_ordinary_scancode_from_sdl_keycode(SDL_Keycode sdl_keycode);

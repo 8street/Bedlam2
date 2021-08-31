@@ -6,12 +6,11 @@
 
 RAW_File::RAW_File()
 {
-
 }
 
 RAW_File::RAW_File(const std::string &path)
     : File(path)
-{ 
+{
     load_chunk();
 }
 
@@ -72,7 +71,6 @@ int RAW_File::destroy()
 
 int RAW_File::load_data()
 {
-
     std::ifstream file;
     file.open(get_full_path().c_str(), std::ios_base::in | std::ios_base::binary);
     if (!file.is_open())
@@ -107,5 +105,4 @@ int RAW_File::load_data()
 
     file.close();
     return 0;
-
 }

@@ -1,16 +1,16 @@
-#include <string>
 #include <cstdint>
 #include <iostream>
 #include <stdio.h>
+#include <string>
 
-#include "sdl_window.h"
 #include "bedlam2_draw.h"
 #include "helper.h"
-#include "screenshot.h"
 #include "palette.h"
+#include "screenshot.h"
+#include "sdl_window.h"
 
 #ifdef _MSC_VER
-#pragma warning(disable : 4996)
+#    pragma warning(disable : 4996)
 #endif
 
 int NUM_SCREENSHOTS;
