@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     }
 
     // Run bedlam 2 main function
-    return main_(0, NULL, NULL);
+    return main_(argc, (const char**)argv, NULL);
 }
 
 void free_win()
