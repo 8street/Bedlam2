@@ -13,7 +13,7 @@ cursor::~cursor()
 {
     SDL_FreeCursor(m_crosshair);
     SDL_FreeCursor(m_default);
-    for (auto cur : m_waiting_cursor)
+    for (auto &cur : m_waiting_cursor)
     {
         SDL_FreeCursor(cur);
     }
