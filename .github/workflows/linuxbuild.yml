@@ -9,9 +9,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: prepare
-      run: ./linux/prepare.sh
-      shell: bash
     - name: compile
       run: ./linux/compile.sh
       shell: bash
