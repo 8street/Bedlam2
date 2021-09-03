@@ -9,11 +9,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: cd
-      run: cd linux/
     - name: prepare
-      run: ./prepare.sh
+      run: ./linux/prepare.sh
       shell: bash
     - name: compile
-      run: ./compile.sh
+      run: ./linux/compile.sh
       shell: bash
