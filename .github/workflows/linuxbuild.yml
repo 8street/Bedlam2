@@ -22,7 +22,6 @@ jobs:
     - name: Display created files
       run: ls -R
       working-directory: linux
-    - name: Download a Build Artifact
     - uses: actions/upload-artifact@v2
       with:
        name: bedlam2
