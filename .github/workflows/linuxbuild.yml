@@ -13,5 +13,7 @@ jobs:
       run: cd linux/
     - name: prepare
       run: ./prepare.sh
+      shell: bash
     - name: compile
       run: ./compile.sh
+      shell: bash
