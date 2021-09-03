@@ -9,6 +9,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Change prepare.sh permissions
+      run: chmod +x ./linux/prepare.sh
+    - name: Change compile.sh permissions
+      run: chmod +x ./linux/compile.sh
+    - name: prepare
+      run: ./linux/prepare.sh
+      shell: bash
     - name: compile
       run: ./linux/compile.sh
       shell: bash
