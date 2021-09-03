@@ -13,17 +13,17 @@ jobs:
       run: chmod +x ./linux/prepare.sh
     - name: Change compile.sh permissions
       run: chmod +x ./linux/compile.sh
-    - name: prepare
+    - name: Prepare
       run: ./linux/prepare.sh
       shell: bash
-    - name: compile
+    - name: Compile
       run: ./linux/compile.sh
       shell: bash
-    - name: Download a Build Artifact
-      uses: actions/download-artifact@v2.0.10
-      with:
-        name: bedlam2
-        path: linux
-    - name: Display structure of downloaded files
+    - name: Display created files
       run: ls -R
       working-directory: linux
+    - name: Download a Build Artifact
+    - uses: actions/upload-artifact@v2
+      with:
+       name: bedlam2
+       path: linux/bedlam2
