@@ -1,7 +1,11 @@
 #!/bin/bash
 
 sudo apt update
+
 sudo apt install clang-12 -y
+sudo apt install libc6-dev-i386 -y
+sudo apt install gcc-multilib -y
+sudo apt install g++-multilib -y
 
 
 git clone https://github.com/JWasm/JWasm.git
