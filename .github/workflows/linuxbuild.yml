@@ -23,5 +23,7 @@ jobs:
       uses: actions/download-artifact@v2.0.10
       with:
         name: bedlam2
+        path: linux
     - name: Display structure of downloaded files
       run: ls -R
+      working-directory: linux
