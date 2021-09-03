@@ -1,0 +1,17 @@
+name: LinuxBuild
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: cd
+      run: cd linux/
+    - name: prepare
+      run: ./prepare.sh
+    - name: compile
+      run: ./compile.sh
