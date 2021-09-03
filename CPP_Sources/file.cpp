@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <algorithm>
 
 #include "file.h"
 
@@ -69,8 +70,16 @@ int File::load_data()
     file.open(get_full_path().c_str(), std::ios_base::in | std::ios_base::binary);
     if (!file.is_open())
     {
-        std::cout << "Unable to open file %s." << get_full_path().c_str() << "\n";
-        exit(404);
+        file.close();
+        std::string path = get_full_path();
+        std::transform(path.begin(), path.end(), path.begin(), ::toupper);
+        m_file.assign(path);
+        file.open(get_full_path().c_str(), std::ios_base::in | std::ios_base::binary);
+        if (!file.is_open())
+        {
+            std::cout << "Unable to open file " << get_full_path().c_str() << std::endl;
+            exit(404);
+        }
     }
 
     // get filesize
