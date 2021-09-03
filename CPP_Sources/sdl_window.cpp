@@ -76,6 +76,7 @@ int Window::init()
     if (!m_renderer)
     {
         std::cout << "ERROR: created accelerated renderer is invalid. " << SDL_GetError() << std::endl;
+        std::cout << "Try to create software renderer... ";
         m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_SOFTWARE | SDL_RENDERER_TARGETTEXTURE);
         if (!m_renderer)
         {
@@ -83,6 +84,7 @@ int Window::init()
             ret_val |= 1;
             return ret_val;
         }
+        std::cout << "Ok!" << std::endl;
     }
 
     SDL_SetWindowMinimumSize(m_window, ORIGINAL_GAME_WIDTH, ORIGINAL_GAME_HEIGHT);
