@@ -1,0 +1,40 @@
+name: LinuxBuild
+
+#on: [push]
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Change prepare.sh permissions
+      run: chmod +x ./linux/prepare.sh
+
+    - name: Change compile.sh permissions
+      run: chmod +x ./linux/compile.sh
+
+    - name: Prepare
+      run: ./linux/prepare.sh
+      shell: bash
+
+    - name: Compile
+      run: ./compile.sh
+      working-directory: linux
+      shell: bash
+
+    - name: Display created files
+      run: ls -R
+      working-directory: linux
+
+    - uses: actions/upload-artifact@v2
+      with:
+       name: bedlam2.linux.i386
+       path: linux/bedlam2
