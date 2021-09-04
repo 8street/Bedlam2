@@ -1,8 +1,8 @@
 # Linux compile
 
-I have compiled the game, but I have not tested it to work.
+The game is compiled but still does not work properly. You can download binary file from CI artefacts. Dependencies for run: SDL2, SDL_mixer.
 
-### Dependencies
+### Dependencies for compilation
 
 You need:
 
@@ -13,7 +13,15 @@ sudo apt update
 sudo apt install clang-12
 ```
 
-2. Install assembly compiler JWasm that understands masm syntax
+2. Some cross platform libs
+
+```bash
+sudo apt install libc6-dev-i386
+sudo apt install gcc-multilib
+sudo apt install g++-multilib
+```
+
+3. Install assembly compiler JWasm that understands masm syntax
 
 ```bash
 git clone https://github.com/JWasm/JWasm.git 
@@ -23,7 +31,7 @@ make
 sudo cp jwasm /usr/local/bin 
 ```
 
-3. Install x86 lib SDL2 not lower than version SDL 2.0.12. You may compile it yourself
+4. Install x86 lib SDL2 not lower than version SDL 2.0.12. You may compile it yourself
 
 ```bash
 git clone https://github.com/libsdl-org/SDL
@@ -35,7 +43,7 @@ make
 sudo make install
 ```
 
-4. Install x86 lib SDL2_mixer. You may compile it yourself
+5. Install x86 lib SDL2_mixer. You may compile it yourself
 
 ```bash
 git clone https://github.com/libsdl-org/SDL_mixer
@@ -61,8 +69,8 @@ cd Bedlam2/linux
 
 There are several problems here to run Bedlam2 game on linux. 
 
-* All file paths in Windows transcription. It use "\\" separator
-* All file path use install drive letter, eg. "C"
+* Some file paths in Windows transcription. It use "\\" separator
+* Some file path use installdrive letter, eg. "C"
 * Bedlam2.asm use platform dependent direct.h header for mkdir, getcwd etc.
 * Something else
 
