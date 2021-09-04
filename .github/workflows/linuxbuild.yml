@@ -1,6 +1,11 @@
 name: LinuxBuild
 
-on: [push]
+#on: [push]
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
 
 jobs:
   build:
@@ -9,19 +14,26 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Change prepare.sh permissions
       run: chmod +x ./linux/prepare.sh
+
     - name: Change compile.sh permissions
       run: chmod +x ./linux/compile.sh
+
     - name: Prepare
       run: ./linux/prepare.sh
       shell: bash
+
     - name: Compile
-      run: ./linux/compile.sh
+      run: ./compile.sh
+      working-directory: linux
       shell: bash
+
     - name: Display created files
       run: ls -R
       working-directory: linux
+
     - uses: actions/upload-artifact@v2
       with:
        name: bedlam2.linux.i386
