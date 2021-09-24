@@ -38,6 +38,7 @@
     <ClCompile Include="..\CPP_Sources\mouse.cpp" />
     <ClCompile Include="..\CPP_Sources\options.cpp" />
     <ClCompile Include="..\CPP_Sources\palette.cpp" />
+    <ClCompile Include="..\CPP_Sources\player.cpp" />
     <ClCompile Include="..\CPP_Sources\raw_file.cpp" />
     <ClCompile Include="..\CPP_Sources\resolutions.cpp" />
     <ClCompile Include="..\CPP_Sources\screenshot.cpp" />
@@ -64,6 +65,7 @@
     <ClInclude Include="..\CPP_Sources\mouse.h" />
     <ClInclude Include="..\CPP_Sources\options.h" />
     <ClInclude Include="..\CPP_Sources\palette.h" />
+    <ClInclude Include="..\CPP_Sources\player.h" />
     <ClInclude Include="..\CPP_Sources\raw_file.h" />
     <ClInclude Include="..\CPP_Sources\resolutions.h" />
     <ClInclude Include="..\CPP_Sources\screenshot.h" />
