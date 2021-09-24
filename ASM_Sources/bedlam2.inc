@@ -99,6 +99,8 @@ extrn KEY_7:dword
 extrn KEY_P:dword
 extrn KEY_M:dword
 
+extrn ROBOT_MAX_HEALTH:dword
+
 ;==========================================================
 
 public screen_x_pos

@@ -4,6 +4,7 @@
 [![Lines of Code](https://tokei.rs/b1/github/8street/Bedlam2?category=code)](https://github.com/XAMPPRocky/tokei)
 
 Source code for Bedlam 2: Absolute Bedlam executable file. To preserve the cultural heritage. Working on modern OS.
+Some game mechanics and balance have been overhauled because game was never officially released and was unfinished.
 
 This repository does not contain any original game resources.
 
@@ -19,8 +20,10 @@ The sources can be compiled and fully playable in single player mode. All known 
 
 # List of changes
 
-* Port to SDL
-* Add various screen resolutions
+* Port to SDL (working on Windows. Linux has some issues)
+* Add various screen resolutions (game selects a resolution close up to your monitor resolution. From 480p to 1440p)
+* Fix overkill robot balance (now similar to Bedlam 1)
+* Skip missing levels (some level files seems were never created)
 * Fix some bugs
 
 # Contributing
