@@ -30,6 +30,7 @@ private:
     std::unordered_map<std::string, int> m_filename_index_map;
     int m_num_simultaneously_playing_channels = 0;
     int m_master_volume = 0;
+    bool m_sound_was_initted = false;
 };
 
 extern Sound SOUND_SYSTEM;
