@@ -55,11 +55,20 @@ int Sound::init()
         ret_val |= -1;
     }
 
+    if (!ret_val)
+    {
+        m_sound_was_initted = true;
+    }
+
     return ret_val;
 }
 
 int Sound::add_raw(const std::string &path)
 {
+    if (!m_sound_was_initted)
+    {
+        return -1;
+    }
     // if we already have this file, just return file index
     if (get_raw_index(path) >= 0)
     {
@@ -76,6 +85,10 @@ int Sound::add_raw(const std::string &path)
 
 int Sound::play_raw(int index, int x, int y, bool loop)
 {
+    if (!m_sound_was_initted)
+    {
+        return -1;
+    }
     int ret_val = 0;
     int balance = 0;
     int l_balance = 0;
@@ -120,20 +133,36 @@ int Sound::play_raw(int index, int x, int y, bool loop)
 
 int Sound::stop()
 {
+    if (!m_sound_was_initted)
+    {
+        return -1;
+    }
     return Mix_HaltChannel(-1);
 }
 int Sound::stop(int index)
 {
+    if (!m_sound_was_initted)
+    {
+        return -1;
+    }
     return Mix_HaltChannel(index);
 }
 
 int Sound::fade_stop(int ms)
 {
+    if (!m_sound_was_initted)
+    {
+        return -1;
+    }
     return Mix_FadeOutChannel(-1, ms);
 }
 
 int Sound::fade_stop(int index, int ms)
 {
+    if (!m_sound_was_initted)
+    {
+        return -1;
+    }
     return Mix_FadeOutChannel(index, ms);
 }
 
