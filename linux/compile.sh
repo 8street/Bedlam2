@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Delete previous version
+rm bedlam2
+
 mkdir o
 cd o
 rm -rf *
@@ -18,4 +21,4 @@ echo
 echo ============= run ld linker =============
 clang++-12 -m32 o/*.o -o bedlam2 -lstdc++fs `pkg-config --libs SDL2_mixer sdl2`
 
-chmod 755 bedlam2 
+chmod 755 bedlam2
