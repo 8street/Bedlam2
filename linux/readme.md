@@ -1,6 +1,6 @@
 # Linux compile
 
-The game is compiled but still does not work properly. You can download binary file from CI artefacts. Dependencies for run: SDL2, SDL_mixer.
+You can download binary file from CI artefacts. Dependencies for run: SDL2 i686, SDL_mixer i686.
 
 ### Dependencies for compilation
 
@@ -62,16 +62,6 @@ To compile run build script from Bedlam2/linux folder
 ```bash
 git clone https://github.com/8street/Bedlam2
 cd Bedlam2/linux
+chmod +x compile.sh
 ./compile.sh
 ```
-
-### Issues
-
-There are several problems here to run Bedlam2 game on linux. 
-
-* Some file paths in Windows transcription. It use "\\" separator
-* Some file path use installdrive letter, eg. "C"
-* Bedlam2.asm use platform dependent direct.h header for mkdir, getcwd etc.
-* Something else
-
-Please, if you have fixed any issue, do not hesitate to contribute.

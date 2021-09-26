@@ -158,7 +158,8 @@ int Window::clear_screen()
 {
     int ret_val = 0;
     ret_val |= m_screen.clear();
-    ret_val |= SDL_RenderClear(m_renderer);
+    ret_val |= SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255);
+    ret_val |= SDL_RenderFillRect(m_renderer, NULL);
     ret_val |= redraw();
     return ret_val;
 }

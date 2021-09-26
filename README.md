@@ -45,3 +45,8 @@ You can download executable file from [releases](https://github.com/8street/Bedl
 ### Linux
 
 Please read [linux/readme.md](https://github.com/8street/Bedlam2/blob/master/linux/readme.md).
+
+You can download binary file from [releases](https://github.com/8street/Bedlam2/releases). Put compiled binary file in your Bedlam2 folder with game files.
+You need to install SDL i686 v2.0.12 or above and SDL_mixer i686 to run game. How to do this, see the readme above.
+
+To work save files run "chmod 755 %folder%" for MIRAGE and MIRAGE/AB_BED folders in Bedlam2 directory. This folders will created after first run bedlam2 game.
