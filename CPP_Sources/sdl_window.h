@@ -29,8 +29,6 @@ public:
     int get_game_width() const;
     int draw_game_to_screen_buffer(uint8_t *game_screen_ptr, int32_t dead_screen_scale);
     int resize_window(int new_width, int new_height);
-    int reinit_screen_data(int new_width, int new_height);
-    int reinit_game_screen_buffer(int new_width, int new_height);
     int set_window_pos(int pos_x, int pos_y);
     int set_window_pos_center();
     SDL_Renderer *get_renderer();
@@ -38,6 +36,10 @@ public:
     int decrease_viewport_scale();
 
 private:
+    int reinit_screen_data(int new_width, int new_height);
+    int reinit_game_screen_buffer(int new_width, int new_height);
+    int clear_render();
+
     int m_window_width = 0;
     int m_window_height = 0;
     int m_game_width = 0;

@@ -99,7 +99,7 @@ int Window::init()
 
     ret_val |= SDL_SetRenderTarget(m_renderer, NULL);
     ret_val |= SDL_SetRenderDrawBlendMode(m_renderer, SDL_BLENDMODE_BLEND);
-    ret_val |= SDL_RenderClear(m_renderer);
+    ret_val |= clear_render();
     SDL_RenderPresent(m_renderer);
 
     if (MAP_BUFFER_PTR == nullptr)
@@ -158,8 +158,7 @@ int Window::clear_screen()
 {
     int ret_val = 0;
     ret_val |= m_screen.clear();
-    ret_val |= SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255);
-    ret_val |= SDL_RenderFillRect(m_renderer, NULL);
+    ret_val |= clear_render();
     ret_val |= redraw();
     return ret_val;
 }
@@ -266,7 +265,7 @@ int Window::draw_game_to_screen_buffer(uint8_t *game_screen_ptr, int32_t dead_sc
     uint8_t *destination_ptr;
     if (dead_screen_scale)
     {
-        SDL_RenderClear(m_renderer);
+        clear_render();
     }
     else
     {
@@ -438,4 +437,14 @@ int Window::decrease_viewport_scale()
     }
     return m_screen.set_render_source(
         m_viewport_scale_x / 2, m_viewport_scale_y / 2, width - m_viewport_scale_x, height - m_viewport_scale_y);
+}
+
+int Window::clear_render()
+{
+    // Similar SDL_RenderClear()
+    // Use to avoid SSE4 bug on virtual linux machine due to SDL_RenderClear()
+    int ret_val = 0;
+    ret_val |= SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255);
+    ret_val |= SDL_RenderFillRect(m_renderer, NULL);
+    return ret_val;
 }
