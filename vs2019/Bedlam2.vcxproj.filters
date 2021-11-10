@@ -97,6 +97,9 @@
     <ClCompile Include="..\CPP_Sources\player.cpp">
       <Filter>CPP Sources</Filter>
     </ClCompile>
+    <ClCompile Include="..\CPP_Sources\render_position.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CPP_Sources\file.h">
@@ -159,9 +162,6 @@
     <ClInclude Include="..\CPP_Sources\ingame_music.h">
       <Filter>CPP Sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\CPP_Sources\screen_data.h">
-      <Filter>CPP Sources</Filter>
-    </ClInclude>
     <ClInclude Include="..\CPP_Sources\tiles.h">
       <Filter>CPP Sources</Filter>
     </ClInclude>
@@ -172,6 +172,12 @@
       <Filter>CPP Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\CPP_Sources\player.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\render_position.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\screen_data.h">
       <Filter>CPP Sources</Filter>
     </ClInclude>
   </ItemGroup>

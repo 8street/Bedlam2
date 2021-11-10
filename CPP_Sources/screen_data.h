@@ -38,10 +38,6 @@ public:
     int get_surface_width() const;
     int get_surface_height() const;
     const SDL_Rect *get_texture_coord() const;
-    int set_render_destination(int x, int y, int w, int h);
-    const SDL_Rect *get_render_destination() const;
-    int set_render_source(int x, int y, int w, int h);
-    const SDL_Rect *get_render_source() const;
     SDL_Surface *get_surface();
     const SDL_Surface *get_surface() const;
 
@@ -50,6 +46,4 @@ private:
     bool m_must_lock_surface = false;
     Texture m_texture;
     SDL_Rect m_texture_coord_in_surface = { 0 };
-    SDL_Rect m_render_source = { 0 };
-    SDL_Rect m_render_destination = { 0 };
 };

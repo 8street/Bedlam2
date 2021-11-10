@@ -3,6 +3,7 @@
 #include <cstdint>
 
 #include "options.h"
+#include "render_position.h"
 #include "screen_data.h"
 #include "tiles.h"
 
@@ -39,6 +40,10 @@ private:
     int reinit_screen_data(int new_width, int new_height);
     int reinit_game_screen_buffer(int new_width, int new_height);
     int clear_render();
+    int set_map_position();
+    int set_sidebar_position();
+    int set_menu_position();
+    int set_game_position();
 
     int m_window_width = 0;
     int m_window_height = 0;
@@ -56,6 +61,12 @@ private:
 
     Tiles m_tiles;
     Options m_options;
+
+    Render_position m_menu_pos;
+    Render_position m_game_pos;
+    Render_position m_dead_screen_pos;
+    Render_position m_sidebar_pos;
+    Render_position m_map_pos;
 };
 
 extern Window GAME_WINDOW;

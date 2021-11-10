@@ -40,6 +40,7 @@
     <ClCompile Include="..\CPP_Sources\palette.cpp" />
     <ClCompile Include="..\CPP_Sources\player.cpp" />
     <ClCompile Include="..\CPP_Sources\raw_file.cpp" />
+    <ClCompile Include="..\CPP_Sources\render_position.cpp" />
     <ClCompile Include="..\CPP_Sources\resolutions.cpp" />
     <ClCompile Include="..\CPP_Sources\screenshot.cpp" />
     <ClCompile Include="..\CPP_Sources\screen_data.cpp" />
@@ -67,6 +68,7 @@
     <ClInclude Include="..\CPP_Sources\palette.h" />
     <ClInclude Include="..\CPP_Sources\player.h" />
     <ClInclude Include="..\CPP_Sources\raw_file.h" />
+    <ClInclude Include="..\CPP_Sources\render_position.h" />
     <ClInclude Include="..\CPP_Sources\resolutions.h" />
     <ClInclude Include="..\CPP_Sources\screenshot.h" />
     <ClInclude Include="..\CPP_Sources\screen_data.h" />
