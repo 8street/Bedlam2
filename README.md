@@ -20,7 +20,7 @@ The sources can be compiled and fully playable in single player mode. All known 
 
 # List of changes
 
-* Port to SDL (working on Windows. Linux has some issues)
+* Port to SDL (working on Windows and Linux)
 * Add various screen resolutions (game selects a resolution close up to your monitor resolution. From 480p to 1440p)
 * Fix overkill robot balance (now similar to Bedlam 1)
 * Skip missing levels (some level files seems were never created)
@@ -37,8 +37,9 @@ Patches and improvements are welcome.
 
 1. Open solution vs2019/Bedlam2.sln in Visual Studio 2019
 2. Compile x86 platform
-3. Put compiled .exe, SDL2.dll, SDL2_mixer.dll files in your Bedlam2 folder. Or put Bedlam2 files in VS output directory
-4. Run
+3. Get original DOS game Bedlam2: Absolute Bedlam
+4. Put compiled .exe, SDL2.dll, SDL2_mixer.dll files in your original Bedlam2 folder. Or put original Bedlam2 files in VS output directory
+5. Run
 
 You can download executable file from [releases](https://github.com/8street/Bedlam2/releases). You may need to install "Microsoft Visual C++ 2015 Redistributable x86" to run game.
 
