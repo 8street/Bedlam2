@@ -426,7 +426,7 @@ int Window::set_map_position()
     if (m_game_height > SIDEBAR_HEIGHT + MAP_HEIGHT)
     {
         // draw map bottom right
-        m_map_pos.set_render_destination(
+        ret_val |= m_map_pos.set_render_destination(
             (m_game_width - MAP_WIDTH) * m_window_width / m_game_width,
             (m_game_height - MAP_HEIGHT) * m_window_height / m_game_height, MAP_WIDTH * m_window_width / m_game_width,
             MAP_HEIGHT * m_window_height / m_game_height);
@@ -434,7 +434,7 @@ int Window::set_map_position()
     else
     {
         // draw map top left
-        m_map_pos.set_render_destination(
+        ret_val |= m_map_pos.set_render_destination(
             0, 0, MAP_WIDTH * m_window_width / m_game_width, MAP_HEIGHT * m_window_height / m_game_height);
     }
     return ret_val;

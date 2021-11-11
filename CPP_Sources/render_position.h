@@ -4,7 +4,7 @@
 class Render_position
 {
 public:
-    Render_position(bool enable = false);
+    Render_position();
     ~Render_position();
     const SDL_Rect *get_render_source() const;
     const SDL_Rect *get_render_destination() const;

@@ -64,7 +64,6 @@ private:
 
     Render_position m_menu_pos;
     Render_position m_game_pos;
-    Render_position m_dead_screen_pos;
     Render_position m_sidebar_pos;
     Render_position m_map_pos;
 };

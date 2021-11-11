@@ -1,8 +1,7 @@
-
 #include "render_position.h"
 #include "bedlam2.h"
 
-Render_position::Render_position(bool enable)
+Render_position::Render_position()
 {
 }
 
