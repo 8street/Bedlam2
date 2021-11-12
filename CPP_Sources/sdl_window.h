@@ -40,10 +40,10 @@ private:
     int reinit_screen_data(int new_width, int new_height);
     int reinit_game_screen_buffer(int new_width, int new_height);
     int clear_render();
-    int set_map_position();
-    int set_sidebar_position();
-    int set_menu_position();
-    int set_game_position();
+    int update_map_position();
+    int update_sidebar_position();
+    int update_menu_position();
+    int update_game_position();
 
     int m_window_width = 0;
     int m_window_height = 0;
