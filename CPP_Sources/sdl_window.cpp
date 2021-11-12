@@ -44,8 +44,8 @@ int Window::init()
         std::cout << "ERROR: get display mode. " << SDL_GetError() << std::endl;
         ret_val |= 1;
     }
-    int monitor_width = DM.w;
-    int monitor_height = DM.h;
+    const int monitor_width = DM.w;
+    const int monitor_height = DM.h;
 
 #ifdef _DEBUG
     const Resolution_settings &resolution_settings = m_options.get_resolution_settings(Resolution(800, 600));
@@ -191,7 +191,6 @@ int Window::redraw()
         ret_val |= SDL_RenderCopy(
             m_renderer, m_screen.get_texture(), m_menu_pos.get_render_source(), m_menu_pos.get_render_destination());
     }
-
     // double elapsed = tim.elapsed();
     // elapsed = 0.0;
     SDL_RenderPresent(m_renderer);
@@ -251,7 +250,7 @@ int Window::draw_game_to_screen_buffer(uint8_t *game_screen_ptr, int32_t dead_sc
     }
     else
     {
-        int surf_width = m_screen.get_surface_width();
+        const int surf_width = m_screen.get_surface_width();
         source_ptr = &game_screen_ptr
                          [GAME_SCREEN_WIDTH * (((screen_y_pos & 31) + (screen_x_pos & 31u)) >> 1) // y
                           + 64 * GAME_SCREEN_WIDTH                                                // y offset (64 is tile size)
@@ -343,7 +342,7 @@ int Window::reinit_game_screen_buffer(int new_width, int new_height)
     // Additional tile width needs to avoid black holes
     GAME_SCREEN_WIDTH = new_width + TILE_WIDTH * 5;
 
-    int game_screen_height = new_height + TILE_HEIGHT * 20;
+    const int game_screen_height = new_height + TILE_HEIGHT * 20;
     // Additional tile height needs to avoid black holes and draw all Z levels in screen bottom
     GAME_SCREEN_SIZE = GAME_SCREEN_WIDTH * game_screen_height;
 
@@ -361,12 +360,12 @@ int Window::reinit_game_screen_buffer(int new_width, int new_height)
 
 int Window::set_window_pos(int pos_x, int pos_y)
 {
-    if (pos_x >= 0 && pos_y >= 0)
+    if (pos_x < 0 && pos_y < 0)
     {
-        SDL_SetWindowPosition(m_window, pos_x, pos_y);
-        return 0;
+        return -1;
     }
-    return -1;
+    SDL_SetWindowPosition(m_window, pos_x, pos_y);
+    return 0;
 }
 
 int Window::set_window_pos_center()
@@ -449,8 +448,8 @@ int Window::update_menu_position()
 {
     int ret_val = 0;
     // scale original 640*480 resolution to user resolution and place in center
-    int menu_width = m_window_height * 4 / 3;
-    int menu_start_pos_x = (m_window_width - menu_width) / 2;
+    const int menu_width = m_window_height * 4 / 3;
+    const int menu_start_pos_x = (m_window_width - menu_width) / 2;
     ret_val |= m_menu_pos.set_render_source(0, 0, ORIGINAL_GAME_WIDTH, ORIGINAL_GAME_HEIGHT);
     ret_val |= m_menu_pos.set_render_destination(menu_start_pos_x, 0, menu_width, m_window_height);
     return ret_val;
@@ -476,9 +475,11 @@ int Window::update_game_position()
         viewport_start_x + scale_start_x, viewport_start_y + scale_start_y, viewport_width + scale_width,
         viewport_height + scale_height);
 
-    const int dead_screen_scale_y = dead_screen_scale * m_game_height / m_game_width;
+    // max value of dead_screen_scale is 480, so we need to scale it to window res
+    const int dead_screen_scale_x = dead_screen_scale * m_window_width / ORIGINAL_GAME_HEIGHT;
+    const int dead_screen_scale_y = dead_screen_scale_x * m_window_height / m_window_width;
     ret_val |= m_game_pos.set_render_destination(
-        dead_screen_scale / 2, dead_screen_scale_y / 2, m_window_width - dead_screen_scale,
+        dead_screen_scale_x / 2, dead_screen_scale_y / 2, m_window_width - dead_screen_scale_x,
         m_window_height - dead_screen_scale_y);
     return ret_val;
 }
