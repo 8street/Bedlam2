@@ -198,13 +198,6 @@ int Window::redraw()
     return ret_val;
 }
 
-int Window::clear_game_viewport()
-{
-    int ret_val = 0;
-    ret_val |= m_screen.clear();
-    return ret_val;
-}
-
 int Window::copy_screen_to_buffer(uint8_t *buffer_ptr)
 {
     return m_screen.copy_surface_to_buffer(buffer_ptr);

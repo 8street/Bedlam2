@@ -20,7 +20,6 @@ public:
     int fill_screen_surface(uint8_t *buffer_ptr);
     int unlock_screen_surface() const;
     int redraw();
-    int clear_game_viewport();
     int copy_screen_to_buffer(uint8_t *buffer_ptr);
     uint8_t *lock_and_get_surface_ptr();
     uint8_t *get_RGB_palette_ptr();
