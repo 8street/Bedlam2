@@ -44,8 +44,8 @@ int Window::init()
         std::cout << "ERROR: get display mode. " << SDL_GetError() << std::endl;
         ret_val |= 1;
     }
-    int monitor_width = DM.w;
-    int monitor_height = DM.h;
+    const int monitor_width = DM.w;
+    const int monitor_height = DM.h;
 
 #ifdef _DEBUG
     const Resolution_settings &resolution_settings = m_options.get_resolution_settings(Resolution(800, 600));
@@ -99,7 +99,7 @@ int Window::init()
 
     ret_val |= SDL_SetRenderTarget(m_renderer, NULL);
     ret_val |= SDL_SetRenderDrawBlendMode(m_renderer, SDL_BLENDMODE_BLEND);
-    ret_val |= SDL_RenderClear(m_renderer);
+    ret_val |= clear_render();
     SDL_RenderPresent(m_renderer);
 
     if (MAP_BUFFER_PTR == nullptr)
@@ -121,21 +121,12 @@ int Window::init()
     ret_val |= m_sidebar.set_palette(game_pal);
     ret_val |= m_map.set_palette(game_pal);
 
-    ret_val |= m_sidebar.set_render_destination(SIDEBAR_START_POS_X, 0, SIDEBAR_WIDTH, SIDEBAR_HEIGHT);
-
-    if (m_window_height > SIDEBAR_HEIGHT + MAP_HEIGHT)
-    {
-        // draw map bottom right
-        ret_val |= m_map.set_render_destination(
-            m_window_width - MAP_WIDTH, m_window_height - MAP_HEIGHT, MAP_WIDTH, MAP_HEIGHT);
-    }
-    else
-    {
-        // draw map top left
-        ret_val |= m_map.set_render_destination(0, 0, MAP_WIDTH, MAP_HEIGHT);
-    }
-
     ret_val |= reinit_screen_data(m_game_width, m_game_height);
+
+    ret_val |= update_game_position();
+    ret_val |= update_sidebar_position();
+    ret_val |= update_map_position();
+    ret_val |= update_menu_position();
 
     ret_val |= m_tiles.init_vars(resolution_settings);
 
@@ -158,8 +149,7 @@ int Window::clear_screen()
 {
     int ret_val = 0;
     ret_val |= m_screen.clear();
-    ret_val |= SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255);
-    ret_val |= SDL_RenderFillRect(m_renderer, NULL);
+    ret_val |= clear_render();
     ret_val |= redraw();
     return ret_val;
 }
@@ -182,46 +172,29 @@ int Window::redraw()
 {
     int ret_val = 0;
     // Timer tim;
-
     if (game_is_playing)
     {
-        // draw all screen when game level is playing
-        m_screen.set_render_source(0, 0, m_screen.get_surface_width(), m_screen.get_surface_height());
-        m_screen.set_render_destination(
-            dead_screen_scale / 2, dead_screen_scale / 2, m_window_width - dead_screen_scale,
-            m_window_height - dead_screen_scale);
+        if (dead_screen_scale)
+        {
+            ret_val |= update_game_position();
+        }
+        ret_val |= SDL_RenderCopy(
+            m_renderer, m_screen.get_texture(), m_game_pos.get_render_source(), m_game_pos.get_render_destination());
+        ret_val |= SDL_RenderCopy(m_renderer, m_sidebar.get_texture(), NULL, m_sidebar_pos.get_render_destination());
+        if (map_active)
+        {
+            ret_val |= SDL_RenderCopy(m_renderer, m_map.get_texture(), NULL, m_map_pos.get_render_destination());
+        }
     }
     else
     {
-        // upscale menu, map and armory screen
-        int menu_width = m_window_height * 4 / 3;
-        int menu_start_pos_x = (m_window_width - menu_width) / 2;
-        m_screen.set_render_source(0, 0, ORIGINAL_GAME_WIDTH, ORIGINAL_GAME_HEIGHT);
-        m_screen.set_render_destination(menu_start_pos_x, 0, menu_width, m_window_height);
+        ret_val |= SDL_RenderCopy(
+            m_renderer, m_screen.get_texture(), m_menu_pos.get_render_source(), m_menu_pos.get_render_destination());
     }
-    ret_val |= SDL_RenderCopy(
-        m_renderer, m_screen.get_texture(), m_screen.get_render_source(), m_screen.get_render_destination());
-
-    if (game_is_playing)
-    {
-        ret_val |= SDL_RenderCopy(m_renderer, m_sidebar.get_texture(), NULL, m_sidebar.get_render_destination());
-        if (map_active)
-        {
-            ret_val |= SDL_RenderCopy(m_renderer, m_map.get_texture(), NULL, m_map.get_render_destination());
-        }
-    }
-
     // double elapsed = tim.elapsed();
     // elapsed = 0.0;
     SDL_RenderPresent(m_renderer);
     SDL_events();
-    return ret_val;
-}
-
-int Window::clear_game_viewport()
-{
-    int ret_val = 0;
-    ret_val |= m_screen.clear();
     return ret_val;
 }
 
@@ -266,11 +239,11 @@ int Window::draw_game_to_screen_buffer(uint8_t *game_screen_ptr, int32_t dead_sc
     uint8_t *destination_ptr;
     if (dead_screen_scale)
     {
-        SDL_RenderClear(m_renderer);
+        clear_render();
     }
     else
     {
-        int surf_width = m_screen.get_surface_width();
+        const int surf_width = m_screen.get_surface_width();
         source_ptr = &game_screen_ptr
                          [GAME_SCREEN_WIDTH * (((screen_y_pos & 31) + (screen_x_pos & 31u)) >> 1) // y
                           + 64 * GAME_SCREEN_WIDTH                                                // y offset (64 is tile size)
@@ -291,6 +264,7 @@ int Window::draw_game_to_screen_buffer(uint8_t *game_screen_ptr, int32_t dead_sc
 
 int Window::resize_window(int new_width, int new_height)
 {
+    int ret_val = 0;
     // size decreases
     if (new_height < m_window_height || new_width < m_window_width)
     {
@@ -320,29 +294,17 @@ int Window::resize_window(int new_width, int new_height)
     if (new_width < ORIGINAL_GAME_WIDTH || new_height < ORIGINAL_GAME_HEIGHT)
     {
         new_height = ORIGINAL_GAME_HEIGHT;
-        new_width = new_height * m_game_width / m_game_height;
+        new_width = ORIGINAL_GAME_WIDTH;
     }
     m_window_width = new_width;
     m_window_height = new_height;
     SDL_SetWindowSize(m_window, m_window_width, m_window_height);
-    m_sidebar.set_render_destination(
-        SIDEBAR_START_POS_X * m_window_width / m_game_width, 0, SIDEBAR_WIDTH * m_window_width / m_game_width,
-        SIDEBAR_HEIGHT * m_window_height / m_game_height);
-    if (m_game_height > SIDEBAR_HEIGHT + MAP_HEIGHT)
-    {
-        // draw map bottom right
-        m_map.set_render_destination(
-            (m_game_width - MAP_WIDTH) * m_window_width / m_game_width,
-            (m_game_height - MAP_HEIGHT) * m_window_height / m_game_height, MAP_WIDTH * m_window_width / m_game_width,
-            MAP_HEIGHT * m_window_height / m_game_height);
-    }
-    else
-    {
-        // draw map top left
-        m_map.set_render_destination(
-            0, 0, MAP_WIDTH * m_window_width / m_game_width, MAP_HEIGHT * m_window_height / m_game_height);
-    }
-    return redraw();
+    ret_val |= update_game_position();
+    ret_val |= update_sidebar_position();
+    ret_val |= update_map_position();
+    ret_val |= update_menu_position();
+    ret_val |= redraw();
+    return ret_val;
 }
 
 int Window::reinit_screen_data(int new_width, int new_height)
@@ -373,7 +335,7 @@ int Window::reinit_game_screen_buffer(int new_width, int new_height)
     // Additional tile width needs to avoid black holes
     GAME_SCREEN_WIDTH = new_width + TILE_WIDTH * 5;
 
-    int game_screen_height = new_height + TILE_HEIGHT * 20;
+    const int game_screen_height = new_height + TILE_HEIGHT * 20;
     // Additional tile height needs to avoid black holes and draw all Z levels in screen bottom
     GAME_SCREEN_SIZE = GAME_SCREEN_WIDTH * game_screen_height;
 
@@ -391,12 +353,12 @@ int Window::reinit_game_screen_buffer(int new_width, int new_height)
 
 int Window::set_window_pos(int pos_x, int pos_y)
 {
-    if (pos_x >= 0 && pos_y >= 0)
+    if (pos_x < 0 && pos_y < 0)
     {
-        SDL_SetWindowPosition(m_window, pos_x, pos_y);
-        return 0;
+        return -1;
     }
-    return -1;
+    SDL_SetWindowPosition(m_window, pos_x, pos_y);
+    return 0;
 }
 
 int Window::set_window_pos_center()
@@ -412,30 +374,105 @@ SDL_Renderer *Window::get_renderer()
 
 int Window::increase_viewport_scale()
 {
-    const int width = m_screen.get_surface_width();
-    const int height = m_screen.get_surface_height();
-    m_viewport_scale_x += width >> 6;
-    m_viewport_scale_y += height >> 6;
-    if (m_viewport_scale_x > m_game_width / 2 || m_viewport_scale_y > m_game_height / 2)
+    m_viewport_scale_x += m_screen.get_surface_width() >> 6;
+    m_viewport_scale_y = m_viewport_scale_x * m_game_height / m_game_width;
+    const int max_scale_x = m_game_width / 2;
+    const int max_scale_y = m_game_height / 2;
+    if (m_viewport_scale_x > max_scale_x || m_viewport_scale_y > max_scale_y)
     {
         m_viewport_scale_x = m_game_width / 2;
         m_viewport_scale_y = m_game_height / 2;
     }
-    return m_screen.set_render_source(
-        m_viewport_scale_x / 2, m_viewport_scale_y / 2, width - m_viewport_scale_x, height - m_viewport_scale_y);
+    return update_game_position();
 }
 
 int Window::decrease_viewport_scale()
 {
-    const int width = m_screen.get_surface_width();
-    const int height = m_screen.get_surface_height();
-    m_viewport_scale_x -= width >> 6;
-    m_viewport_scale_y -= height >> 6;
+    m_viewport_scale_x -= m_screen.get_surface_width() >> 6;
+    m_viewport_scale_y = m_viewport_scale_x * m_game_height / m_game_width;
     if (m_viewport_scale_x < 0 || m_viewport_scale_y < 0)
     {
         m_viewport_scale_x = 0;
         m_viewport_scale_y = 0;
     }
-    return m_screen.set_render_source(
-        m_viewport_scale_x / 2, m_viewport_scale_y / 2, width - m_viewport_scale_x, height - m_viewport_scale_y);
+    return update_game_position();
+}
+
+int Window::clear_render()
+{
+    // Similar SDL_RenderClear()
+    // Use to avoid SSE4 bug on virtual linux machine due to SDL_RenderClear()
+    int ret_val = 0;
+    ret_val |= SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255);
+    ret_val |= SDL_RenderFillRect(m_renderer, NULL);
+    return ret_val;
+}
+
+int Window::update_map_position()
+{
+    int ret_val = 0;
+    if (m_game_height > SIDEBAR_HEIGHT + MAP_HEIGHT)
+    {
+        // draw map bottom right
+        ret_val |= m_map_pos.set_render_destination(
+            (m_game_width - MAP_WIDTH) * m_window_width / m_game_width,
+            (m_game_height - MAP_HEIGHT) * m_window_height / m_game_height, MAP_WIDTH * m_window_width / m_game_width,
+            MAP_HEIGHT * m_window_height / m_game_height);
+    }
+    else
+    {
+        // draw map top left
+        ret_val |= m_map_pos.set_render_destination(
+            0, 0, MAP_WIDTH * m_window_width / m_game_width, MAP_HEIGHT * m_window_height / m_game_height);
+    }
+    return ret_val;
+}
+
+int Window::update_sidebar_position()
+{
+    int ret_val = 0;
+    ret_val |= m_sidebar_pos.set_render_destination(
+        SIDEBAR_START_POS_X * m_window_width / m_game_width, 0, SIDEBAR_WIDTH * m_window_width / m_game_width,
+        SIDEBAR_HEIGHT * m_window_height / m_game_height);
+    return ret_val;
+}
+
+int Window::update_menu_position()
+{
+    int ret_val = 0;
+    // scale original 640*480 resolution to user resolution and place in center
+    const int menu_width = m_window_height * 4 / 3;
+    const int menu_start_pos_x = (m_window_width - menu_width) / 2;
+    ret_val |= m_menu_pos.set_render_source(0, 0, ORIGINAL_GAME_WIDTH, ORIGINAL_GAME_HEIGHT);
+    ret_val |= m_menu_pos.set_render_destination(menu_start_pos_x, 0, menu_width, m_window_height);
+    return ret_val;
+}
+
+int Window::update_game_position()
+{
+    int ret_val = 0;
+    const int viewport_start_x = 0;
+    const int viewport_start_y = 0;
+
+    const int max_scale_x = m_game_width / 2;
+    // needs for always draw robot in one place when scaling
+    const int scale_start_x = (m_viewport_scale_x - SIDEBAR_WIDTH / 2 * m_viewport_scale_x / max_scale_x) / 2;
+    const int scale_start_y = m_viewport_scale_y / 2;
+
+    const int viewport_width = m_screen.get_surface_width();
+    const int viewport_height = m_screen.get_surface_height();
+    const int scale_width = -m_viewport_scale_x;
+    const int scale_height = -m_viewport_scale_y;
+
+    ret_val |= m_game_pos.set_render_source(
+        viewport_start_x + scale_start_x, viewport_start_y + scale_start_y, viewport_width + scale_width,
+        viewport_height + scale_height);
+
+    // max value of dead_screen_scale is 480, so we need to scale it to window res
+    const int dead_screen_scale_x = dead_screen_scale * m_window_width / ORIGINAL_GAME_HEIGHT;
+    const int dead_screen_scale_y = dead_screen_scale_x * m_window_height / m_window_width;
+    ret_val |= m_game_pos.set_render_destination(
+        dead_screen_scale_x / 2, dead_screen_scale_y / 2, m_window_width - dead_screen_scale_x,
+        m_window_height - dead_screen_scale_y);
+    return ret_val;
 }

@@ -261,38 +261,6 @@ const SDL_Rect *Screen_data::get_texture_coord() const
     return &m_texture_coord_in_surface;
 }
 
-int Screen_data::set_render_destination(int x, int y, int w, int h)
-{
-    m_render_destination.x = x;
-    m_render_destination.y = y;
-    m_render_destination.w = w;
-    m_render_destination.h = h;
-    return 0;
-}
-
-const SDL_Rect *Screen_data::get_render_destination() const
-{
-    return &m_render_destination;
-}
-
-int Screen_data::set_render_source(int x, int y, int w, int h)
-{
-    m_render_source.x = x;
-    m_render_source.y = y;
-    m_render_source.w = w;
-    m_render_source.h = h;
-    return 0;
-}
-const SDL_Rect *Screen_data::get_render_source() const
-{
-    return &m_render_source;
-}
-
-SDL_Surface *Screen_data::get_surface()
-{
-    return m_surface;
-}
-
 const SDL_Surface *Screen_data::get_surface() const
 {
     return m_surface;
