@@ -174,10 +174,7 @@ int Window::redraw()
     // Timer tim;
     if (game_is_playing)
     {
-        if (dead_screen_scale)
-        {
-            ret_val |= update_game_position();
-        }
+        ret_val |= update_game_position();
         ret_val |= SDL_RenderCopy(
             m_renderer, m_screen.get_texture(), m_game_pos.get_render_source(), m_game_pos.get_render_destination());
         ret_val |= SDL_RenderCopy(m_renderer, m_sidebar.get_texture(), NULL, m_sidebar_pos.get_render_destination());
