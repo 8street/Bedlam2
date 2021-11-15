@@ -371,6 +371,10 @@ SDL_Renderer *Window::get_renderer()
 
 int Window::increase_viewport_scale()
 {
+    if (!game_is_playing)
+    {
+        return 0;
+    }
     m_viewport_scale_x += m_screen.get_surface_width() >> 6;
     m_viewport_scale_y = m_viewport_scale_x * m_game_height / m_game_width;
     const int max_scale_x = m_game_width / 2;
@@ -385,6 +389,10 @@ int Window::increase_viewport_scale()
 
 int Window::decrease_viewport_scale()
 {
+    if (!game_is_playing)
+    {
+        return 0;
+    }
     m_viewport_scale_x -= m_screen.get_surface_width() >> 6;
     m_viewport_scale_y = m_viewport_scale_x * m_game_height / m_game_width;
     if (m_viewport_scale_x < 0 || m_viewport_scale_y < 0)
