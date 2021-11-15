@@ -174,10 +174,7 @@ int Window::redraw()
     // Timer tim;
     if (game_is_playing)
     {
-        if (dead_screen_scale)
-        {
-            ret_val |= update_game_position();
-        }
+        ret_val |= update_game_position();
         ret_val |= SDL_RenderCopy(
             m_renderer, m_screen.get_texture(), m_game_pos.get_render_source(), m_game_pos.get_render_destination());
         ret_val |= SDL_RenderCopy(m_renderer, m_sidebar.get_texture(), NULL, m_sidebar_pos.get_render_destination());
@@ -374,6 +371,10 @@ SDL_Renderer *Window::get_renderer()
 
 int Window::increase_viewport_scale()
 {
+    if (!game_is_playing)
+    {
+        return 0;
+    }
     m_viewport_scale_x += m_screen.get_surface_width() >> 6;
     m_viewport_scale_y = m_viewport_scale_x * m_game_height / m_game_width;
     const int max_scale_x = m_game_width / 2;
@@ -388,6 +389,10 @@ int Window::increase_viewport_scale()
 
 int Window::decrease_viewport_scale()
 {
+    if (!game_is_playing)
+    {
+        return 0;
+    }
     m_viewport_scale_x -= m_screen.get_surface_width() >> 6;
     m_viewport_scale_y = m_viewport_scale_x * m_game_height / m_game_width;
     if (m_viewport_scale_x < 0 || m_viewport_scale_y < 0)
