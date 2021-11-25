@@ -45,18 +45,18 @@ int Sound_chunk::load_chunk(const WAV &wav_file)
     SDL_RWops *io = SDL_RWFromConstMem(wav_file.get_data(), wav_file.get_size());
     if (!io)
     {
-        std::cout << "WAV error. Couldn't load data to SDL_RWops. " << SDL_GetError() << std::endl;
+        std::cout << "Sound chunk error. Couldn't load data to SDL_RWops. " << SDL_GetError() << std::endl;
         return -1;
     }
     m_chunk = Mix_LoadWAV_RW(io, false);
     m_used_operator_new = false;
     if (SDL_RWclose(io))
     {
-        std::cout << "WAV error. Couldn't close SDL_RWops. " << SDL_GetError() << std::endl;
+        std::cout << "Sound chunk. Couldn't close SDL_RWops. " << SDL_GetError() << std::endl;
     }
     if (!m_chunk || !m_chunk->allocated)
     {
-        std::cout << "WAV error. Couldn't load data chunk. " << Mix_GetError() << std::endl;
+        std::cout << "Sound chunk. Couldn't load data chunk. " << Mix_GetError() << std::endl;
         return -1;
     }
     return 0;
