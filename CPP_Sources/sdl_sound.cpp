@@ -88,7 +88,7 @@ int Sound::add_raw(const std::string &path)
     return chunk_index;
 }
 
-int Sound::play_raw(int index, int x, int y, bool loop)
+int Sound::play_raw(int chunk_index, int x, int y, bool loop)
 {
     if (!m_sound_was_initted)
     {
@@ -123,7 +123,7 @@ int Sound::play_raw(int index, int x, int y, bool loop)
     }
     volume = volume * m_master_volume / 100;
 
-    int free_channel_index = get_first_free_channel(index);
+    int free_channel_index = get_first_free_channel(chunk_index);
 
     Mix_Volume(free_channel_index, volume);
     Mix_SetPanning(free_channel_index, static_cast<uint8_t>(l_balance), static_cast<uint8_t>(r_balance));
@@ -131,8 +131,8 @@ int Sound::play_raw(int index, int x, int y, bool loop)
     {
         palying_times = -1;
     }
-    Mix_PlayChannel(free_channel_index, m_chunks_arr[index].get_chunk(), palying_times);
-    return index;
+    Mix_PlayChannel(free_channel_index, m_chunks_arr[chunk_index].get_chunk(), palying_times);
+    return chunk_index;
 }
 
 int Sound::stop()
@@ -143,13 +143,13 @@ int Sound::stop()
     }
     return Mix_HaltChannel(-1);
 }
-int Sound::stop(int index)
+int Sound::stop(int channel_index)
 {
     if (!m_sound_was_initted)
     {
         return -1;
     }
-    return Mix_HaltChannel(index);
+    return Mix_HaltChannel(channel_index);
 }
 
 int Sound::fade_stop(int ms)
@@ -161,13 +161,13 @@ int Sound::fade_stop(int ms)
     return Mix_FadeOutChannel(-1, ms);
 }
 
-int Sound::fade_stop(int index, int ms)
+int Sound::fade_stop(int channel_index, int ms)
 {
     if (!m_sound_was_initted)
     {
         return -1;
     }
-    return Mix_FadeOutChannel(index, ms);
+    return Mix_FadeOutChannel(channel_index, ms);
 }
 
 int Sound::set_volume(int new_volume)

@@ -12,11 +12,11 @@ public:
     ~Sound();
     int init();
     int add_raw(const std::string &path);
-    int play_raw(int index, int x = -1, int y = -1, bool loop = false);
+    int play_raw(int chunk_index, int x = -1, int y = -1, bool loop = false);
     int stop();
-    int stop(int index);
+    int stop(int channel_index);
     int fade_stop(int ms);
-    int fade_stop(int index, int ms);
+    int fade_stop(int channel_index, int ms);
     int set_volume(int new_volume);
     int is_stopped(int channel_index) const;
 
