@@ -45,9 +45,11 @@ int Sound::init()
     }
     m_num_simultaneously_playing_channels = 6;
     // Allocate check
-    int max_channels = 110 * m_num_simultaneously_playing_channels;
-    int num_channels = Mix_AllocateChannels(max_channels);
-    int num_reserve_channels = Mix_ReserveChannels(max_channels);
+    const int num_sound_files = 110;
+    m_chunks_arr.reserve(num_sound_files);
+    const int max_channels = num_sound_files * m_num_simultaneously_playing_channels;
+    const int num_channels = Mix_AllocateChannels(max_channels);
+    const int num_reserve_channels = Mix_ReserveChannels(max_channels);
     if (num_channels != max_channels || num_reserve_channels != max_channels)
     {
         std::cout << "ERROR: allocate channels. Current channels number is " << num_channels << std::endl;
