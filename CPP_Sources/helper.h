@@ -1,6 +1,5 @@
 #pragma once
 #include <cstdint>
-#include <cstdio>
 #include <string>
 
 void clear_buffer(uint32_t size, uint8_t *buffer);
