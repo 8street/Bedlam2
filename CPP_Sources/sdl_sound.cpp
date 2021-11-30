@@ -8,11 +8,9 @@
 #include "sdl_event.h"
 #include "sdl_sound.h"
 
-#ifdef _MSC_VER
-#    pragma warning(disable : 4005)
-#endif
-
 #define MIX_MAX_BALANCE 255
+
+#undef MIX_CHANNELS
 #define MIX_CHANNELS 12;
 
 Sound SOUND_SYSTEM;
