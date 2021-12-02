@@ -1,11 +1,9 @@
-#include <SDL.h>
-
+#include "sdl_event.h"
 #include "keyboard.h"
 #include "main.h"
 #include "mouse.h"
 #include "palette.h"
 #include "screenshot.h"
-#include "sdl_event.h"
 #include "sdl_timer.h"
 #include "sdl_window.h"
 
