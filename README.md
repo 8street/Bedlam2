@@ -2,6 +2,7 @@
 # Bedlam 2: Absolute Bedlam
 
 [![Lines of Code](https://tokei.rs/b1/github/8street/Bedlam2?category=code)](https://github.com/XAMPPRocky/tokei)
+[![CodeFactor](https://www.codefactor.io/repository/github/8street/bedlam2/badge)](https://www.codefactor.io/repository/github/8street/bedlam2)
 
 Source code for Bedlam 2: Absolute Bedlam executable file. To preserve the cultural heritage. Working on modern OS.
 Some game mechanics and balance have been overhauled because game was never officially released and was unfinished.
