@@ -12,7 +12,7 @@ sudo apt install g++-multilib -y
 echo                                          
 echo ============= setup JWasm =============
 git clone https://github.com/JWasm/JWasm.git
-cd JWasm 
+cd JWasm || exit 1
 cmake .
 make
 sudo cp jwasm /usr/local/bin
@@ -21,9 +21,9 @@ cd ..
 echo                                          
 echo ============= setup SDL2 =============
 git clone https://github.com/libsdl-org/SDL
-cd SDL
+cd SDL || exit 2
 mkdir build
-cd build
+cd build || exit 2
 ../configure --host=i686-pc-linux-gnu CFLAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32
 make
 sudo make install
@@ -33,9 +33,9 @@ cd ..
 echo                                          
 echo ============= setup SDL_mixer =============
 git clone https://github.com/libsdl-org/SDL_mixer
-cd SDL_mixer
+cd SDL_mixer || exit 3
 mkdir build
-cd build
+cd build || exit 3
 ../configure --host=i686-pc-linux-gnu CFLAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32
 make
 sudo make install
