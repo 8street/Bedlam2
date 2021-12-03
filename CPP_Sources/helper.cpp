@@ -1,4 +1,6 @@
+#include <algorithm>
 #include <math.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -48,4 +50,18 @@ long get_file_size(FILE *fp)
     long sz = ftell(fp);
     fseek(fp, curr_pos, SEEK_SET);
     return sz;
+}
+
+std::string to_lower(const std::string &str)
+{
+    std::string ret_str(str);
+    std::transform(ret_str.begin(), ret_str.end(), ret_str.begin(), ::tolower);
+    return ret_str;
+}
+
+std::string to_upper(const std::string &str)
+{
+    std::string ret_str(str);
+    std::transform(ret_str.begin(), ret_str.end(), ret_str.begin(), ::toupper);
+    return ret_str;
 }

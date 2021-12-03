@@ -70,9 +70,6 @@
     <ClCompile Include="..\CPP_Sources\sdl_sound.cpp">
       <Filter>CPP Sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\CPP_Sources\raw_file.cpp">
-      <Filter>CPP Sources</Filter>
-    </ClCompile>
     <ClCompile Include="..\CPP_Sources\sdl_window.cpp">
       <Filter>CPP Sources</Filter>
     </ClCompile>
@@ -98,6 +95,12 @@
       <Filter>CPP Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\CPP_Sources\render_position.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\wav.cpp">
+      <Filter>CPP Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CPP_Sources\sound_chunk.cpp">
       <Filter>CPP Sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -150,9 +153,6 @@
     <ClInclude Include="..\CPP_Sources\sdl_sound.h">
       <Filter>CPP Sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\CPP_Sources\raw_file.h">
-      <Filter>CPP Sources</Filter>
-    </ClInclude>
     <ClInclude Include="..\CPP_Sources\sdl_window.h">
       <Filter>CPP Sources</Filter>
     </ClInclude>
@@ -178,6 +178,12 @@
       <Filter>CPP Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\CPP_Sources\screen_data.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\wav.h">
+      <Filter>CPP Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP_Sources\sound_chunk.h">
       <Filter>CPP Sources</Filter>
     </ClInclude>
   </ItemGroup>
