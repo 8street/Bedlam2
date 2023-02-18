@@ -4,6 +4,8 @@ sudo apt update
 
 echo                                          
 echo ============= setup compiler =============
+sudo apt install cmake -y
+sudo apt install pkg-config -y
 sudo apt install clang-12 -y
 sudo apt install libc6-dev-i386 -y
 sudo apt install gcc-multilib -y
@@ -20,7 +22,7 @@ cd ..
 
 echo                                          
 echo ============= setup SDL2 =============
-git clone https://github.com/libsdl-org/SDL
+git clone https://github.com/libsdl-org/SDL.git -b SDL2
 cd SDL || exit 2
 mkdir build
 cd build || exit 2
@@ -32,7 +34,7 @@ cd ..
 
 echo                                          
 echo ============= setup SDL_mixer =============
-git clone https://github.com/libsdl-org/SDL_mixer
+git clone https://github.com/libsdl-org/SDL_mixer.git -b SDL2
 cd SDL_mixer || exit 3
 mkdir build
 cd build || exit 3
