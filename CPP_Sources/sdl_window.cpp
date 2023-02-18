@@ -38,8 +38,9 @@ int Window::init()
         return ret_val;
     }
 
+    const int display_index = 0;
     SDL_DisplayMode DM;
-    if (SDL_GetCurrentDisplayMode(0, &DM))
+    if (SDL_GetCurrentDisplayMode(display_index, &DM))
     {
         std::cout << "ERROR: get display mode. " << SDL_GetError() << std::endl;
         ret_val |= 1;
@@ -57,6 +58,15 @@ int Window::init()
     m_game_height = resolution_settings.m_resolution.get_height();
     m_window_width = m_game_width;
     m_window_height = m_game_height;
+
+    if (m_window_width > monitor_width)
+    {
+        m_window_width = monitor_width;
+    }
+    if (m_window_height > monitor_height)
+    {
+        m_window_height = monitor_height;
+    }
 
     int window_flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_SHOWN;
     if (m_window_width == monitor_width && m_window_height == monitor_height)
